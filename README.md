@@ -23,7 +23,7 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 |---|---|
 | [`publicado/Guarani-al-dia-1.2.apk`](publicado/Guarani-al-dia-1.2.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
 
-Descargá el `.apk` en el celular (desde esta página o desde [Releases](https://github.com/parizeliseo/SIU-GUARANI-PUBLICO/releases/latest)), abrilo desde *Archivos* y permití la instalación desde esta
+Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta
 fuente. No está en Google Play. Cada versión se firma con la misma clave, así que se instala encima
 de la anterior y conserva tus cuentas, datos y ajustes.
 
