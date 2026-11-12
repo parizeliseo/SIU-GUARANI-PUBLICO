@@ -1,0 +1,10 @@
+# Compilación
+build/
+.gradle/
+.kotlin/
+local.properties
+
+# NUNCA subir: clave de firma de la aplicación
+*.keystore
+*.jks
+keystore.properties
