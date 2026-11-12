@@ -6,9 +6,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Notifier.createChannels(this)
-        Profiles.all(this).forEach { Store.ensureSeed(this, it.id) }
-        Scheduler.schedule(this, replace = false)
-        Scheduler.keepAlive(this)
-        WatchService.sync(this)
+        // Nada de esto puede impedir que la app abra.
+        runCatching { Profiles.all(this).forEach { Store.ensureSeed(this, it.id) } }
+        runCatching { Scheduler.schedule(this, replace = false) }
+        runCatching { Scheduler.keepAlive(this) }
+        runCatching { WatchService.sync(this) }
     }
 }

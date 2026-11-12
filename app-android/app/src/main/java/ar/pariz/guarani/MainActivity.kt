@@ -55,6 +55,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val root = findViewById<View>(R.id.root)
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+            val b = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars() or androidx.core.view.WindowInsetsCompat.Type.ime())
+            v.setPadding(b.left, b.top, b.right, b.bottom)
+            androidx.core.view.WindowInsetsCompat.CONSUMED
+        }
         dashWeb = findViewById(R.id.dashWeb)
         dashSwipe = findViewById(R.id.dashSwipe)
         gWeb = findViewById(R.id.guaraniWeb)
@@ -355,7 +361,7 @@ class MainActivity : AppCompatActivity() {
     private val fPass by lazy { findViewById<EditText>(R.id.setPass) }
     private val fSave by lazy { findViewById<CheckBox>(R.id.setSavePass) }
     private var spinnerIds: List<String?> = emptyList()
-    private var fillingSpinner = false
+    private var spinnerLabels: List<String> = emptyList()
 
     private fun setupSettings() {
         findViewById<Spinner>(R.id.setInterval).adapter =
@@ -371,8 +377,10 @@ class MainActivity : AppCompatActivity() {
 
         accSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p: AdapterView<*>?, v: View?, pos: Int, id: Long) {
-                if (fillingSpinner) return
+                // Solo actuar si la persona eligió OTRA cuenta. Sin esta comprobación, volver a cargar los
+                // campos disparaba de nuevo este aviso y la pantalla se recargaba sin parar, borrando lo escrito.
                 val pid = spinnerIds.getOrNull(pos)
+                if (pid == editingId) return
                 editingId = pid
                 if (pid != null) switchTo(pid)
                 loadSettingsFields()
@@ -463,10 +471,12 @@ class MainActivity : AppCompatActivity() {
         // Lista de cuentas
         val labels = all.map { it.nombre } + listOf("(cuenta nueva)")
         spinnerIds = all.map { it.id } + listOf(null)
-        fillingSpinner = true
-        accSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, labels)
-        accSpinner.setSelection(spinnerIds.indexOf(editingId).coerceAtLeast(0), false)
-        accSpinner.post { fillingSpinner = false }
+        if (labels != spinnerLabels) {      // la lista solo se rearma si cambió
+            spinnerLabels = labels
+            accSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, labels)
+        }
+        val sel = spinnerIds.indexOf(editingId).coerceAtLeast(0)
+        if (accSpinner.selectedItemPosition != sel) accSpinner.setSelection(sel, false)
 
         val p = Profiles.get(this, editingId)
         fInst.setText(p?.institucion ?: "", false)

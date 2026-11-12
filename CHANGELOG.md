@@ -5,6 +5,17 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Guaraní al día 1.3.2 — 12 de noviembre de 2026
+
+- **Arreglo importante: no se podía escribir en Ajustes.** La lista de cuentas recargaba los
+  campos sin parar y borraba lo que se iba escribiendo, así que no se podía cargar ninguna cuenta.
+- La pantalla se acomoda al teclado y a los bordes del teléfono (Android 15).
+- La app abre aunque falle algo del arranque en segundo plano.
+- Prueba automática nueva que abre la app como recién instalada y escribe en Ajustes, para que
+  esta falla no vuelva.
+
+---
+
 ## Guaraní al día 1.3.1 — 12 de noviembre de 2026
 
 - Se suma el **IUPA** (Instituto Universitario Patagónico de las Artes) a la lista: ya son 27

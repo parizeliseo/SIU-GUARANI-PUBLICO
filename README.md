@@ -21,7 +21,7 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 
 | Archivo | Qué es |
 |---|---|
-| [`publicado/Guarani-al-dia-1.3.1.apk`](publicado/Guarani-al-dia-1.3.1.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
+| [`publicado/Guarani-al-dia-1.3.2.apk`](publicado/Guarani-al-dia-1.3.2.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
 
 Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta
 fuente. No está en Google Play. Cada versión se firma con la misma clave, así que se instala encima
@@ -190,6 +190,7 @@ otra, sumá su dirección en *Ajustes → Páginas que se vigilan*.
 | `…/Notifier.kt` | Los canales de notificación por tema. |
 | `…/Store.kt`, `Config.kt` | Datos de cada cuenta, fotos de cada página y ajustes generales. |
 | `app-android/app/src/main/assets/dashboard.html`, `menu.html` | El tablero y la pestaña Menú. |
+| `app-android/app/src/test/…/PantallaTest.kt` | Abre la app como recién instalada y comprueba que se pueda escribir en Ajustes. |
 | `app-android/app/src/test/…/AnalyzerTest.kt` | Pruebas del lector de notas y materias, de los avisos por tema y de la detección de sesión vencida. |
 
 Paquete `ar.pariz.guarani`, minSdk 26, targetSdk 35, Kotlin 2.0, Android Gradle Plugin 8.7.
