@@ -5,6 +5,13 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Guaraní al día 1.3.1 — 12 de noviembre de 2026
+
+- Se suma el **IUPA** (Instituto Universitario Patagónico de las Artes) a la lista: ya son 27
+  instituciones comprobadas.
+
+---
+
 ## Guaraní al día 1.3 — 12 de noviembre de 2026
 
 - **Sesión siempre abierta:** la app toca Guaraní cada 8 minutos para que la sesión no venza. Si

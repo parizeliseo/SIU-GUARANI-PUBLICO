@@ -13,8 +13,8 @@ android {
         applicationId = "ar.pariz.guarani"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.3.1"
     }
 
     // La clave de firma NO está en el repositorio. Para firmar, poné guarani.keystore y

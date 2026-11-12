@@ -21,7 +21,7 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 
 | Archivo | Qué es |
 |---|---|
-| [`publicado/Guarani-al-dia-1.3.apk`](publicado/Guarani-al-dia-1.3.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
+| [`publicado/Guarani-al-dia-1.3.1.apk`](publicado/Guarani-al-dia-1.3.1.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
 
 Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta
 fuente. No está en Google Play. Cada versión se firma con la misma clave, así que se instala encima
@@ -89,6 +89,7 @@ responden como SIU Guaraní autogestión para alumnos.
 | UBA — Facultad de Ciencias Veterinarias | `https://guarani.fvet.uba.ar/veterinaria/` |
 | UTN — Facultad Regional Buenos Aires (grado) | `https://guarani.frba.utn.edu.ar/autogestion/grado/` |
 | UTN — Facultad Regional Concepción del Uruguay | `https://guarani.frcu.utn.edu.ar/autogestion/` |
+| IUPA — Instituto Universitario Patagónico de las Artes | `https://guarani.iupa.edu.ar/autogestion/` |
 
 **¿Tu institución no está?** Igual funciona: pegá la dirección en la cuenta. Y si querés que
 aparezca en la lista para todos, [pedila acá](https://github.com/parizeliseo/SIU-GUARANI-PUBLICO/issues/new?template=nueva-institucion.yml)
@@ -100,6 +101,9 @@ Algunas direcciones que suelen circular **no sirven para esta app**:
 - Las que muestran **«Guaraní – Autentificación de Usuarios»** son el Guaraní de *gestión*, el que
   usa el personal administrativo, no la autogestión de alumnos.
 - Las que funcionan sin `https` (solo `http`): Android bloquea esas conexiones por seguridad.
+- Las direcciones armadas "por fórmula" (`guarani.` + la sigla de la universidad): la mayoría no
+  existe. Cada institución publica su Guaraní donde quiere; la dirección buena es la que te da tu
+  facultad.
 
 ## Qué tiene
 
