@@ -5,6 +5,15 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Manual de uso — 12 de noviembre de 2026
+
+- Nuevo **manual de uso completo** en PDF (`publicado/Manual-Guarani-al-dia.pdf`) y para leer en
+  línea (`docs/manual/MANUAL.md`): instalación paso a paso, cuentas, las cuatro pestañas, avisos,
+  sesión abierta, contraseña y privacidad, ajustes uno por uno y problemas frecuentes. La app no
+  cambia (sigue en 1.3.2).
+
+---
+
 ## Guaraní al día 1.3.2 — 12 de noviembre de 2026
 
 - **Arreglo importante: no se podía escribir en Ajustes.** La lista de cuentas recargaba los
