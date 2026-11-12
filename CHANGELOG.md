@@ -5,6 +5,19 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Guaraní al día 1.3 — 12 de noviembre de 2026
+
+- **Sesión siempre abierta:** la app toca Guaraní cada 8 minutos para que la sesión no venza. Si
+  igual vence y la contraseña está guardada, vuelve a entrar en el momento; si no, avisa una vez.
+- **Vigilancia permanente** (opcional): notificación fija que impide que Android cierre la app,
+  para teléfonos con ahorro de batería agresivo. Se retoma sola al prender el teléfono.
+- **Avisos por tema**, con título claro y canal propio: calificaciones nuevas, cambios en el plan
+  de estudios, inscripción a exámenes abierta o cerrada, mesas de examen nuevas, inscripción a
+  materias, mensajes y encuestas. Estos temas se avisan siempre; el interruptor de Ajustes solo
+  apaga «otros cambios».
+
+---
+
 ## Guaraní al día 1.2 — 12 de noviembre de 2026
 
 La app deja de ser solo para el IUGNA: sirve para **cualquier institución que use SIU Guaraní**.

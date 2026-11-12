@@ -397,8 +397,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnGeneral).setOnClickListener {
             Config.saveGeneral(this, Config.INTERVALS[findViewById<Spinner>(R.id.setInterval).selectedItemPosition],
-                findViewById<MaterialSwitch>(R.id.setAll).isChecked, findViewById<MaterialSwitch>(R.id.setWifi).isChecked)
+                findViewById<MaterialSwitch>(R.id.setAll).isChecked, findViewById<MaterialSwitch>(R.id.setWifi).isChecked,
+                findViewById<MaterialSwitch>(R.id.setKeep).isChecked, findViewById<MaterialSwitch>(R.id.setFixed).isChecked)
             Scheduler.schedule(this, replace = true)
+            Scheduler.keepAlive(this)
+            WatchService.sync(this)
             toast("Guardado")
         }
         findViewById<Button>(R.id.btnCheck).setOnClickListener { Scheduler.checkNow(this); toast("Revisando todas las cuentas…") }
@@ -448,6 +451,8 @@ class MainActivity : AppCompatActivity() {
         gLoadedFor = null
         Scheduler.schedule(this, replace = false)
         Scheduler.checkNow(this, prof.id)
+        Scheduler.keepAlive(this)
+        WatchService.sync(this)
         toast(if (old == null) "Cuenta creada. Primera revisión en marcha." else "Cuenta guardada")
         loadSettingsFields(); refreshPages()
     }
@@ -477,6 +482,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<Spinner>(R.id.setInterval).setSelection(Config.INTERVALS.indexOf(Config.interval(this)).coerceAtLeast(0))
         findViewById<MaterialSwitch>(R.id.setAll).isChecked = Config.notifyAll(this)
         findViewById<MaterialSwitch>(R.id.setWifi).isChecked = Config.wifiOnly(this)
+        findViewById<MaterialSwitch>(R.id.setKeep).isChecked = Config.keepAlive(this)
+        findViewById<MaterialSwitch>(R.id.setFixed).isChecked = Config.fixed(this)
         updateStatus()
     }
 

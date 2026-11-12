@@ -9,7 +9,7 @@ import java.text.Normalizer
 class Analyzer(private val c: Context, private val prof: Profile) {
     private val pid = prof.id
 
-    data class Change(val page: String, val added: List<String>, val removed: List<String>)
+    data class Change(val page: String, val kind: String, val added: List<String>, val removed: List<String>)
 
     companion object {
         private val NOISE = listOf(
@@ -21,6 +21,45 @@ class Analyzer(private val c: Context, private val prof: Profile) {
         )
         val GRADE_WORDS = Regex("(aprobad|promocion|promoción|desaprobad|ausente|libre|regular|nota|acta|calificaci|final)", RegexOption.IGNORE_CASE)
         val INSC_WORDS = Regex("(inscripci|periodo|vencimiento|vence|mesa|turno de examen|llamado|cierre|apertura)")
+        /** Frases con las que Guaraní dice «acá todavía no hay nada» (inscripción cerrada, sin mesas…). */
+        val CLOSED = Regex("(no hay|no existen|no se encontr|no posee|no tenes|no tiene|no se registran|sin (mesas|inscripciones|turnos|periodos)|" +
+            "fuera del? periodo|periodo.{0,25}(cerrado|finalizado|no (esta )?(vigente|habilitado))|no esta habilitad|no hay periodos)")
+
+        /** De qué trata una página de Guaraní, según su dirección y su título. */
+        fun kindOf(url: String, title: String): String {
+            val u = norm(url.substringAfter("://").substringAfter('/').substringBefore('?') + " " + title)
+            return when {
+                Regex("historia|actuacion|\\bactas?\\b|calificacion|reporte_acta").containsMatchIn(u) -> "nota"
+                Regex("plan").containsMatchIn(u) -> "plan"
+                Regex("examen|mesa").containsMatchIn(u) -> "examen"
+                Regex("cursada|inscripcion|comision|materia").containsMatchIn(u) -> "cursada"
+                Regex("mensaje").containsMatchIn(u) -> "mensaje"
+                Regex("encuesta").containsMatchIn(u) -> "encuesta"
+                else -> "otro"
+            }
+        }
+
+        /** Título, canal y tipo de novedad para un cambio, según el tema de la página. */
+        fun headline(kind: String, page: String, added: List<String>, removed: List<String>, hasGradeMsgs: Boolean): Triple<String, String, String>? {
+            val opened = added.isNotEmpty() && removed.any { CLOSED.containsMatchIn(norm(it)) }
+            val closed = removed.isNotEmpty() && added.any { CLOSED.containsMatchIn(norm(it)) } && !opened
+            return when (kind) {
+                "nota" -> if (hasGradeMsgs) null else Triple("Movimiento en tus notas", Notifier.CH_NOTAS, "Nota")
+                "plan" -> Triple("Cambió tu plan de estudios", Notifier.CH_PLAN, "Plan de estudios")
+                "examen" -> Triple(when { opened -> "Se abrió la inscripción a exámenes"; closed -> "Cerró la inscripción a exámenes"
+                    else -> "Novedades en mesas de examen" }, Notifier.CH_INSC, "Exámenes")
+                "cursada" -> Triple(when { opened -> "Se abrió la inscripción a materias"; closed -> "Cerró la inscripción a materias"
+                    else -> "Novedades en inscripción a materias" }, Notifier.CH_INSC, "Inscripciones")
+                "mensaje" -> Triple("Mensaje nuevo en Guaraní", Notifier.CH_MSG, "Mensaje")
+                "encuesta" -> Triple("Encuesta en Guaraní", Notifier.CH_MSG, "Encuesta")
+                else -> when {
+                    added.any { GRADE_WORDS.containsMatchIn(it) } && !hasGradeMsgs -> Triple("Movimiento de notas: $page", Notifier.CH_NOTAS, "Nota")
+                    added.any { INSC_WORDS.containsMatchIn(norm(it)) } -> Triple("Inscripciones y fechas: $page", Notifier.CH_INSC, "Inscripciones")
+                    else -> null
+                }
+            }
+        }
+
         private val WORD_NUM = mapOf("uno" to 1, "dos" to 2, "tres" to 3, "cuatro" to 4, "cinco" to 5, "seis" to 6,
             "siete" to 7, "ocho" to 8, "nueve" to 9, "diez" to 10)
 
@@ -157,7 +196,7 @@ class Analyzer(private val c: Context, private val prof: Profile) {
             val oldSet = old.toHashSet(); val nowSet = now.toHashSet()
             val added = now.filter { it !in oldSet }
             val removed = old.filter { it !in nowSet }
-            if (added.isNotEmpty() || removed.isNotEmpty()) changes.add(Change(pageName(p), added, removed))
+            if (added.isNotEmpty() || removed.isNotEmpty()) changes.add(Change(pageName(p), kindOf(p.url, p.title), added, removed))
         }
 
         // 2) Notas: materias de la carrera y actividades de otra propuesta.
@@ -183,22 +222,21 @@ class Analyzer(private val c: Context, private val prof: Profile) {
         if (gradeMsgs.isNotEmpty()) {
             gradeMsgs.forEach { Store.addNovedad(c, pid, "Nota", it) }
             notify(Notifier.CH_NOTAS,
-                if (gradeMsgs.size == 1) "Nueva nota en Guaraní" else "${gradeMsgs.size} novedades de notas",
+                if (gradeMsgs.size == 1) "Nueva calificación en Guaraní" else "${gradeMsgs.size} calificaciones nuevas",
                 gradeMsgs.first(), gradeMsgs)
         }
         val notifyAll = Config.notifyAll(c)
         for (ch in changes) {
-            val gradeLike = ch.added.filter { GRADE_WORDS.containsMatchIn(it) }
             val first = ch.added.firstOrNull() ?: "Se quitó: ${ch.removed.first()}"
-            Store.addNovedad(c, pid, "Cambio", "${ch.page}: ${first.take(160)}")
             val detail = ch.added.map { "+ $it" } + ch.removed.take(4).map { "− $it" }
-            val inscLike = ch.added.filter { INSC_WORDS.containsMatchIn(norm(it)) }
-            when {
-                gradeLike.isNotEmpty() && gradeMsgs.isEmpty() ->
-                    notify(Notifier.CH_NOTAS, "Movimiento de notas: ${ch.page}", gradeLike.first(), detail)
-                inscLike.isNotEmpty() ->
-                    notify(Notifier.CH_INSC, "Inscripciones y fechas: ${ch.page}", inscLike.first(), detail, tab = "web")
-                notifyAll ->
+            val h = headline(ch.kind, ch.page, ch.added, ch.removed, gradeMsgs.isNotEmpty())
+            if (h != null) {
+                // Temas de interés: se avisan siempre.
+                Store.addNovedad(c, pid, h.third, "${h.first}: ${first.take(160)}")
+                notify(h.second, h.first, first, detail, tab = if (h.second == Notifier.CH_NOTAS) "dash" else "web")
+            } else {
+                Store.addNovedad(c, pid, "Cambio", "${ch.page}: ${first.take(160)}")
+                if (notifyAll && !(ch.kind == "nota" && gradeMsgs.isNotEmpty()))
                     notify(Notifier.CH_CAMBIOS, "Cambió algo en ${ch.page}", first, detail, tab = "web")
             }
         }

@@ -17,6 +17,9 @@ object Notifier {
     const val CH_CAMBIOS = "cambios"
     const val CH_ESTADO = "estado"
     const val CH_INSC = "inscripciones"
+    const val CH_PLAN = "plan"
+    const val CH_MSG = "mensajes"
+    const val CH_VIG = "vigilancia"
     private const val GROUP = "guarani"
 
     fun createChannels(c: Context) {
@@ -25,8 +28,18 @@ object Notifier {
             description = "Cuando se carga o cambia una nota, una promoción o un acta"
             enableVibration(true)
         })
-        nm.createNotificationChannel(NotificationChannel(CH_INSC, "Inscripciones, períodos y vencimientos", NotificationManager.IMPORTANCE_HIGH).apply {
+        nm.createNotificationChannel(NotificationChannel(CH_INSC, "Inscripciones y mesas de examen", NotificationManager.IMPORTANCE_HIGH).apply {
             description = "Apertura y cierre de inscripciones, mesas de examen y vencimientos de finales"
+        })
+        nm.createNotificationChannel(NotificationChannel(CH_PLAN, "Plan de estudios", NotificationManager.IMPORTANCE_HIGH).apply {
+            description = "Cuando cambia algo en el plan de tu propuesta"
+        })
+        nm.createNotificationChannel(NotificationChannel(CH_MSG, "Mensajes y encuestas", NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = "Mensajes de la institución y encuestas pendientes"
+        })
+        nm.createNotificationChannel(NotificationChannel(CH_VIG, "Vigilancia permanente", NotificationManager.IMPORTANCE_MIN).apply {
+            description = "Notificación fija que mantiene la app despierta (se puede ocultar)"
+            setShowBadge(false)
         })
         nm.createNotificationChannel(NotificationChannel(CH_CAMBIOS, "Otros cambios en Guaraní", NotificationManager.IMPORTANCE_DEFAULT).apply {
             description = "Mensajes, inscripciones, mesas, calendario y cualquier otro cambio"
@@ -53,7 +66,7 @@ object Notifier {
             .setAutoCancel(true)
             .setContentIntent(pi)
             .setGroup(GROUP)
-            .setPriority(if (channel == CH_NOTAS) NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(if (channel in setOf(CH_NOTAS, CH_INSC, CH_PLAN)) NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_DEFAULT)
         runCatching { NotificationManagerCompat.from(c).notify(id, b.build()) }
     }
 }

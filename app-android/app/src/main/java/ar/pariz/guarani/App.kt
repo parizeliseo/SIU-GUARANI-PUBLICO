@@ -8,5 +8,7 @@ class App : Application() {
         Notifier.createChannels(this)
         Profiles.all(this).forEach { Store.ensureSeed(this, it.id) }
         Scheduler.schedule(this, replace = false)
+        Scheduler.keepAlive(this)
+        WatchService.sync(this)
     }
 }

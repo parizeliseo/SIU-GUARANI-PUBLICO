@@ -111,6 +111,12 @@ object Profiles {
         return cleared
     }
 
+    /** ¿Las cookies del sitio son de esta cuenta? (falso si la última sesión abierta ahí fue de otra) */
+    fun ownsSession(c: Context, prof: Profile): Boolean {
+        val owner = p(c).getString("owner_${prof.host}", null)
+        return owner == null || owner == prof.id
+    }
+
     fun clearCookies(url: String) {
         val cm = CookieManager.getInstance()
         val raw = cm.getCookie(url) ?: return

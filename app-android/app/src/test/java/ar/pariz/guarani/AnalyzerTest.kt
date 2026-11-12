@@ -52,3 +52,36 @@ Promedio general: 7,50
         assertEquals("https://guarani.unt.edu.ar/autogestion/", Profiles.normalizeUrl("https://guarani.unt.edu.ar/autogestion"))
     }
 }
+
+class AvisosTest {
+    private val B = "https://siu.x.edu.ar/autogestion/"
+    @Test fun temas() {
+        assertEquals("nota", Analyzer.kindOf(B + "historia_academica", "SIU Guaraní - Historia académica"))
+        assertEquals("plan", Analyzer.kindOf(B + "plan_estudio", "Plan de estudios"))
+        assertEquals("examen", Analyzer.kindOf(B + "inscripcion_examen", "Inscripción a exámenes"))
+        assertEquals("examen", Analyzer.kindOf(B + "fecha_examen", "Fechas de examen"))
+        assertEquals("cursada", Analyzer.kindOf(B + "cursada", "Inscripción a materias"))
+        assertEquals("mensaje", Analyzer.kindOf(B + "mensajes", "Mensajes"))
+        assertEquals("otro", Analyzer.kindOf(B + "datos_censales", "Datos"))
+    }
+    @Test fun titulos() {
+        val abre = Analyzer.headline("examen", "Examen", listOf("Base de Datos - 15/12/2026 18:00 - Regular"), listOf("No hay mesas de examen disponibles"), false)
+        assertEquals("Se abrió la inscripción a exámenes", abre!!.first)
+        assertEquals(Notifier.CH_INSC, abre.second)
+        val mesa = Analyzer.headline("examen", "Examen", listOf("Electromagnetismo - 20/12/2026"), emptyList(), false)
+        assertEquals("Novedades en mesas de examen", mesa!!.first)
+        val cierra = Analyzer.headline("cursada", "Cursada", listOf("No hay períodos de inscripción vigentes"), listOf("Taller de Programación - Comisión A"), false)
+        assertEquals("Cerró la inscripción a materias", cierra!!.first)
+        assertEquals("Cambió tu plan de estudios", Analyzer.headline("plan", "Plan", listOf("Informática Forense (GSTI-301)"), emptyList(), false)!!.first)
+        assertEquals(Notifier.CH_PLAN, Analyzer.headline("plan", "Plan", listOf("x"), emptyList(), false)!!.second)
+        assertNull(Analyzer.headline("nota", "Historia", listOf("x"), emptyList(), true))
+        assertNull(Analyzer.headline("otro", "Datos", listOf("Domicilio: Av. Siempreviva 742"), emptyList(), false))
+    }
+    @Test fun sesion() {
+        val ingreso = "kernel.renderer.on_arrival({\"content\":\"<input id=\\\"password\\\" name=\\\"password\\\" type=\\\"password\\\" value=\\\"\\\"/>\"})"
+        assertTrue(KeepAliveWorker.looksLoggedOut(B, ingreso))
+        assertTrue(KeepAliveWorker.looksLoggedOut(B, "<a href=\"https://x/unq/acceso?auth=saml\">Ingresar</a>"))
+        assertTrue(KeepAliveWorker.looksLoggedOut(B + "acceso", "<html></html>"))
+        assertFalse(KeepAliveWorker.looksLoggedOut(B, "<div id='kernel_contenido'>Bienvenido Juan. Períodos de inscripción</div>"))
+    }
+}

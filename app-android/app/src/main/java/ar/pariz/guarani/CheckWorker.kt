@@ -36,6 +36,7 @@ class CheckWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx,
                 }
             }
         }
+        Scheduler.keepAlive(c)   // la revisión ya renovó la sesión: la cadena arranca de nuevo
         return Result.success()
     }
 }

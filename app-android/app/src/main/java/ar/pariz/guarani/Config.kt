@@ -12,10 +12,17 @@ object Config {
     fun interval(c: Context): Int = p(c).getInt("interval", 30)
     fun notifyAll(c: Context): Boolean = p(c).getBoolean("all", true)
     fun wifiOnly(c: Context): Boolean = p(c).getBoolean("wifi", false)
+    /** Tocar Guaraní cada pocos minutos para que la sesión no venza. */
+    fun keepAlive(c: Context): Boolean = p(c).getBoolean("keepalive", true)
+    /** Vigilancia permanente con notificación fija (para teléfonos que cierran las apps). */
+    fun fixed(c: Context): Boolean = p(c).getBoolean("fixed", false)
+    const val KEEPALIVE_MIN = 8L
+
     fun configured(c: Context): Boolean = Profiles.all(c).isNotEmpty()
 
-    fun saveGeneral(c: Context, interval: Int, all: Boolean, wifi: Boolean) {
-        p(c).edit().putInt("interval", interval).putBoolean("all", all).putBoolean("wifi", wifi).apply()
+    fun saveGeneral(c: Context, interval: Int, all: Boolean, wifi: Boolean, keepAlive: Boolean, fixed: Boolean) {
+        p(c).edit().putInt("interval", interval).putBoolean("all", all).putBoolean("wifi", wifi)
+            .putBoolean("keepalive", keepAlive).putBoolean("fixed", fixed).apply()
     }
 
     // ----- Lo que guardaba la versión de una sola cuenta (para migrar) -----

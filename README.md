@@ -21,7 +21,7 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 
 | Archivo | Qué es |
 |---|---|
-| [`publicado/Guarani-al-dia-1.2.apk`](publicado/Guarani-al-dia-1.2.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
+| [`publicado/Guarani-al-dia-1.3.apk`](publicado/Guarani-al-dia-1.3.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
 
 Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta
 fuente. No está en Google Play. Cada versión se firma con la misma clave, así que se instala encima
@@ -118,15 +118,36 @@ Algunas direcciones que suelen circular **no sirven para esta app**:
   que hace la web: inscribirse, descargar certificados (van a *Descargas*) y subir archivos.
 - **Ajustes:** cuentas, frecuencia de revisión, avisos y páginas que se vigilan.
 
-**Avisos, en cuatro canales** (cada uno se puede silenciar aparte desde Android). Con varias
-cuentas, cada aviso empieza con el nombre de la cuenta.
+**Avisos por tema.** Cada tema tiene su canal, que se puede silenciar aparte desde Android. Con
+varias cuentas, cada aviso empieza con el nombre de la cuenta.
 
-| Canal | Cuándo llega |
-|---|---|
-| Notas y actas | Se carga o cambia una nota, una promoción, una regularidad o un acta. Ejemplo: *«Análisis Matemático I: aprobada con 7.»* |
-| Inscripciones, períodos y vencimientos | Se abre o cierra una inscripción, aparece una mesa o turno, o un final está por vencer. |
-| Otros cambios en Guaraní | Cualquier otra cosa que cambie (se puede apagar en Ajustes). |
-| Estado de la sesión | Guaraní no deja entrar (contraseña cambiada, sesión vencida sin contraseña guardada, captcha). Avisa una sola vez. |
+| Canal | Cuándo llega | Ejemplo de título |
+|---|---|---|
+| Notas y actas | Se carga o cambia una calificación, una promoción, una regularidad o un acta. | *«Nueva calificación en Guaraní — Análisis Matemático I: aprobada con 7.»* |
+| Plan de estudios | Cambia algo en el plan de tu propuesta. | *«Cambió tu plan de estudios»* |
+| Inscripciones y mesas de examen | Se abre o cierra la inscripción a exámenes o a materias, o aparece una mesa nueva. | *«Se abrió la inscripción a exámenes»*, *«Novedades en mesas de examen»* |
+| Mensajes y encuestas | Llega un mensaje de la institución o hay una encuesta pendiente. | *«Mensaje nuevo en Guaraní»* |
+| Otros cambios en Guaraní | Cualquier otra cosa que cambie (se puede apagar en Ajustes). | *«Cambió algo en Datos censales»* |
+| Estado de la sesión | Guaraní no deja entrar (contraseña cambiada, sesión vencida sin contraseña guardada, captcha). Avisa una sola vez. | *«Guaraní: hay que volver a entrar»* |
+
+Los cinco primeros temas de interés se avisan **siempre**; el interruptor de Ajustes solo apaga
+«Otros cambios».
+
+## La sesión, siempre abierta
+
+Para avisarte, la app necesita tener abierta tu sesión de Guaraní. La mantiene así:
+
+1. **Cada 8 minutos toca Guaraní** con un pedido liviano, para que la sesión no venza por falta
+   de uso (*Ajustes → Mantener la sesión abierta*, activado de fábrica).
+2. **Si igual vence** (Guaraní se reinició, pasó la noche sin red…) y la contraseña está guardada,
+   vuelve a entrar sola en el momento. Sin contraseña guardada, te avisa una vez para que entres.
+3. **Vigilancia permanente** (opcional): deja una notificación fija que impide que Android cierre
+   la app. Activala si los avisos te llegan tarde; algunos teléfonos (Xiaomi, Samsung, Motorola
+   con ahorro agresivo) frenan las apps en segundo plano.
+
+Conviene además tocar *Permitir que funcione en segundo plano*. Los avisos no son instantáneos:
+llegan en la revisión siguiente al cambio (cada 15 minutos a 6 horas, según elijas). Con el
+teléfono apagado o sin red no hay revisión; al volver, la app se pone al día y avisa lo acumulado.
 
 ![Pestaña Menú](capturas/menu.png)
 
@@ -161,10 +182,11 @@ otra, sumá su dirección en *Ajustes → Páginas que se vigilan*.
 | `…/Scraper.kt` | Navegador invisible: entra (formulario propio o ingreso único), lee los menús y recorre las páginas. |
 | `…/Analyzer.kt` | Compara con la revisión anterior, lee materias y notas, y decide qué avisar. |
 | `…/CheckWorker.kt`, `Scheduler.kt` | Revisión periódica de todas las cuentas. |
-| `…/Notifier.kt` | Los cuatro canales de notificación. |
+| `…/KeepAliveWorker.kt`, `WatchService.kt` | Sesión siempre abierta: toque cada 8 minutos y vigilancia permanente opcional. |
+| `…/Notifier.kt` | Los canales de notificación por tema. |
 | `…/Store.kt`, `Config.kt` | Datos de cada cuenta, fotos de cada página y ajustes generales. |
 | `app-android/app/src/main/assets/dashboard.html`, `menu.html` | El tablero y la pestaña Menú. |
-| `app-android/app/src/test/…/AnalyzerTest.kt` | Pruebas del lector de notas, de materias y de direcciones. |
+| `app-android/app/src/test/…/AnalyzerTest.kt` | Pruebas del lector de notas y materias, de los avisos por tema y de la detección de sesión vencida. |
 
 Paquete `ar.pariz.guarani`, minSdk 26, targetSdk 35, Kotlin 2.0, Android Gradle Plugin 8.7.
 

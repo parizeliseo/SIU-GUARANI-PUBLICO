@@ -35,4 +35,30 @@ object Scheduler {
             .build()
         WorkManager.getInstance(c).enqueueUniqueWork(NOW + (pid ?: ""), ExistingWorkPolicy.KEEP, req)
     }
+
+    // ----- Sesión abierta -----
+    private const val KA_TAG = "guarani-keepalive"
+
+    /** (Re)inicia la cadena que toca Guaraní cada pocos minutos para que la sesión no venza. */
+    fun keepAlive(c: Context) {
+        val wm = WorkManager.getInstance(c)
+        wm.cancelAllWorkByTag(KA_TAG)
+        if (!Config.keepAlive(c) || !Config.configured(c)) return
+        wm.enqueue(nextKeepAlive())
+    }
+
+    fun nextKeepAlive(): OneTimeWorkRequest = OneTimeWorkRequestBuilder<KeepAliveWorker>()
+        .setInitialDelay(Config.KEEPALIVE_MIN, TimeUnit.MINUTES)
+        .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+        .addTag(KA_TAG)
+        .build()
+
+    /** Un toque ya mismo (lo usa la vigilancia permanente). */
+    fun pingNow(c: Context) {
+        val req = OneTimeWorkRequestBuilder<KeepAliveWorker>()
+            .setInputData(workDataOf("once" to true))
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+            .build()
+        WorkManager.getInstance(c).enqueueUniqueWork("guarani-ping", ExistingWorkPolicy.KEEP, req)
+    }
 }

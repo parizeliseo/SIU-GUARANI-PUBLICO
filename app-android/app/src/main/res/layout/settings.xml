@@ -54,14 +54,26 @@
 
         <!-- ===== Generales ===== -->
         <TextView style="@style/SetSection" android:text="Revisiones y avisos (todas las cuentas)"/>
+        <TextView style="@style/SetHelp"
+            android:text="Siempre se avisa: calificaciones nuevas, cambios en el plan de estudios, inscripción a exámenes y a materias, mesas de examen, mensajes y encuestas."/>
         <TextView style="@style/SetLabel" android:text="Revisar Guaraní cada"/>
         <Spinner android:id="@+id/setInterval" android:layout_width="match_parent" android:layout_height="48dp"/>
         <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setAll"
             android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp"
-            android:text="Avisarme de cualquier cambio (no solo notas)" android:checked="true"/>
+            android:text="Avisarme también de cualquier otro cambio" android:checked="true"/>
         <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setWifi"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:text="Revisar solo con Wi-Fi" android:checked="false"/>
+        <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setKeep"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Mantener la sesión abierta" android:checked="true"/>
+        <TextView style="@style/SetHelp"
+            android:text="La app toca Guaraní cada 8 minutos para que la sesión no venza. Si igual vence y la contraseña está guardada, vuelve a entrar sola."/>
+        <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setFixed"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Vigilancia permanente (notificación fija)" android:checked="false"/>
+        <TextView style="@style/SetHelp"
+            android:text="Activala si los avisos te llegan tarde o no llegan: deja una notificación fija que impide que Android cierre la app. Gasta un poco más de batería."/>
         <Button android:id="@+id/btnGeneral" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="10dp" android:text="Guardar"/>
         <Button android:id="@+id/btnCheck" style="@style/Widget.Material3.Button.OutlinedButton"
