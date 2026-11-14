@@ -31,6 +31,7 @@ class CheckWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx,
                         }
                     }
                     Analyzer(c, prof).process(r)
+                    Analyzer(c, prof).recordatorios()
                 } catch (e: Throwable) {
                     Store.setStatus(c, prof.id, "${Store.shortNow()} · Error en la revisión: ${e.javaClass.simpleName} ${e.message ?: ""}".trim())
                 }

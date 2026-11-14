@@ -1,6 +1,6 @@
 # Guaraní al día — Manual de uso
 
-**Versión 1.3.2 · noviembre de 2026**
+**Versión 1.4 · noviembre de 2026**
 
 Guaraní al día es una aplicación para Android, libre y gratuita, para estudiantes de cualquier
 universidad o instituto que use **SIU Guaraní**. Trae tu Guaraní completo adentro de la app, lo
@@ -19,23 +19,35 @@ inscripción o cambia algo.
 5. [La primera revisión](#5-la-primera-revisión)
 6. [Las cuatro pestañas](#6-las-cuatro-pestañas)
 7. [Los avisos](#7-los-avisos)
-8. [La sesión, siempre abierta](#8-la-sesión-siempre-abierta)
-9. [Varias cuentas](#9-varias-cuentas)
-10. [Tu contraseña y tu privacidad](#10-tu-contraseña-y-tu-privacidad)
-11. [Si tu institución no está en la lista](#11-si-tu-institución-no-está-en-la-lista)
-12. [Ajustes, uno por uno](#12-ajustes-uno-por-uno)
-13. [Problemas frecuentes](#13-problemas-frecuentes)
-14. [Límites conocidos](#14-límites-conocidos)
-15. [Actualizar y desinstalar](#15-actualizar-y-desinstalar)
-16. [Ayuda](#16-ayuda)
+8. [Compartir tus calificaciones](#8-compartir-tus-calificaciones)
+9. [Exámenes, recordatorios y Google Calendar](#9-exámenes-recordatorios-y-google-calendar)
+10. [Documentos PDF oficiales](#10-documentos-pdf-oficiales)
+11. [Tu carrera y tu institución, siempre a la vista](#11-tu-carrera-y-tu-institución-siempre-a-la-vista)
+12. [La sesión, siempre abierta](#12-la-sesión-siempre-abierta)
+13. [Varias cuentas](#13-varias-cuentas)
+14. [Tu contraseña y tu privacidad](#14-tu-contraseña-y-tu-privacidad)
+15. [Si tu institución no está en la lista](#15-si-tu-institución-no-está-en-la-lista)
+16. [Ajustes, uno por uno](#16-ajustes-uno-por-uno)
+17. [Problemas frecuentes](#17-problemas-frecuentes)
+18. [Límites conocidos](#18-límites-conocidos)
+19. [Actualizar y desinstalar](#19-actualizar-y-desinstalar)
+20. [Ayuda](#20-ayuda)
 
 ## 1. Qué hace y qué no hace
 
 **Lo que hace:**
 
-- Te muestra un **tablero** con tu promedio, tu avance y el estado de cada materia.
-- Te **avisa** con una notificación cuando hay una calificación nueva, un cambio en el plan de
-  estudios, una inscripción que se abre, una mesa de examen nueva, un mensaje o una encuesta.
+- Te muestra un **tablero** con tu institución y tu carrera bien a la vista, tu promedio, tu
+  avance y **todas las materias de tu plan** con su estado y su nota.
+- Te **avisa** con una notificación cuando hay una calificación nueva (con un **sonido propio**),
+  un cambio en el plan de estudios, una inscripción que se abre, una fecha de examen nueva, un
+  mensaje o una encuesta.
+- Te **recuerda los exámenes** una semana antes, el día anterior y el mismo día, y los pasa a
+  **Google Calendar** (o al calendario que uses) con un toque.
+- Te deja **compartir tus calificaciones** por WhatsApp, mail o cualquier app.
+- Te da los **PDF oficiales** que emite Guaraní (historia académica, plan, comprobantes), tal cual
+  los entrega el sitio, para abrirlos o compartirlos.
+- Se **actualiza sola**: en segundo plano y cada vez que abrís la app.
 - Te deja usar **Guaraní completo** sin salir de la app: inscribirte, pedir certificados, subir
   documentación.
 - Mantiene tu **sesión abierta** para que los avisos no se corten.
@@ -43,8 +55,10 @@ inscripción o cambia algo.
 
 **Lo que no hace:**
 
-- No se inscribe a nada por vos ni cambia nada en Guaraní: solo mira. Lo que hagas en la pestaña
-  Guaraní lo hacés vos, igual que en el navegador.
+- No se inscribe a nada por vos ni cambia nada en Guaraní: solo mira. Los únicos botones que toca
+  sola son los que **muestran** información («Historia completa», «Expandir» el plan). Lo que
+  hagas en la pestaña Guaraní lo hacés vos, igual que en el navegador.
+- No arma documentos propios: los PDF son los de Guaraní, sin modificar.
 - No avisa al instante. Revisa cada cierto tiempo (cada 15 minutos como mínimo), así que el aviso
   llega en la revisión siguiente al cambio.
 - No manda tus datos a ningún servidor propio ni de terceros. La app habla únicamente con el
@@ -93,7 +107,7 @@ se abre la pestaña **Ajustes**. Completá los datos en este orden:
 
 1. **Institución o facultad.** Escribí parte del nombre (por ejemplo *UTN*, *UNC* o *IUGNA*) y
    elegila de la lista que se despliega. Si no aparece, mirá el
-   [capítulo 11](#11-si-tu-institución-no-está-en-la-lista).
+   [capítulo 15](#15-si-tu-institución-no-está-en-la-lista).
 2. **Dirección de SIU Guaraní.** Se completa sola cuando elegís la institución. No la toques,
    salvo que la tuya no esté en la lista.
 3. **Nombre de esta cuenta.** Es el nombre con el que la vas a ver en la app. Poné lo que
@@ -102,7 +116,7 @@ se abre la pestaña **Ajustes**. Completá los datos en este orden:
 5. **Contraseña.** La de Guaraní.
 6. **Guardar la contraseña en este teléfono.** Viene tildado, y conviene dejarlo así: con la
    contraseña guardada, la app vuelve a entrar sola cuando la sesión vence. El
-   [capítulo 10](#10-tu-contraseña-y-tu-privacidad) explica cómo se guarda.
+   [capítulo 14](#14-tu-contraseña-y-tu-privacidad) explica cómo se guarda.
 7. Tocá **Agregar cuenta y revisar**.
 
 Después, más abajo en la misma pantalla, tocá **Permitir que funcione en segundo plano** y
@@ -117,9 +131,13 @@ Esa primera revisión **no te avisa nada**: toma una «foto» de cómo está tu 
 materias, tus notas, tu plan, tus inscripciones). Desde la segunda revisión, compara con la foto
 anterior y te avisa todo lo que cambió.
 
-Para saber si salió bien, mirá en el tablero la línea **Revisión desde la app**. Tiene que decir
-algo como *«12/11 16:40 · 14 páginas revisadas · sin cambios»*. Si dice otra cosa, buscá el
-mensaje en el [capítulo 13](#13-problemas-frecuentes).
+En esa primera revisión la app también lee **tu carrera**, tu **plan de estudio completo**, tu
+**historia académica completa** y tus **inscripciones**, y con eso arma el tablero.
+
+Para saber si salió bien, mirá el encabezado del tablero: tiene que decir *«Actualizado hace X
+min»* y mostrar tu carrera. Al pie del tablero está el detalle, por ejemplo *«13/11 10:40 · 14
+páginas revisadas · sin cambios»*. Si dice otra cosa, buscá el mensaje en
+[Problemas frecuentes](#17-problemas-frecuentes).
 
 ## 6. Las cuatro pestañas
 
@@ -130,23 +148,35 @@ Abajo de todo hay cuatro pestañas. Todas muestran la cuenta que tengas elegida.
 ![Tablero](img/03-tablero.png)
 *El tablero, con datos de ejemplo.*
 
-Es el resumen de tu carrera:
+Es el resumen de tu carrera, de arriba hacia abajo:
 
-- **Arriba:** cuántas materias aprobaste, con qué promedio, cuántos finales te quedan y qué
-  cursás. Debajo, la fecha de la última revisión.
-- **Botones:** *Revisar ahora* hace una revisión en el momento; *Abrir Guaraní* y *Ajustes* te
-  llevan a esas pestañas. También podés **deslizar hacia abajo** para revisar.
-- **Indicadores:** promedio general, avance de la carrera, materias aprobadas y finales
-  pendientes.
-- **Novedades:** la lista de todo lo que cambió, lo más reciente arriba. Es el historial de los
-  avisos.
-- **Fechas que se vienen** y **Bandeja de Guaraní:** mensajes sin leer, encuestas pendientes y exámenes en
-  los que estás inscripto.
-- **Estado de cada materia:** todas tus materias con su estado (aprobada, promocionada, regular,
-  en curso), la nota y la fecha. La app las lee sola de tu historia académica.
+- **Encabezado verde.** Dice con letras grandes **qué institución** y **qué carrera** estás
+  viendo, el plan, el nombre de la cuenta y el usuario. A la derecha, si la **sesión está
+  abierta** o cerrada. Debajo, cuándo se actualizó por última vez.
+- **Botones:** *Actualizar* lee Guaraní en el momento (también podés **deslizar hacia abajo**);
+  *Compartir notas* manda tus calificaciones por WhatsApp, mail, etc.; *Abrir Guaraní* va al
+  sitio.
+- **Indicadores:** avance de la carrera (materias aprobadas sobre el total del plan, con barra),
+  promedio, aprobadas, finales pendientes y materias en curso. Debajo de cada número dice de
+  dónde sale: por ejemplo, si el promedio lo informa Guaraní o lo calcula la app con tus notas
+  aprobadas.
+- **Próximos exámenes:** las mesas a las que estás inscripto y las evaluaciones con fecha, con
+  cuántos días faltan y el botón **Agendar**. Ver [Exámenes, recordatorios y Google
+  Calendar](#9-exámenes-recordatorios-y-google-calendar).
+- **Finales pendientes:** las materias regulares que todavía no rendiste.
+- **Novedades:** el historial de todo lo que cambió, lo más reciente arriba. *Ver todas*
+  muestra la lista completa.
+- **Materias y calificaciones:** todas las materias de tu plan con su estado (aprobada,
+  promocionada, regular, en curso, pendiente, desaprobada) y la nota. Tiene un **buscador** (por
+  nombre o código, sin importar los acentos) y **filtros** arriba. Tocá una materia para ver su
+  historia: por ejemplo, *«Examen aprobado con 8 (20/02/2026) · Examen desaprobado con 2
+  (12/12/2025)»*. Si una nota todavía no está en un acta cerrada, aparece la marca
+  **PROVISORIA**.
+- **Documentos oficiales:** los PDF que ofrece tu Guaraní. Ver [Documentos PDF
+  oficiales](#10-documentos-pdf-oficiales).
 
-![Estado de cada materia](img/04-materias.png)
-*La tabla de materias. Deslizala hacia el costado para ver la nota, la fecha y el detalle.*
+![Materias y calificaciones](img/04-materias.png)
+*Materias con buscador y filtros. El botón Compartir manda lo que estás filtrando.*
 
 ### Menú
 
@@ -173,15 +203,16 @@ hacer acá: inscribirte, darte de baja, pedir un certificado, subir un archivo.
 
 - Si la contraseña está guardada, **entra sola**. Si no, ingresás a mano y la app te pregunta
   si querés guardarla.
-- La barra de arriba tiene **atrás** (←), **inicio** (⌂) y **recargar** (⟳).
-- Los archivos que descargues (certificados, comprobantes) van a la carpeta **Descargas** del
-  teléfono.
+- La barra de arriba muestra la página, y debajo **la institución y la carrera** de la cuenta.
+  Tiene **atrás** (←), **guardar como PDF** (⤓), **inicio** (⌂) y **recargar** (⟳).
+- Los archivos que descargues (certificados, comprobantes, reportes en PDF) van a la carpeta
+  **Descargas**. Cuando termina la descarga, la app te ofrece **Abrir** o **Compartir**.
 - Podés acercar y alejar la página con dos dedos.
 
 ### Ajustes
 
 Tiene tres partes: tus cuentas, las revisiones y avisos, y las opciones avanzadas. Está
-explicada opción por opción en el [capítulo 12](#12-ajustes-uno-por-uno).
+explicada opción por opción en [Ajustes, uno por uno](#16-ajustes-uno-por-uno).
 
 ## 7. Los avisos
 
@@ -202,27 +233,143 @@ Cada tema tiene su propio aviso, con un título que dice qué pasó. Para tener 
 
 Estos son todos los avisos:
 
-| Qué pasó en Guaraní | Título del aviso | Canal |
-|---|---|---|
-| Se cargó o cambió una calificación, una promoción, una regularidad o un acta | **Nueva calificación en Guaraní**, con la materia y la nota | Notas y actas |
-| Cambió algo en tu plan de estudios | **Cambió tu plan de estudios** | Plan de estudios |
-| Se abrió o se cerró la inscripción a exámenes | **Se abrió la inscripción a exámenes** / **Cerró la inscripción a exámenes** | Inscripciones y mesas de examen |
-| Apareció una mesa de examen nueva | **Novedades en mesas de examen** | Inscripciones y mesas de examen |
-| Se abrió o se cerró la inscripción a materias | **Se abrió la inscripción a materias** / **Cerró la inscripción a materias** | Inscripciones y mesas de examen |
-| Llegó un mensaje de la institución, o hay una encuesta | **Mensaje nuevo en Guaraní** / **Encuesta en Guaraní** | Mensajes y encuestas |
-| Cambió cualquier otra cosa | **Cambió algo en…** y el nombre de la página | Otros cambios en Guaraní |
-| La app no puede entrar a Guaraní | **Guaraní: hay que volver a entrar** | Estado de la sesión |
+| Qué pasó en Guaraní | Título del aviso | Canal | Botón |
+|---|---|---|---|
+| Se cargó o cambió una calificación, una promoción, una regularidad o un acta | **Nueva calificación en Guaraní**, con la materia, el tipo y la nota (*«Física I: examen aprobado con 8.»*) | Calificaciones nuevas (con sonido propio) | Compartir |
+| Apareció una fecha de examen o de evaluación | **Nueva fecha de examen** / **Nueva evaluación** | Inscripciones y mesas de examen | Agendar |
+| Falta una semana, un día o es hoy | **En una semana / Mañana / Hoy: Examen: …** | Recordatorios de examen | Agendar |
+| Cambió algo en tu plan de estudios | **Cambió tu plan de estudios** | Plan de estudios | — |
+| Se abrió o se cerró la inscripción a exámenes | **Se abrió la inscripción a exámenes** / **Cerró la inscripción a exámenes** | Inscripciones y mesas de examen | — |
+| Apareció una mesa de examen nueva | **Novedades en mesas de examen** | Inscripciones y mesas de examen | — |
+| Se abrió o se cerró la inscripción a materias | **Se abrió la inscripción a materias** / **Cerró la inscripción a materias** | Inscripciones y mesas de examen | — |
+| Cambió algo en tus inscripciones | **Novedades en tus inscripciones** | Inscripciones y mesas de examen | — |
+| Llegó un mensaje de la institución, o hay una encuesta | **Mensaje nuevo en Guaraní** / **Encuesta en Guaraní** | Mensajes y encuestas | — |
+| Cambió cualquier otra cosa | **Cambió algo en…** y el nombre de la sección | Otros cambios en Guaraní | — |
+| La app no puede entrar a Guaraní | **Guaraní: hay que volver a entrar** | Estado de la sesión | — |
+
+Cómo se escribe cada calificación: *«cursada aprobada con 7 (queda el final)»* para una
+regularidad, *«examen aprobado con 8»*, *«promocionada con 9»*, *«aprobada por equivalencia»*,
+*«ausente en el examen»*. Si la nota todavía es provisoria (el acta no está cerrada), el aviso
+lo dice: *«nota provisoria, examen aprobado con 9»*.
+
+**El sonido de las calificaciones.** Las calificaciones nuevas suenan con un tono propio, de tres
+notas, distinto del resto de los avisos, y vibran. Para cambiar el tono o subirle la importancia,
+tocá **Sonido de las calificaciones** en Ajustes. Si el teléfono está en silencio o en *No
+molestar*, no suena.
 
 **Silenciar o cambiar el sonido de un tema.** Cada canal se maneja por separado desde Android:
 mantené apretado un aviso de la app y tocá el engranaje, o entrá a *Configuración del teléfono →
 Apps → Guaraní al día → Notificaciones*. Ahí podés apagar un canal, cambiarle el sonido o dejarlo
-silencioso sin tocar los demás.
+silencioso sin tocar los demás. Los canales son: *Calificaciones nuevas*, *Inscripciones y mesas
+de examen*, *Recordatorios de examen*, *Plan de estudios*, *Mensajes y encuestas*, *Otros
+cambios en Guaraní*, *Estado de la sesión* y *Vigilancia permanente*.
 
 **Probar que los avisos llegan.** En Ajustes, tocá **Probar notificación**. Si no aparece nada,
 la app no tiene permiso para notificar: activalo en *Configuración del teléfono → Apps → Guaraní
 al día → Notificaciones*.
 
-## 8. La sesión, siempre abierta
+## 8. Compartir tus calificaciones
+
+Hay tres formas:
+
+1. **Todo:** en el tablero, tocá **Compartir notas** (arriba) o **Compartir** en *Materias y
+   calificaciones* con el filtro *Todas*.
+2. **Una parte:** elegí un filtro (por ejemplo *Aprobadas*) y tocá **Compartir**: se manda solo
+   eso.
+3. **Una nota nueva:** en el aviso de *Nueva calificación*, tocá **Compartir**.
+
+Android te muestra las apps para mandarlo: WhatsApp, Telegram, Gmail, Drive, Mensajes… El texto
+queda así:
+
+> Mis calificaciones — Ingeniería en Sistemas de Información  
+> UTN — Facultad Regional Buenos Aires (grado)  
+> Promedio: 7,67 · Aprobadas: 3 de 11  
+>
+> Aprobadas (3)  
+> • Análisis Matemático I — 7 · 12/07/2026  
+> • Física I — 8 (provisoria) · 13/11/2026  
+> • Álgebra y Geometría Analítica — 8 (promoción) · 20/07/2026  
+>
+> Regulares (falta el final) (1)  
+> • Algoritmos y Estructuras de Datos — 7  
+
+Las materias pendientes del plan se resumen en un número, para que el texto no sea larguísimo.
+Si necesitás un documento con valor oficial, usá el **PDF de la historia académica** (ver
+[Documentos PDF oficiales](#10-documentos-pdf-oficiales)): el texto compartido es solo informativo.
+
+## 9. Exámenes, recordatorios y Google Calendar
+
+![Próximos exámenes](img/10-examenes.png)
+*Exámenes y evaluaciones con fecha, cada uno con su botón Agendar.*
+
+**De dónde salen las fechas.** La app las lee de *Mis inscripciones* (las mesas a las que estás
+inscripto, con su hora, llamado, mesa y lugar), del panel de exámenes de la portada de Guaraní y,
+si tu institución lo usa, del *Cronograma de evaluaciones*. Las inscripciones dadas de baja no se
+cuentan. Cuando aparece una fecha nueva, llega el aviso **Nueva fecha de examen**.
+
+**Recordatorios automáticos.** Para cada examen, la app te avisa **una semana antes**, **el día
+anterior** y **el mismo día**. Solo entre las 8 y las 22: nunca de madrugada.
+
+**Pasarlo a Google Calendar.** Tocá **Agendar** (en el tablero o en el aviso). Se abre tu app de
+calendario con el examen ya cargado: título, día, hora (dos horas de duración) y, en la
+descripción, el llamado, la mesa, el lugar, tu institución y tu carrera. Elegí en qué calendario
+guardarlo y, si querés, agregale un aviso propio; después tocá **Guardar**. Si el examen no tiene
+hora, se agenda como evento de todo el día.
+
+- Funciona con **Google Calendar** y con cualquier calendario instalado (Samsung, Outlook…).
+- La app **no pide permiso para leer tu calendario** ni escribe nada sola: vos confirmás cada
+  evento.
+- **Finales pendientes:** cada materia regular tiene su botón **Agendar**, para ponerte una fecha
+  de estudio o de final. Y **+ Recordatorio** abre el calendario con un evento en blanco.
+
+## 10. Documentos PDF oficiales
+
+![Documentos oficiales](img/11-documentos.png)
+*Los PDF que ofrece tu Guaraní, listos para abrir o compartir.*
+
+En cada revisión, la app anota los PDF y comprobantes que tu Guaraní ofrece: el de la historia
+académica, el del plan de estudio, el de la actuación provisoria, los comprobantes de inscripción
+a materias y exámenes, y los demás que tenga tu institución. Aparecen en **Documentos oficiales**,
+al final del tablero.
+
+**Los PDF son los originales.** La app no arma ni modifica ningún documento: lo pide a tu Guaraní
+con tu sesión y lo guarda tal como lo entrega el sitio.
+
+- **Descarga directa:** al tocarlo, Guaraní genera el PDF y se guarda en **Descargas**. Cuando
+  termina, la app ofrece **Abrir** o **Compartir**.
+- **Se abre en Guaraní:** algunos comprobantes se generan con un botón dentro de la página. La
+  app abre esa página y vos tocás el botón *Generar* o el ícono de PDF.
+- **Guardar cualquier pantalla como PDF:** en la pestaña Guaraní, el botón **⤓** de la barra
+  guarda la página que estás viendo, tal como la muestra el sitio. Sirve para pantallas que
+  Guaraní no ofrece en PDF. Ojo: eso es una copia de la pantalla, no un documento emitido por
+  Guaraní.
+- Las **constancias y certificados con firma** se piden desde *Menú → Solicitar constancias y
+  certificados*, igual que en la web.
+
+## 11. Tu carrera y tu institución, siempre a la vista
+
+Todas las pantallas dicen qué estás viendo:
+
+- **Tablero:** el encabezado verde muestra *Institución* y *Carrera* con letras grandes, el plan,
+  el nombre de la cuenta y el usuario.
+- **Menú:** debajo del título, *institución · carrera*.
+- **Pestaña Guaraní:** debajo del título de la página, *institución · carrera*.
+- **Avisos:** con varias cuentas, empiezan con el nombre de la cuenta, y debajo del texto dicen la
+  carrera.
+
+**De dónde sale la carrera.** La app la lee de Guaraní: del dato *Propuesta* del plan de estudio
+o del selector de propuesta de arriba de la página. Si preferís otro nombre (por ejemplo, uno más
+corto), escribilo en *Ajustes → Carrera o propuesta*.
+
+**Si tenés más de una propuesta con el mismo usuario** (por ejemplo, una carrera y una
+diplomatura), Guaraní muestra los datos de la que está elegida en su selector, y la app sigue esa
+misma. El tablero te avisa cuando hay más de una. Para ver la otra:
+
+- cambiala en la pestaña Guaraní y tocá **Actualizar**; o
+- mejor, creá **dos cuentas** con el mismo usuario y escribí en cada una su carrera (ver [Varias
+  cuentas](#13-varias-cuentas)).
+
+## 12. La sesión, siempre abierta
 
 Para poder avisarte, la app necesita tener abierta tu sesión de Guaraní. Guaraní cierra las
 sesiones que pasan un rato sin uso, así que la app hace tres cosas:
@@ -253,7 +400,11 @@ batería, y eso atrasa los avisos. Si te pasa:
 **Qué pasa si el teléfono está apagado o sin internet.** No hay revisión. Cuando vuelve la
 conexión, la app se pone al día y te avisa junto todo lo que cambió mientras tanto.
 
-## 9. Varias cuentas
+**Actualización automática.** Además de las revisiones en segundo plano, **cada vez que abrís la
+app** se fija cuándo leyó Guaraní por última vez: si pasaron más de 10 minutos, se actualiza sola
+en ese momento. No hace falta tocar nada.
+
+## 13. Varias cuentas
 
 ![Selector de cuentas](img/09-dos-cuentas.png)
 *Con dos o más cuentas aparece un selector arriba del tablero.*
@@ -266,13 +417,15 @@ Podés tener una cuenta por cada facultad o institución, o más de un usuario e
   Ajustes. El tablero, el menú y la pestaña Guaraní cambian a esa cuenta.
 - **Revisión:** la app revisa todas las cuentas, una detrás de otra, aunque no la tengas elegida.
 - **Avisos:** cada aviso dice de qué cuenta es.
+- **Dos carreras con el mismo usuario:** creá una cuenta por carrera y escribí en cada una su
+  *Carrera o propuesta* en Ajustes, así no se confunden.
 - **Dos cuentas en el mismo Guaraní:** se puede. La app cierra la sesión de una antes de abrir la
   otra para no mezclar datos. En ese caso conviene guardar la contraseña de las dos.
 - **Borrar una cuenta:** en Ajustes, elegila y tocá **Borrar esta cuenta del teléfono**. Se
   borran del teléfono su contraseña, sus notas guardadas y sus novedades. En Guaraní no cambia
   nada.
 
-## 10. Tu contraseña y tu privacidad
+## 14. Tu contraseña y tu privacidad
 
 **Guardar la contraseña es opcional.** Esta es la diferencia:
 
@@ -298,10 +451,15 @@ revisar**.
 cuenta y revisar**. O borrá la cuenta.
 
 **Qué guarda la app en el teléfono.** La dirección de tu Guaraní, tu usuario y tu contraseña
-(cifrados), y el texto de las páginas que revisó, para poder comparar. Nada de eso se envía a
-otro lado. Al desinstalar la app se borra todo.
+(cifrados), tus materias y notas, las fechas de examen, y el texto de las páginas que revisó,
+para poder comparar. Nada de eso se envía a otro lado. Tampoco viaja al pasar los datos a un
+teléfono nuevo: ahí hay que volver a agregar las cuentas. Al desinstalar la app se borra todo.
 
-## 11. Si tu institución no está en la lista
+**Calendario y compartir.** La app no tiene permiso para leer tu calendario ni tus contactos.
+Cuando tocás *Agendar* o *Compartir*, se abre la otra app con los datos cargados y sos vos quien
+confirma.
+
+## 15. Si tu institución no está en la lista
 
 La app funciona igual: solo necesita la dirección de tu Guaraní.
 
@@ -359,7 +517,7 @@ No hace falta poner usuario ni contraseña: solo la dirección.
 | UTN — Facultad Regional Concepción del Uruguay | `https://guarani.frcu.utn.edu.ar/autogestion/` |
 <!-- INSTITUCIONES:FIN -->
 
-## 12. Ajustes, uno por uno
+## 16. Ajustes, uno por uno
 
 ![Ajustes generales](img/08-ajustes.png)
 *Esquema de la parte de revisiones, avisos y opciones avanzadas.*
@@ -389,6 +547,7 @@ cuenta y cómo salió. Es lo primero que conviene mirar si algo no anda.
 | Institución o facultad | Buscar tu institución en la lista. Al elegirla se completa la dirección. |
 | Dirección de SIU Guaraní | La dirección de autogestión. Se puede escribir a mano. |
 | Nombre de esta cuenta | El nombre con el que la ves en la app y en los avisos. |
+| Carrera o propuesta | Se completa sola con la que la app lee de Guaraní (aparece de ejemplo en gris). Escribila solo si querés verla con otro nombre, o para distinguir dos cuentas del mismo usuario. |
 | Usuario y Contraseña | Los de Guaraní. |
 | Guardar la contraseña en este teléfono | Si está tildado, la app entra sola cuando la sesión vence. |
 | **Guardar cuenta y revisar** | Guarda los cambios y hace una revisión de esa cuenta. |
@@ -405,7 +564,8 @@ cuenta y cómo salió. Es lo primero que conviene mirar si algo no anda.
 | Vigilancia permanente (notificación fija) | Impide que Android cierre la app. Para teléfonos que frenan las apps en segundo plano. |
 | **Guardar** | Guarda estas opciones. **Los cambios de esta parte no valen hasta tocar Guardar.** |
 | **Revisar todas ahora** | Revisa todas las cuentas en el momento. |
-| **Probar notificación** | Manda un aviso de prueba. |
+| **Probar notificación** | Manda un aviso de prueba de calificación, con su sonido. |
+| **Sonido de las calificaciones** | Abre la configuración de Android del canal *Calificaciones nuevas*: tono, vibración e importancia. |
 | **Permitir que funcione en segundo plano** | Le pide a Android que no le aplique ahorro de batería a la app. |
 
 ### Avanzado (cuenta elegida)
@@ -416,16 +576,39 @@ cuenta y cómo salió. Es lo primero que conviene mirar si algo no anda.
 | **Guardar páginas** | Guarda la lista. |
 | **Volver a tomar la foto inicial (sin avisar)** | Borra la comparación guardada y empieza de cero, sin mandar avisos. Sirve si la app te avisa cosas viejas o repetidas. |
 
-## 13. Problemas frecuentes
+## 17. Problemas frecuentes
 
 **No puedo escribir en los campos de Ajustes.**
 Era una falla de las versiones 1.2 a 1.3.1. Instalá la versión 1.3.2 o una más nueva.
 
+**El aviso de calificación no suena.**
+Fijate que el teléfono no esté en silencio ni en *No molestar*. Después tocá *Sonido de las
+calificaciones* en Ajustes y revisá que el canal tenga sonido y esté en importancia alta. Si
+venías de una versión anterior, la 1.4 crea ese canal nuevo, con el tono propio.
+
+**El tablero muestra otra carrera, o ninguna.**
+La app muestra la propuesta elegida en Guaraní. Si tenés varias, cambiala en la pestaña Guaraní
+y tocá *Actualizar*, o escribí la carrera en *Ajustes → Carrera o propuesta*. Ver [Tu carrera y
+tu institución, siempre a la vista](#11-tu-carrera-y-tu-institución-siempre-a-la-vista).
+
+**No aparecen mis exámenes en «Próximos exámenes».**
+Aparecen los que tienen fecha en *Mis inscripciones*. Si tu institución no informa la fecha al
+inscribirte, todavía no hay nada para mostrar. Igual podés crear el recordatorio con
+*+ Recordatorio*.
+
+**Al tocar Agendar dice «No encontré una app de calendario».**
+Instalá Google Calendar (o cualquier calendario) desde Play Store y volvé a tocar *Agendar*.
+
+**El PDF no se descarga, o se descarga una página.**
+Algunas instituciones generan el PDF con un botón de la propia página. Abrí esa sección en la
+pestaña Guaraní y tocá el botón de PDF de Guaraní. Como último recurso, el botón ⤓ de la barra
+guarda la pantalla como PDF.
+
 **No me llegan avisos.**
 Revisá, en este orden: que *Probar notificación* muestre el aviso de prueba; que la línea
 *Revisión desde la app* del tablero tenga una fecha reciente; que hayas tocado *Permitir que
-funcione en segundo plano*; y activá *Vigilancia permanente*. Mirá también la tabla de marcas del
-[capítulo 8](#8-la-sesión-siempre-abierta).
+funcione en segundo plano*; y activá *Vigilancia permanente*. Mirá también la tabla de marcas de
+[La sesión, siempre abierta](#12-la-sesión-siempre-abierta).
 
 **Los avisos me llegan tarde.**
 Bajá el tiempo de *Revisar Guaraní cada* y activá *Vigilancia permanente*. Aun así, el aviso
@@ -448,10 +631,11 @@ pasar.
 El teléfono no tenía internet o el sitio de tu institución estaba caído. La app reintenta sola
 en la próxima revisión.
 
-**El tablero no muestra mis materias.**
-Aparecen después de la primera revisión completa. Si pasó y siguen sin aparecer, es posible que
-tu institución muestre la historia académica de otra forma. Los avisos de cambios funcionan
-igual; contalo en GitHub para que se pueda mejorar.
+**El tablero no muestra mis materias, o le faltan.**
+Aparecen después de la primera revisión completa: la app las lee del plan de estudio (todas,
+incluidas las que todavía no cursaste) y de la historia académica completa. Si pasó y siguen sin
+aparecer, es posible que tu institución las muestre de otra forma. Los avisos de cambios
+funcionan igual; contalo en GitHub para que se pueda mejorar.
 
 **El Menú no muestra «Mi cuenta de alumno».**
 Aparece cuando la app logra entrar con tu usuario. Mirá la línea *Última revisión* en Ajustes
@@ -466,10 +650,10 @@ Apagá *Avisarme también de cualquier otro cambio*, o borrá esa página de *P�
 vigilan*.
 
 **Cambié de teléfono.**
-Instalá la app en el nuevo y agregá tus cuentas otra vez. Por seguridad, las contraseñas no se
-copian de un teléfono a otro.
+Instalá la app en el nuevo y agregá tus cuentas otra vez. Por seguridad, ni las contraseñas ni
+los datos se copian de un teléfono a otro.
 
-## 14. Límites conocidos
+## 18. Límites conocidos
 
 - **No es instantánea.** La revisión completa corre cada 15 minutos como mínimo.
 - **Captcha.** Si tu Guaraní lo pide, hay que entrar a mano esa vez.
@@ -477,22 +661,27 @@ copian de un teléfono a otro.
   pero la app no los revisa sola. Tus mesas sí las detecta, desde la inscripción a exámenes de tu
   cuenta.
 - **Dos propuestas en el mismo usuario.** Si tu carrera y otra propuesta se eligen con un
-  selector dentro de Guaraní, la app vigila la que esté seleccionada. Para la otra, agregá su
-  dirección en *Páginas que se vigilan*.
+  selector dentro de Guaraní, la app sigue la que esté seleccionada (y el tablero te lo avisa).
+- **El promedio** es el que informa Guaraní cuando lo muestra; si no, la app lo calcula con tus
+  notas aprobadas, sin aplazos. Puede diferir del promedio oficial de tu institución.
+- **El avance** se calcula con las actividades del plan de estudio; si tu plan cuenta créditos u
+  optativas de otra forma, el porcentaje oficial puede ser distinto.
 - **Hasta 30 páginas por cuenta** en cada revisión.
 - **Cada institución configura Guaraní a su manera.** Si en la tuya algo no se lee bien, los
   avisos de cambios siguen funcionando, pero puede que el tablero no muestre todo.
 
-## 15. Actualizar y desinstalar
+## 19. Actualizar y desinstalar
 
 **Actualizar.** Descargá el `.apk` nuevo desde la carpeta *publicado* de GitHub e instalalo
-encima. No hace falta desinstalar: se conservan tus cuentas, tus datos y tus ajustes. Las
+encima. No hace falta desinstalar: se conservan tus cuentas, tus datos y tus ajustes. La primera
+revisión después de actualizar vuelve a tomar la «foto» de tu Guaraní sin avisar nada, para no
+darte novedades falsas. Las
 novedades de cada versión están en el archivo `CHANGELOG.md` del repositorio.
 
 **Desinstalar.** Mantené apretado el ícono de la app y elegí *Desinstalar*. Se borra del teléfono
 todo lo que la app guardó, incluidas las contraseñas. En Guaraní no cambia nada.
 
-## 16. Ayuda
+## 20. Ayuda
 
 - **Avisar de una falla o pedir una mejora:**
   [github.com/parizeliseo/SIU-GUARANI-PUBLICO/issues](https://github.com/parizeliseo/SIU-GUARANI-PUBLICO/issues).

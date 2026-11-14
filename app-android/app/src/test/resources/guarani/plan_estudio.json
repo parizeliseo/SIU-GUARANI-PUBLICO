@@ -1,0 +1,198 @@
+{
+ "url": "https://guarani.ejemplo.edu.ar/autogestion/plan_estudio",
+ "title": "SIU Guaraní - Plan de estudio",
+ "login": false,
+ "sso": "",
+ "captcha": false,
+ "error": "",
+ "text": "Plan de estudio\nPropuesta: (SI-001) Licenciatura en Sistemas de Información Plan: (SI-2019) Plan 2019 Versión: 2\nExpandirContraer\nPrimer año\nActividad\tTipo\tAño\tPeríodo\tNota\tOrigen\tCréditos\tPuntaje\tCorrelativas\nAnálisis Matemático I (SI-101)\tMateria\t1\tAnual\t8,0 (Aprobado)\tExamen\t\t\t\nProgramación I (SI-102)\tMateria\t1\tAnual\t8,0 (Promocionado)\tPromoción\t\t\t\nÁlgebra y Geometría (SI-103)\tMateria\t1\t1.er cuatrimestre\t\t\t\t\tVer\nSistemas y Organizaciones (SI-104)\tMateria\t1\t2.º cuatrimestre\t\t\t\t\t\nInglés Técnico (SI-105)\tMateria\t1\tAnual\t7,50 (Aprobado)\tEquivalencia\t\t\t\nFísica I (SI-106)\tMateria\t1\t1.er cuatrimestre\t\tEn Curso\t\t\t\nProgramación II (SI-201)\tMateria\t2\tAnual\t\t\t\t\tVer\nBases de Datos (SI-202)\tMateria\t2\tAnual\t\t\t\t\t\nÉtica Profesional (SI-204)\tSeminario\t2\t2.º cuatrimestre\t\t\t\t\t\nTrabajo Final (SI-501)\tTesis\t5\tAnual\t\t\t\t\t",
+ "full": "SIU Guaraní\nPropuesta:\nLicenciatura en Sistemas de Información\nInscripción a Materias\nInscripción a Exámenes\nReportes\nTrámites\nPerfil: Alumno\nCerrar sesión\nPlan de estudio\nPropuesta: (SI-001) Licenciatura en Sistemas de Información Plan: (SI-2019) Plan 2019 Versión: 2\nExpandirContraer\nPrimer año\nActividad\tTipo\tAño\tPeríodo\tNota\tOrigen\tCréditos\tPuntaje\tCorrelativas\nAnálisis Matemático I (SI-101)\tMateria\t1\tAnual\t8,0 (Aprobado)\tExamen\t\t\t\nProgramación I (SI-102)\tMateria\t1\tAnual\t8,0 (Promocionado)\tPromoción\t\t\t\nÁlgebra y Geometría (SI-103)\tMateria\t1\t1.er cuatrimestre\t\t\t\t\tVer\nSistemas y Organizaciones (SI-104)\tMateria\t1\t2.º cuatrimestre\t\t\t\t\t\nInglés Técnico (SI-105)\tMateria\t1\tAnual\t7,50 (Aprobado)\tEquivalencia\t\t\t\nFísica I (SI-106)\tMateria\t1\t1.er cuatrimestre\t\tEn Curso\t\t\t\nProgramación II (SI-201)\tMateria\t2\tAnual\t\t\t\t\tVer\nBases de Datos (SI-202)\tMateria\t2\tAnual\t\t\t\t\t\nÉtica Profesional (SI-204)\tSeminario\t2\t2.º cuatrimestre\t\t\t\t\t\nTrabajo Final (SI-501)\tTesis\t5\tAnual\t\t\t\t\t\nInscripción a exámenes\n(SI-204) Ética Profesional - 27/05/2027",
+ "links": [],
+ "menu": [
+  [
+   "Inscripción a Materias",
+   "https://guarani.ejemplo.edu.ar/autogestion/cursada"
+  ],
+  [
+   "Inscripción a Exámenes",
+   "https://guarani.ejemplo.edu.ar/autogestion/examen"
+  ],
+  [
+   "Actuación provisoria",
+   "https://guarani.ejemplo.edu.ar/autogestion/actuacion_provisoria"
+  ],
+  [
+   "Agenda",
+   "https://guarani.ejemplo.edu.ar/autogestion/agenda"
+  ],
+  [
+   "Historia académica",
+   "https://guarani.ejemplo.edu.ar/autogestion/historia_academica"
+  ],
+  [
+   "Inasistencias",
+   "https://guarani.ejemplo.edu.ar/autogestion/inasistencias"
+  ],
+  [
+   "Mis inscripciones",
+   "https://guarani.ejemplo.edu.ar/autogestion/mis_inscripciones"
+  ],
+  [
+   "Plan de estudios",
+   "https://guarani.ejemplo.edu.ar/autogestion/plan_estudio"
+  ],
+  [
+   "Mis datos personales",
+   "https://guarani.ejemplo.edu.ar/autogestion/datos_censales"
+  ],
+  [
+   "Solicitar Constancias y Certificados",
+   "https://guarani.ejemplo.edu.ar/autogestion/certificados"
+  ],
+  [
+   "Cerrar sesión",
+   "https://guarani.ejemplo.edu.ar/autogestion/logout"
+  ]
+ ],
+ "tables": [
+  {
+   "sec": "Plan de estudio",
+   "head": [
+    "Actividad",
+    "Tipo",
+    "Año",
+    "Período",
+    "Nota",
+    "Origen",
+    "Créditos",
+    "Puntaje",
+    "Correlativas"
+   ],
+   "rows": [
+    [
+     "Análisis Matemático I (SI-101)",
+     "Materia",
+     "1",
+     "Anual",
+     "8,0 (Aprobado)",
+     "Examen",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Programación I (SI-102)",
+     "Materia",
+     "1",
+     "Anual",
+     "8,0 (Promocionado)",
+     "Promoción",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Álgebra y Geometría (SI-103)",
+     "Materia",
+     "1",
+     "1.er cuatrimestre",
+     "",
+     "",
+     "",
+     "",
+     "Ver"
+    ],
+    [
+     "Sistemas y Organizaciones (SI-104)",
+     "Materia",
+     "1",
+     "2.º cuatrimestre",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Inglés Técnico (SI-105)",
+     "Materia",
+     "1",
+     "Anual",
+     "7,50 (Aprobado)",
+     "Equivalencia",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Física I (SI-106)",
+     "Materia",
+     "1",
+     "1.er cuatrimestre",
+     "",
+     "En Curso",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Programación II (SI-201)",
+     "Materia",
+     "2",
+     "Anual",
+     "",
+     "",
+     "",
+     "",
+     "Ver"
+    ],
+    [
+     "Bases de Datos (SI-202)",
+     "Materia",
+     "2",
+     "Anual",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Ética Profesional (SI-204)",
+     "Seminario",
+     "2",
+     "2.º cuatrimestre",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Trabajo Final (SI-501)",
+     "Tesis",
+     "5",
+     "Anual",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ]
+  }
+ ],
+ "propSel": "Licenciatura en Sistemas de Información",
+ "props": [
+  "Licenciatura en Sistemas de Información",
+  "Tecnicatura en Programación"
+ ],
+ "docs": [
+  {
+   "t": "PDF",
+   "h": "https://guarani.ejemplo.edu.ar/autogestion/plan_estudio/generar_pdf",
+   "tipo": "pdf",
+   "ctx": ""
+  }
+ ]
+}

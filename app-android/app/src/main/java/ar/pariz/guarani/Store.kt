@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter
  * y fotos de cada página. Todo va separado por cuenta: el parámetro [pid] es el id de la cuenta.
  */
 object Store {
-    val DATASETS = listOf("resumen", "novedades", "materias", "diplomatura", "calendario", "mesas", "menu", "menu_publico")
+    val DATASETS = listOf("resumen", "novedades", "materias", "diplomatura", "calendario", "mesas", "menu", "menu_publico", "documentos")
     val TZ: ZoneId = ZoneId.of("America/Buenos_Aires")
 
     private fun p(c: Context): SharedPreferences = c.getSharedPreferences("store", Context.MODE_PRIVATE)

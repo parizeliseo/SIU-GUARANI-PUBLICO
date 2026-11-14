@@ -23,18 +23,24 @@
             android:layout_marginTop="4dp" android:textSize="13sp" android:alpha="0.7" android:textColor="@color/fg"/>
 
         <TextView style="@style/SetLabel" android:text="Institución o facultad"/>
-        <AutoCompleteTextView android:id="@+id/setInst" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <AutoCompleteTextView android:id="@+id/setInst" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:completionThreshold="1" android:inputType="text" android:hint="Escribí para buscar (ej.: UTN, Comahue, IUGNA)"/>
         <TextView style="@style/SetHelp"
             android:text="Si la tuya no está en la lista, escribí abajo la dirección de tu Guaraní: la que ves en el navegador cuando entrás a autogestión."/>
 
         <TextView style="@style/SetLabel" android:text="Dirección de SIU Guaraní (autogestión)"/>
-        <EditText android:id="@+id/setUrl" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <EditText android:id="@+id/setUrl" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:inputType="textUri" android:hint="https://…/autogestion/"/>
 
         <TextView style="@style/SetLabel" android:text="Nombre de esta cuenta"/>
-        <EditText android:id="@+id/setName" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <EditText android:id="@+id/setName" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:inputType="textCapSentences" android:hint="Ej.: UTN Sistemas, Licenciatura, Diplomatura"/>
+
+        <TextView style="@style/SetLabel" android:text="Carrera o propuesta"/>
+        <EditText android:id="@+id/setCarrera" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:inputType="textCapSentences" android:hint="Se completa sola al leer Guaraní"/>
+        <TextView style="@style/SetHelp"
+            android:text="La app la lee de Guaraní y la muestra arriba en todas las pantallas. Escribila acá solo si querés verla con otro nombre."/>
 
         <TextView style="@style/SetLabel" android:text="Usuario"/>
         <EditText android:id="@+id/setUser" android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -82,6 +88,10 @@
             android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Revisar todas ahora"/>
         <Button android:id="@+id/btnTest" style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Probar notificación"/>
+        <Button android:id="@+id/btnSound" style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Sonido de las calificaciones"/>
+        <TextView style="@style/SetHelp"
+            android:text="Las calificaciones nuevas suenan con un tono propio. Desde este botón podés cambiarlo o subirle la importancia. Si el teléfono está en silencio o en No molestar, no suena."/>
         <Button android:id="@+id/btnBattery" style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Permitir que funcione en segundo plano"/>
 
@@ -90,7 +100,7 @@
         <TextView style="@style/SetLabel" android:text="Páginas de Guaraní que se vigilan (una por línea)"/>
         <TextView style="@style/SetHelp"
             android:text="Se completa sola con el menú de Guaraní en la primera revisión. Podés agregar o borrar direcciones."/>
-        <EditText android:id="@+id/setPages" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <EditText android:id="@+id/setPages" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:inputType="textMultiLine|textUri" android:minLines="4" android:gravity="top" android:textSize="13sp"/>
         <Button android:id="@+id/btnPages" style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Guardar páginas"/>

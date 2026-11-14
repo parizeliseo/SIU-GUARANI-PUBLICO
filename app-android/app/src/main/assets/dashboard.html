@@ -1,312 +1,381 @@
 <!doctype html>
 <html lang="es-AR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mi Guaraní al día</title>
+<title>Guaraní al día</title>
 <style>
 :root{
- --font-anthropic-sans: system-ui,-apple-system,"Roboto","Segoe UI",sans-serif;
- --font-anthropic-serif: "Noto Serif",Georgia,serif;
- --color-bg:#F7F6F2; --color-fg:#1E1E1C; --color-fg-muted:#6B6A64; --color-panel:#FFFFFF; --color-border-line:#E3E1D9;
- --color-ok:#2E7D5B; --color-warn:#B26A00; --color-bad:#B3261E; --color-brand:#1F5C4A;
- --cds-chart-grid:#E6E4DC;
- --cds-gap-xs:4px; --cds-gap-sm:8px; --cds-gap-md:12px; --cds-gap-lg:18px; --cds-gap-xl:22px;
- --cds-pad-sm:8px; --cds-pad-md:12px; --cds-pad-lg:16px; --cds-radius:12px;
- --cds-font-size-title:1.8rem; --cds-font-size-heading:1.08rem; --cds-font-size-body:.95rem; --cds-font-size-caption:.8rem;
- --cds-font-weight-medium:600;
+  --bg:#F3F2EC; --panel:#FFFFFF; --ink:#1B1B19; --muted:#66655F; --line:#E4E2D9; --soft:#F6F5F0;
+  --brand:#1F5C4A; --brand-d:#143D31; --brand-l:#E3EFE9; --gold:#F2C14E;
+  --ok:#1F7A55; --ok-bg:#E2F2EA; --warn:#9A5B00; --warn-bg:#FBEFD6; --bad:#B3261E; --bad-bg:#FBE4E2;
+  --info:#285C8F; --info-bg:#E3EDF7; --idle:#5F5E58; --idle-bg:#ECEBE5;
+  --r:16px; --sh:0 1px 2px rgba(20,30,25,.06),0 4px 14px rgba(20,30,25,.05);
 }
 @media (prefers-color-scheme: dark){ :root{
- --color-bg:#1A1A18; --color-fg:#ECEBE6; --color-fg-muted:#A3A29B; --color-panel:#242422; --color-border-line:#3A3936;
- --color-ok:#5CC596; --color-warn:#F0A43A; --color-bad:#F2827A; --cds-chart-grid:#3A3936; } }
-html,body{margin:0;background:var(--color-bg);}
+  --bg:#141513; --panel:#1F201D; --ink:#ECEBE6; --muted:#A3A29B; --line:#33342F; --soft:#262723;
+  --brand:#2A7A62; --brand-d:#173F33; --brand-l:#1E3A30;
+  --ok:#6FD3A4; --ok-bg:#1B3A2D; --warn:#F2B455; --warn-bg:#3D2F12; --bad:#F2908A; --bad-bg:#44201D;
+  --info:#8FBDEB; --info-bg:#1C2F44; --idle:#B5B4AD; --idle-bg:#2D2E2A; --sh:none;
+}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Roboto","Segoe UI",sans-serif;font-size:15px;line-height:1.45}
 [hidden]{display:none !important}
-body{padding:16px 16px 28px;}
-.gd table{min-width:520px}
-.gd #materias table, .gd #diplomatura table{min-width:600px}
-.gd #proximas table{min-width:0}
-.app-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
-.app-bar button{font:inherit;font-size:.85rem;border-radius:999px;padding:7px 14px;border:1px solid var(--color-brand);background:var(--color-brand);color:#fff}
-.app-bar button.ghost{background:transparent;color:var(--color-fg);border-color:var(--color-border-line)}
-.acc-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
-.acc-row select{flex:1;font:inherit;font-size:.9rem;padding:7px 10px;border-radius:10px;border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg)}
-.app-bar button.small,.acc-row button{font:inherit;font-size:.8rem;border-radius:999px;padding:6px 12px;border:1px solid var(--color-border-line);background:transparent;color:var(--color-fg)}
-.app-status{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);margin:8px 0 0}
-</style>
-<style>
-.gd { font-family: var(--font-anthropic-sans); color: var(--color-fg); display: flex; flex-direction: column; gap: var(--cds-gap-xl); max-width: 1100px; }
-.gd h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; }
-.gd h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0 0 var(--cds-gap-sm); }
-.gd .gd-lede { font-size: var(--cds-font-size-body); margin: var(--cds-gap-xs) 0 0; line-height: 1.5; }
-.gd .gd-muted { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: var(--cds-gap-xs) 0 0; }
-.gd .gd-alert { border: 1px solid var(--color-bad); color: var(--color-bad); border-radius: var(--cds-radius); padding: var(--cds-pad-md); margin: var(--cds-gap-sm) 0 0; }
-.gd .gd-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--cds-gap-md); }
-.gd .gd-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); }
-.gd .gd-tile-label { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: 0; }
-.gd .gd-tile-value { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 2.2rem; margin: var(--cds-gap-xs) 0 0; font-variant-numeric: tabular-nums; }
-.gd .gd-tile-note { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: var(--cds-gap-xs) 0 0; }
-.gd .gd-bar { height: 6px; background: var(--cds-chart-grid); border-radius: 3px; margin-top: var(--cds-gap-sm); overflow: hidden; }
-.gd .gd-bar-fill { height: 100%; background: var(--color-ok); width: 0; }
-.gd .gd-feed { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
-.gd .gd-feed li { display: grid; grid-template-columns: 7.5rem 1fr; gap: var(--cds-gap-sm); padding-bottom: var(--cds-gap-sm); border-bottom: 1px solid var(--color-border-line); }
-.gd .gd-feed li:last-child { border-bottom: 0; padding-bottom: 0; }
-.gd .gd-feed .gd-when { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
-.gd .gd-feed .gd-kind { font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); display: block; }
-.gd .gd-wrap { overflow-x: auto; }
-.gd table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); }
-.gd th { text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); }
-.gd td { padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
-.gd td.gd-num { font-variant-numeric: tabular-nums; text-align: right; }
-.gd th.gd-num { text-align: right; }
-.gd .gd-sub { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
-.gd .gd-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: var(--cds-font-size-caption); border: 1px solid currentColor; white-space: nowrap; }
-.gd .gd-badge.ok { color: var(--color-ok); }
-.gd .gd-badge.warn { color: var(--color-warn); }
-.gd .gd-badge.info { color: var(--color-fg-muted); }
-.gd .gd-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--cds-gap-xl); }
-.gd details summary { cursor: pointer; font-weight: var(--cds-font-weight-medium); }
-.gd .gd-chips { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); margin-top: var(--cds-gap-sm); padding: 0; list-style: none; }
-.gd .gd-chips li { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 999px; padding: 2px 10px; font-size: var(--cds-font-size-caption); }
-.gd [data-dash-source-state=refreshing] { opacity: .5; }
-</style>
-</head><body>
-<div class="gd" lang="es-AR">
-  <section id="bienvenida" class="gd-card" hidden>
-    <h1>Guaraní al día</h1>
-    <p class="gd-lede">Te avisa al celular cuando cargan una nota, se abre una inscripción o cambia algo en tu SIU Guaraní. Sirve para cualquier universidad o instituto que use SIU Guaraní, y podés tener varias cuentas.</p>
-    <div class="app-bar"><button onclick="Android.newAccount()">Agregar mi cuenta</button></div>
-  </section>
-  <header id="encabezado">
-    <div class="acc-row"><select id="acc" aria-label="Cuenta" onchange="Android.setActive(this.value)"></select>
-      <button class="ghost small" onclick="Android.newAccount()">+ Cuenta</button></div>
-    <h1 id="acc-nombre">Mi Guaraní al día</h1>
-    <p class="gd-muted" id="acc-inst"></p>
-    <p class="gd-lede" data-read lang="es-AR">Tenés <b data-draw="aprobadas" data-source="resumen" data-field="aprobadas" data-row="0">—</b> materias aprobadas, con promedio <b data-draw="promedio-txt" data-source="resumen" data-field="promedio" data-row="0">—</b>. Te queda <b data-draw="pendientes-txt" data-source="resumen" data-field="pendientes_final" data-row="0">—</b> materia con el final pendiente y cursás <b data-draw="encurso-txt" data-source="resumen" data-field="en_curso" data-row="0">—</b>.</p>
-    <p class="gd-muted">Última revisión de SIU Guaraní: <span data-draw="ultima" data-source="resumen" data-field="ultima_revision" data-row="0">—</span></p>
-    <span data-draw="sesion-switch"></span>
-    <div class="app-bar">
-      <button onclick="Android.checkNow()">Revisar ahora</button>
-      <button class="ghost" onclick="Android.openGuarani()">Abrir Guaraní</button>
-      <button class="ghost" onclick="Android.openSettings()">Ajustes</button>
-    </div>
-    <p class="app-status" id="app-status"></p>
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{padding:0 14px 28px;max-width:720px;margin:0 auto}
 
-    <p class="gd-alert" id="sesion-vencida" hidden>La sesión de Guaraní venció y la última revisión no pudo leer tus datos. Entrá a la pestaña <b>Guaraní</b> e iniciá sesión, o cargá tu usuario y clave en <b>Ajustes</b>, y la próxima revisión se pone al día.</p>
+/* ---------- encabezado: institución y carrera ---------- */
+.hero{background:linear-gradient(160deg,var(--brand) 0%,var(--brand-d) 100%);color:#fff;padding:16px 16px 18px;border-radius:0 0 22px 22px;margin:0 -14px 14px;box-shadow:var(--sh)}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:600;letter-spacing:.2px;font-size:.92rem;opacity:.95}
+.logo i{width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.16);position:relative;display:inline-block}
+.logo i:after{content:"";position:absolute;right:4px;bottom:4px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.16);white-space:nowrap}
+.chip:before{content:"";width:7px;height:7px;border-radius:50%;background:#7CE0B0}
+.chip.bad{background:#FBE4E2;color:#8E1B14}.chip.bad:before{background:#B3261E}
+.chip.wait:before{background:var(--gold)}
+.acc{display:flex;gap:8px;margin-bottom:12px}
+.acc select{flex:1;min-width:0;font:inherit;font-size:.9rem;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:11px;padding:8px 10px}
+.acc select option{color:#1B1B19}
+.acc button{background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:11px;padding:8px 12px;font-size:.84rem;color:#fff;white-space:nowrap}
+.lab{font-size:.66rem;letter-spacing:1.1px;text-transform:uppercase;font-weight:700;opacity:.72;margin-top:10px}
+.inst{font-size:1.02rem;font-weight:600;line-height:1.3;margin-top:1px}
+.carr{font-family:"Noto Serif",Georgia,serif;font-size:1.42rem;line-height:1.22;margin-top:1px}
+.carr.vacia{font-family:inherit;font-size:.92rem;opacity:.85;font-style:italic}
+.hsub{font-size:.8rem;opacity:.82;margin-top:4px}
+.hnote{font-size:.78rem;background:rgba(0,0,0,.2);border-radius:10px;padding:7px 10px;margin-top:10px;line-height:1.35}
+.rev{font-size:.78rem;opacity:.85;margin-top:12px}
+.acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.acts button{flex:1;min-width:104px;border:0;border-radius:12px;padding:10px 8px;font-size:.86rem;font-weight:600;background:rgba(255,255,255,.15);color:#fff}
+.acts button.main{background:#fff;color:var(--brand-d)}
+.acts button:active{transform:scale(.98)}
+
+/* ---------- tarjetas ---------- */
+.card{background:var(--panel);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+h2{font-size:1.02rem;margin:0;font-weight:700;letter-spacing:.1px}
+.hint{color:var(--muted);font-size:.82rem;margin:2px 0 10px}
+.link{background:transparent;border:0;color:var(--brand);font-weight:600;font-size:.85rem;padding:4px 0}
+@media (prefers-color-scheme: dark){ .link{color:#7FD3B2} }
+.btn{border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:7px 12px;font-size:.82rem;font-weight:600;white-space:nowrap}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.alert{background:var(--bad-bg);color:var(--bad);border-radius:var(--r);padding:13px 15px;margin-bottom:12px;font-size:.9rem;line-height:1.4}
+.alert b{display:block;margin-bottom:2px}
+.empty{color:var(--muted);font-size:.88rem;padding:6px 0}
+
+/* ---------- indicadores ---------- */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kpi{background:var(--panel);border-radius:var(--r);padding:13px 14px;box-shadow:var(--sh);min-width:0}
+.kpi .k{font-size:.74rem;color:var(--muted);font-weight:600}
+.kpi .v{font-size:1.7rem;font-weight:700;line-height:1.15;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:.73rem;color:var(--muted);margin-top:2px;line-height:1.3}
+.kpi.wide{grid-column:1/-1}
+.bar{height:7px;border-radius:4px;background:var(--idle-bg);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:4px;background:var(--brand)}
+
+/* ---------- fechas ---------- */
+.ev{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.ev:first-of-type{border-top:0}
+.date{flex:none;width:52px;text-align:center;border-radius:12px;background:var(--brand-l);color:var(--brand-d);padding:6px 0;line-height:1.05}
+@media (prefers-color-scheme: dark){ .date{color:#BFE6D5} }
+.date b{display:block;font-size:1.3rem}.date span{font-size:.66rem;text-transform:uppercase;font-weight:700;letter-spacing:.6px}
+.ev-m{flex:1;min-width:0}.ev-t{font-weight:600;line-height:1.25}.ev-d{font-size:.8rem;color:var(--muted);margin-top:2px}
+.when{font-size:.72rem;font-weight:700;color:var(--warn)}
+
+/* ---------- novedades ---------- */
+.nov{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.nov:first-of-type{border-top:0}
+.nov time{flex:none;width:54px;font-size:.74rem;color:var(--muted);padding-top:2px}
+.tag{display:inline-block;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--idle-bg);color:var(--idle);margin-bottom:2px}
+.tag.Nota{background:var(--ok-bg);color:var(--ok)}.tag.Exámenes,.tag.Inscripciones{background:var(--warn-bg);color:var(--warn)}
+.tag.Mensaje,.tag.Encuesta{background:var(--info-bg);color:var(--info)}
+.nov p{margin:0;font-size:.88rem;line-height:1.35;overflow-wrap:anywhere}
+
+/* ---------- materias ---------- */
+.search{width:100%;font:inherit;font-size:.92rem;padding:10px 12px;border-radius:11px;border:1px solid var(--line);background:var(--soft);color:var(--ink);margin-bottom:10px}
+.filters{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin:0 -2px 4px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.f{flex:none;border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 11px;font-size:.8rem;font-weight:600;color:var(--muted)}
+.f.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.mat{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line)}
+.mat-m{flex:1;min-width:0}.mat-n{font-weight:600;line-height:1.28;overflow-wrap:anywhere}
+.mat-c{font-size:.76rem;color:var(--muted);margin-top:2px}
+.mat-d{font-size:.8rem;color:var(--muted);margin-top:5px;line-height:1.35;display:none}
+.mat.open .mat-d{display:block}
+.mat-s{flex:none;text-align:right;min-width:74px}
+.nota{font-size:1.5rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.nota.sin{font-size:1rem;color:var(--muted);font-weight:500}
+.pill{display:inline-block;font-size:.69rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:5px;background:var(--idle-bg);color:var(--idle);white-space:nowrap}
+.pill.aprobada,.pill.promocionada{background:var(--ok-bg);color:var(--ok)}
+.pill.regular{background:var(--warn-bg);color:var(--warn)}
+.pill.en_curso{background:var(--info-bg);color:var(--info)}
+.pill.desaprobada,.pill.ausente,.pill.libre{background:var(--bad-bg);color:var(--bad)}
+.prov{font-size:.68rem;color:var(--warn);font-weight:700;display:block;margin-top:3px}
+
+/* ---------- documentos ---------- */
+.doc{display:flex;gap:11px;align-items:center;width:100%;text-align:left;background:transparent;border:0;border-top:1px solid var(--line);padding:11px 0}
+.doc:first-of-type{border-top:0}
+.pdf{flex:none;width:38px;height:44px;border-radius:7px;background:var(--bad-bg);color:var(--bad);font-size:.62rem;font-weight:800;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;letter-spacing:.5px}
+.doc-t{font-weight:600;line-height:1.25;overflow-wrap:anywhere}.doc-s{font-size:.78rem;color:var(--muted);margin-top:1px}
+.foot{color:var(--muted);font-size:.74rem;text-align:center;line-height:1.5;margin-top:18px}
+
+/* ---------- bienvenida ---------- */
+.welcome{padding:34px 22px}
+.welcome h1{font-family:"Noto Serif",Georgia,serif;font-weight:400;font-size:2rem;margin:14px 0 8px}
+.welcome p{color:var(--muted);line-height:1.5;margin:0 0 10px}
+.welcome ul{padding-left:18px;color:var(--muted);line-height:1.6;margin:0 0 18px}
+.welcome .go{width:100%;border:0;border-radius:14px;background:var(--brand);color:#fff;font-weight:700;padding:14px;font-size:1rem}
+.mark{width:54px;height:54px;border-radius:15px;background:var(--brand);position:relative}
+.mark:after{content:"";position:absolute;right:10px;bottom:10px;width:13px;height:13px;border-radius:50%;background:var(--gold)}
+</style></head>
+<body>
+
+<section id="bienvenida" class="welcome" hidden>
+  <div class="mark"></div>
+  <h1>Guaraní al día</h1>
+  <p>Tu SIU Guaraní en el celular, siempre actualizado.</p>
+  <ul>
+    <li>Aviso con sonido cuando cargan una calificación.</li>
+    <li>Inscripciones, mesas y fechas de examen, con recordatorios.</li>
+    <li>Tus notas y los PDF oficiales, listos para compartir.</li>
+    <li>Sirve para cualquier institución que use SIU Guaraní.</li>
+  </ul>
+  <button class="go" onclick="Android.newAccount()">Agregar mi cuenta</button>
+</section>
+
+<div id="app" class="wrap" hidden>
+  <header class="hero">
+    <div class="hero-top">
+      <span class="logo"><i></i>Guaraní al día</span>
+      <span class="chip" id="estado">Sesión abierta</span>
+    </div>
+    <div class="acc" id="acc-row" hidden>
+      <select id="acc" aria-label="Cuenta" onchange="Android.setActive(this.value)"></select>
+      <button onclick="Android.newAccount()">+ Cuenta</button>
+    </div>
+    <div class="lab">Institución</div>
+    <div class="inst" id="inst"></div>
+    <div class="lab">Carrera</div>
+    <div class="carr" id="carr"></div>
+    <div class="hsub" id="plan" hidden></div>
+    <div class="hnote" id="multi" hidden></div>
+    <div class="rev" id="rev"></div>
+    <div class="acts">
+      <button class="main" onclick="Android.checkNow()">Actualizar</button>
+      <button onclick="Android.share('')">Compartir notas</button>
+      <button onclick="Android.openGuarani()">Abrir Guaraní</button>
+    </div>
   </header>
 
-  <section id="indicadores" class="gd-tiles">
-    <div class="gd-card">
-      <p class="gd-tile-label">Promedio general</p>
-      <p class="gd-tile-value" data-draw="promedio" data-source="resumen" data-field="promedio" data-row="0">—</p>
-      <p class="gd-tile-note">Con y sin aplazos</p>
-    </div>
-    <div class="gd-card">
-      <p class="gd-tile-label">Avance de la carrera</p>
-      <p class="gd-tile-value" data-draw="avance" data-source="resumen" data-field="avance_pct" data-row="0">—</p>
-      <div class="gd-bar"><div class="gd-bar-fill" data-draw="avance-bar"></div></div>
-    </div>
-    <div class="gd-card">
-      <p class="gd-tile-label">Materias aprobadas</p>
-      <p class="gd-tile-value" data-draw="aprobadas-n" data-source="resumen" data-field="aprobadas" data-row="0">—</p>
-      <p class="gd-tile-note">Por final o promoción</p>
-    </div>
-    <div class="gd-card">
-      <p class="gd-tile-label">Finales pendientes</p>
-      <p class="gd-tile-value" data-draw="pendientes" data-source="resumen" data-field="pendientes_final" data-row="0">—</p>
-      <p class="gd-tile-note">Regulares sin final rendido</p>
-    </div>
-  </section>
-
-  <div class="gd-two">
-    <section id="novedades" class="gd-card">
-      <h2>Novedades</h2>
-      <p class="gd-muted">Lo que cambió en Guaraní, lo más reciente arriba.</p>
-      <ul class="gd-feed" data-draw="feed" data-source="novedades" style="margin-top: var(--cds-gap-md);"></ul>
-    </section>
-
-    <section id="proximas" class="gd-card">
-      <h2>Fechas que se vienen</h2>
-      <div class="gd-wrap">
-        <table data-source="calendario" data-row-key="evento">
-          <thead><tr><th data-field="fecha">Fecha</th><th data-field="evento">Qué pasa</th></tr></thead>
-          <tbody data-draw="cal"></tbody>
-        </table>
-      </div>
-      <h2 style="margin-top: var(--cds-gap-lg);">Bandeja de Guaraní</h2>
-      <div class="gd-wrap">
-        <table>
-          <tbody>
-            <tr><td>Mensajes recibidos</td><td class="gd-num" data-draw="mensajes" data-source="resumen" data-field="mensajes" data-row="0">—</td></tr>
-            <tr><td>Encuestas pendientes</td><td class="gd-num" data-draw="encuestas" data-source="resumen" data-field="encuestas_pendientes" data-row="0">—</td></tr>
-            <tr><td>Exámenes en los que estás inscripto</td><td class="gd-num" data-draw="examenes" data-source="resumen" data-field="examenes_inscriptos" data-row="0">—</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+  <div class="alert" id="vencida" hidden>
+    <b>Guaraní cerró la sesión</b>
+    Entrá desde la pestaña <b style="display:inline">Guaraní</b> o guardá tu contraseña en <b style="display:inline">Ajustes</b>. Mientras tanto no llegan avisos.
   </div>
 
-  <section id="materias" class="gd-card">
-    <h2>Estado de cada materia</h2>
-    <p class="gd-muted" id="mat-vacio" hidden>Todavía no hay materias: aparecen solas cuando la app lee tu historia académica.</p>
-    <div class="gd-wrap">
-      <table data-source="materias" data-row-key="codigo">
-        <thead><tr><th data-field="materia">Materia</th><th data-field="estado">Estado</th><th data-field="nota" class="gd-num">Nota</th><th data-field="fecha">Fecha</th><th data-field="detalle">Detalle</th></tr></thead>
-        <tbody data-draw="materias"></tbody>
-      </table>
-    </div>
+  <section class="kpis" id="kpis"></section>
+
+  <section class="card" id="fechas">
+    <div class="card-h"><h2>Próximos exámenes</h2><button class="btn" onclick="Android.reminder('')">+ Recordatorio</button></div>
+    <div id="fechas-l"></div>
   </section>
 
-  <section id="diplomatura" class="gd-card" hidden>
-    <h2>Otra propuesta</h2>
-    <div class="gd-wrap">
-      <table data-source="diplomatura" data-row-key="codigo">
-        <thead><tr><th data-field="actividad">Actividad</th><th data-field="estado">Estado</th><th data-field="nota" class="gd-num">Nota</th><th data-field="fecha">Fecha</th></tr></thead>
-        <tbody data-draw="diplo"></tbody>
-      </table>
-    </div>
+  <section class="card" id="finales" hidden>
+    <div class="card-h"><h2>Finales pendientes</h2></div>
+    <p class="hint">Materias regulares que todavía no rendiste. Tocá «Agendar» para ponerte una fecha.</p>
+    <div id="finales-l"></div>
   </section>
 
-  <section id="mesas" class="gd-card">
-    <details>
-      <summary>Materias habilitadas para inscribirte a examen</summary>
-      <p class="gd-muted">Las que Guaraní te muestra en Inscripción a exámenes. Las mesas con fecha aparecen cuando se abre un turno.</p>
-      <ul class="gd-chips" data-draw="mesas" data-source="mesas"></ul>
-    </details>
+  <section class="card" id="novedades">
+    <div class="card-h"><h2>Novedades</h2><button class="link" id="nov-mas" hidden></button></div>
+    <div id="nov-l"></div>
   </section>
+
+  <section class="card" id="materias">
+    <div class="card-h"><h2>Materias y calificaciones</h2><button class="btn pri" id="share-btn">Compartir</button></div>
+    <input class="search" id="q" type="search" placeholder="Buscar materia o código" autocomplete="off">
+    <div class="filters" id="filtros"></div>
+    <div id="mat-l"></div>
+  </section>
+
+  <section class="card" id="otra" hidden>
+    <div class="card-h"><h2>Otra propuesta</h2></div>
+    <div id="otra-l"></div>
+  </section>
+
+  <section class="card" id="docs">
+    <div class="card-h"><h2>Documentos oficiales</h2><button class="link" id="doc-mas" hidden></button></div>
+    <p class="hint">Los emite Guaraní: la app los descarga del sitio con tu sesión, sin modificarlos. Después podés abrirlos o compartirlos.</p>
+    <div id="doc-l"></div>
+  </section>
+
+  <p class="foot" id="foot"></p>
 </div>
 
 <script>
-window.dash=(function(){
-  var draws={};
-  function data(n){ try{ return {status:'ok', data: JSON.parse(Android.get(n))}; }catch(e){ return {status:'error', data:[]}; } }
-  function run(name){ document.querySelectorAll('[data-draw="'+name+'"]').forEach(function(el){ try{ draws[name](el); }catch(e){ console.error(name,e); } }); }
-  function draw(name,fn){ draws[name]=fn; run(name); }
-  function refresh(){ Object.keys(draws).forEach(run); if(window.renderAccount) renderAccount(); if(window.setAppStatus) setAppStatus(); }
-  return {data:data, draw:draw, refresh:refresh};
-})();
-window.renderAccount=function(){
-  var accs=[], a={}; try{ accs=JSON.parse(Android.accounts()); a=JSON.parse(Android.account()); }catch(e){}
-  var has=accs.length>0;
-  document.getElementById('bienvenida').hidden=has;
-  ['encabezado','indicadores','materias','mesas'].forEach(function(id){ var el=document.getElementById(id); if(el) el.hidden=!has; });
-  document.querySelectorAll('.gd-two').forEach(function(el){ el.hidden=!has; });
-  var sel=document.getElementById('acc'); sel.replaceChildren();
-  accs.forEach(function(x){ var o=document.createElement('option'); o.value=x.id; o.textContent=x.nombre; if(x.id===a.id) o.selected=true; sel.append(o); });
-  sel.parentNode.style.display=accs.length>1?'flex':'none';
-  document.getElementById('acc-nombre').textContent=a.nombre||'Mi Guaraní al día';
-  document.getElementById('acc-inst').textContent=(a.institucion&&a.institucion!==a.nombre)?a.institucion:'';
-  var dip=dash.data('diplomatura'); document.getElementById('diplomatura').hidden=!(has&&dip.status==='ok'&&dip.data.length);
-  var mat=dash.data('materias'); document.getElementById('mat-vacio').hidden=!(mat.status==='ok'&&!mat.data.length);
-};
-window.setAppStatus=function(){ var el=document.getElementById('app-status'); if(el){ try{ el.textContent='Revisión desde la app: '+Android.status(); }catch(e){} } };
-</script>
-<script>
-(function () {
-  const TZ = 'America/Buenos_Aires';
-  const fmtDay = new Intl.DateTimeFormat('es-AR', { timeZone: 'UTC', day: '2-digit', month: '2-digit', year: 'numeric' });
-  const fmtStamp = new Intl.DateTimeFormat('es-AR', { timeZone: TZ, day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-  const fmtShort = new Intl.DateTimeFormat('es-AR', { timeZone: TZ, day: '2-digit', month: '2-digit', year: 'numeric' });
-  const num = (v) => (v === null || v === undefined || v === '' ? null : Number(v));
-  function day(s) { if (!s) return '—'; const d = new Date(String(s).slice(0, 10) + 'T00:00:00Z'); return isNaN(d) ? String(s) : fmtDay.format(d); }
-  function stamp(s) { const d = new Date(s); return isNaN(d) ? String(s || '—') : fmtStamp.format(d); }
-  function shortStamp(s) { const d = new Date(s); return isNaN(d) ? String(s || '—') : fmtShort.format(d); }
-  function row0() { const r = dash.data('resumen'); return r.status === 'ok' && r.data.length ? r.data[0] : null; }
-  window.gdDay = day;
+(function(){
+  var MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  var DIA=['dom','lun','mar','mié','jue','vie','sáb'];
+  var st={filtro:'todas',q:'',novAll:false,docAll:false,firma:''};
 
-  function text(name, get) {
-    dash.draw(name, (el) => { const r = row0(); el.textContent = r ? get(r) : '—'; });
+  function A(name){ try{ return Android[name].apply(Android,[].slice.call(arguments,1)); }catch(e){ return null; } }
+  function data(n){ try{ return JSON.parse(A('get',n))||[]; }catch(e){ return []; } }
+  function el(tag,cls,txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!==undefined&&txt!==null) e.textContent=txt; return e; }
+  function $(id){ return document.getElementById(id); }
+  function clear(n){ while(n.firstChild) n.removeChild(n.firstChild); return n; }
+  function norm(s){ return (s||'').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+  function num(v,d){ if(v===null||v===undefined||v==='') return '—'; var n=Number(v); if(isNaN(n)) return String(v);
+    return n.toLocaleString('es-AR',{minimumFractionDigits:d||0,maximumFractionDigits:d===undefined?2:d}); }
+  function fecha(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(iso||''); return m?new Date(+m[1],+m[2]-1,+m[3]):null; }
+  function corta(iso){ var d=fecha(iso); return d?('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear():''; }
+  function dias(iso){ var d=fecha(iso); if(!d) return null; var h=new Date(); h.setHours(0,0,0,0); return Math.round((d-h)/864e5); }
+  function hace(iso){ var t=Date.parse(iso||''); if(isNaN(t)) return ''; var m=Math.round((Date.now()-t)/6e4);
+    if(m<1) return 'recién'; if(m<60) return 'hace '+m+' min'; var h=Math.round(m/60); if(h<24) return 'hace '+h+' h';
+    var d=Math.round(h/24); return 'hace '+d+(d===1?' día':' días'); }
+  function cat(m){ if(m.cat) return m.cat; var e=norm(m.estado);
+    return /desaprob/.test(e)?'desaprobada':/promoc/.test(e)?'promocionada':/regular/.test(e)?'regular':/aprob/.test(e)?'aprobada':
+           /ausente/.test(e)?'ausente':/libre/.test(e)?'libre':/pendiente/.test(e)?'pendiente':'en_curso'; }
+  var ETI={aprobada:'Aprobada',promocionada:'Promocionada',regular:'Regular',en_curso:'En curso',desaprobada:'Desaprobada',ausente:'Ausente',libre:'Libre',pendiente:'Pendiente'};
+
+  function encabezado(acc,accs,r){
+    var sel=$('acc'); clear(sel);
+    accs.forEach(function(x){ var o=el('option',null,x.nombre); o.value=x.id; if(x.id===acc.id) o.selected=true; sel.appendChild(o); });
+    $('acc-row').hidden=accs.length<2;
+    $('inst').textContent=acc.institucion||acc.nombre||'';
+    var c=$('carr');
+    if(acc.carrera){ c.textContent=acc.carrera; c.className='carr'; }
+    else { c.textContent='Todavía no leída: se completa en la primera revisión, o escribila en Ajustes.'; c.className='carr vacia'; }
+    var sub=[]; if(acc.plan) sub.push('Plan: '+acc.plan); if(acc.nombre&&acc.nombre!==acc.institucion&&acc.nombre!==acc.carrera) sub.push('Cuenta: '+acc.nombre);
+    if(acc.usuario) sub.push('Usuario: '+acc.usuario);
+    $('plan').textContent=sub.join(' · '); $('plan').hidden=!sub.length;
+    var otras=(acc.propuestas||[]).filter(function(p){ return norm(p)!==norm(acc.carrera); });
+    var multi=$('multi'); multi.hidden=!otras.length||acc.carrera_manual;
+    if(otras.length) multi.textContent='Tu usuario tiene '+(otras.length+1)+' propuestas. La app sigue la que está elegida en Guaraní'+(acc.carrera?' («'+acc.carrera+'»)':'')+'. Para ver otra, cambiala en la pestaña Guaraní y tocá Actualizar.';
+    var venc=r.sesion==='vencida'; var chip=$('estado');
+    chip.className='chip'+(venc?' bad':(r.ultima_ok_ms?'':' wait'));
+    chip.textContent=venc?'Sesión cerrada':(r.ultima_ok_ms?'Sesión abierta':'Sin revisar');
+    $('vencida').hidden=!venc;
+    $('rev').textContent=r.ultima_ok_ms?('Actualizado '+hace(new Date(r.ultima_ok_ms).toISOString())+' · se actualiza sola'):'Todavía no se leyó Guaraní. Tocá Actualizar.';
   }
-  text('aprobadas', (r) => String(num(r.aprobadas)));
-  text('aprobadas-n', (r) => String(num(r.aprobadas)));
-  text('promedio-txt', (r) => num(r.promedio).toFixed(2).replace('.', ','));
-  text('promedio', (r) => num(r.promedio).toFixed(2).replace('.', ','));
-  text('avance', (r) => num(r.avance_pct).toFixed(2).replace('.', ',') + ' %');
-  text('pendientes', (r) => String(num(r.pendientes_final)));
-  text('pendientes-txt', (r) => String(num(r.pendientes_final)));
-  text('encurso-txt', (r) => String(num(r.en_curso)));
-  text('mensajes', (r) => String(num(r.mensajes)));
-  text('encuestas', (r) => String(num(r.encuestas_pendientes)));
-  text('examenes', (r) => String(num(r.examenes_inscriptos)));
-  text('ultima', (r) => stamp(r.ultima_revision));
 
-  dash.draw('avance-bar', (el) => { const r = row0(); el.style.width = r ? Math.max(0, Math.min(100, num(r.avance_pct))) + '%' : '0'; });
+  function kpi(k,v,s,opt){ var d=el('div','kpi'+(opt&&opt.wide?' wide':'')); d.appendChild(el('div','k',k)); d.appendChild(el('div','v',v));
+    if(opt&&opt.bar!==undefined){ var b=el('div','bar'); var i=el('i'); i.style.width=Math.max(0,Math.min(100,opt.bar))+'%'; b.appendChild(i); d.appendChild(b); }
+    if(s) d.appendChild(el('div','s',s)); return d; }
 
-  dash.draw('sesion-switch', () => {
-    const r = row0();
-    document.querySelectorAll('#sesion-vencida').forEach((p) => { p.hidden = !(r && String(r.sesion) !== 'ok'); });
-  });
-
-  dash.draw('feed', (ul) => {
-    const n = dash.data('novedades');
-    ul.replaceChildren();
-    if (n.status !== 'ok') { const li = document.createElement('li'); li.textContent = n.status === 'error' ? 'No se pudo cargar' : '—'; ul.append(li); return; }
-    const rows = n.data.map((r, i) => ({ r, i })).sort((a, b) => new Date(b.r.fecha) - new Date(a.r.fecha)).slice(0, 12);
-    rows.forEach(({ r, i }) => {
-      const li = document.createElement('li');
-      const when = document.createElement('span'); when.className = 'gd-when'; when.textContent = shortStamp(r.fecha);
-      when.dataset.source = 'novedades'; when.dataset.field = 'fecha'; when.dataset.row = String(i);
-      const body = document.createElement('div');
-      const kind = document.createElement('span'); kind.className = 'gd-kind'; kind.textContent = r.tipo;
-      kind.dataset.source = 'novedades'; kind.dataset.field = 'tipo'; kind.dataset.row = String(i);
-      const det = document.createElement('span'); det.textContent = r.detalle;
-      det.dataset.source = 'novedades'; det.dataset.field = 'detalle'; det.dataset.row = String(i);
-      body.append(kind, det); li.append(when, body); ul.append(li);
-    });
-  });
-
-  function badgeClass(estado) {
-    const e = String(estado || '').toLowerCase();
-    if (e.startsWith('aprob') || e.startsWith('promoc')) return 'ok';
-    if (e.includes('falta') || e.includes('regular') || e.includes('libre') || e.includes('desaprob')) return 'warn';
-    return 'info';
+  function indicadores(r,mats){
+    var k=clear($('kpis'));
+    var ap=mats.filter(function(m){ var c=cat(m); return c==='aprobada'||c==='promocionada'; }).length;
+    var reg=mats.filter(function(m){ return cat(m)==='regular'; }).length;
+    var cur=mats.filter(function(m){ return cat(m)==='en_curso'; }).length;
+    var conPlan=r.avance_origen==='plan'&&mats.length;
+    if(r.avance_pct!==undefined&&r.avance_pct!==null)
+      k.appendChild(kpi('Avance de la carrera',num(r.avance_pct,1)+' %',conPlan?(ap+' de '+mats.length+' actividades del plan aprobadas'):'Según informa Guaraní',{wide:true,bar:Number(r.avance_pct)}));
+    k.appendChild(kpi('Promedio',r.promedio===undefined||r.promedio===null?'—':num(r.promedio,2),
+      r.promedio===undefined||r.promedio===null?'Sin notas numéricas todavía':(r.promedio_origen==='guarani'?'Informado por Guaraní':'Calculado con tus aprobadas, sin aplazos')));
+    k.appendChild(kpi('Aprobadas',String(ap),conPlan?('de '+mats.length+' del plan'):'por examen, promoción o equivalencia'));
+    k.appendChild(kpi('Finales pendientes',String(reg),'regulares sin rendir'));
+    k.appendChild(kpi('En curso',String(cur),'este período'));
   }
-  function td(text, cls) { const c = document.createElement('td'); if (cls) c.className = cls; c.textContent = text; return c; }
-  function badgeTd(estado) { const c = document.createElement('td'); const b = document.createElement('span'); b.className = 'gd-badge ' + badgeClass(estado); b.textContent = estado || '—'; c.append(b); return c; }
 
-  dash.draw('materias', (tb) => {
-    const m = dash.data('materias');
-    tb.replaceChildren();
-    if (m.status !== 'ok') { const tr = document.createElement('tr'); tr.append(td(m.status === 'error' ? 'No se pudo cargar' : '—')); tb.append(tr); return; }
-    const order = { ok: 2, warn: 0, info: 1 };
-    m.data.slice().sort((a, b) => order[badgeClass(a.estado)] - order[badgeClass(b.estado)] || String(a.codigo).localeCompare(b.codigo)).forEach((r) => {
-      const tr = document.createElement('tr'); tr.dataset.key = encodeURIComponent(r.codigo);
-      const name = document.createElement('td'); name.textContent = r.materia;
-      const code = document.createElement('div'); code.className = 'gd-sub'; code.textContent = r.codigo; name.append(code);
-      tr.append(name, badgeTd(r.estado), td(num(r.nota) === null ? '—' : String(num(r.nota)), 'gd-num'), td(day(r.fecha)), td(r.detalle || ''));
-      tb.append(tr);
-    });
-  });
+  function evento(ev){
+    var d=fecha(ev.fecha); var row=el('div','ev');
+    var dt=el('div','date'); dt.appendChild(el('b',null,d?d.getDate():'?')); dt.appendChild(el('span',null,d?MES[d.getMonth()]:'')); row.appendChild(dt);
+    var m=el('div','ev-m'); var n=dias(ev.fecha);
+    if(n!==null&&n<=14) m.appendChild(el('div','when',n===0?'HOY':n===1?'MAÑANA':'EN '+n+' DÍAS'));
+    m.appendChild(el('div','ev-t',ev.evento||ev.materia||'Examen'));
+    var det=[]; if(d) det.push(DIA[d.getDay()]+' '+corta(ev.fecha)); if(ev.hora) det.push(ev.hora+' h'); if(ev.detalle) det.push(ev.detalle);
+    m.appendChild(el('div','ev-d',det.join(' · '))); row.appendChild(m);
+    var b=el('button','btn pri','Agendar'); b.onclick=function(){ A('calendar',JSON.stringify(ev)); }; row.appendChild(b);
+    return row;
+  }
 
-  dash.draw('diplo', (tb) => {
-    const m = dash.data('diplomatura');
-    tb.replaceChildren();
-    if (m.status !== 'ok') { const tr = document.createElement('tr'); tr.append(td(m.status === 'error' ? 'No se pudo cargar' : '—')); tb.append(tr); return; }
-    m.data.forEach((r) => {
-      const tr = document.createElement('tr'); tr.dataset.key = encodeURIComponent(r.codigo);
-      const name = document.createElement('td'); name.textContent = r.actividad;
-      const code = document.createElement('div'); code.className = 'gd-sub'; code.textContent = r.codigo; name.append(code);
-      tr.append(name, badgeTd(r.estado), td(r.nota || '—', 'gd-num'), td(day(r.fecha)));
-      tb.append(tr);
-    });
-  });
+  function fechas(cal){
+    var l=clear($('fechas-l'));
+    var fut=cal.filter(function(e){ var n=dias(e.fecha); return n!==null&&n>=0; }).sort(function(a,b){ return (a.fecha+(a.hora||''))<(b.fecha+(b.hora||''))?-1:1; });
+    if(!fut.length){ l.appendChild(el('div','empty','No hay exámenes ni evaluaciones con fecha. Cuando te inscribas a una mesa, aparece acá y la app te la recuerda una semana antes, el día anterior y el mismo día.')); return; }
+    fut.slice(0,12).forEach(function(e){ l.appendChild(evento(e)); });
+  }
 
-  dash.draw('cal', (tb) => {
-    const c = dash.data('calendario');
-    tb.replaceChildren();
-    if (c.status !== 'ok') { const tr = document.createElement('tr'); tr.append(td(c.status === 'error' ? 'No se pudo cargar' : '—')); tb.append(tr); return; }
-    if (!c.data.length) { const tr = document.createElement('tr'); tr.append(td('No hay fechas próximas cargadas en Guaraní.')); tb.append(tr); return; }
-    c.data.slice().sort((a, b) => String(a.fecha).localeCompare(String(b.fecha))).forEach((r) => {
-      const tr = document.createElement('tr'); tr.dataset.key = encodeURIComponent(r.evento);
-      tr.append(td(day(r.fecha)), td(r.evento));
-      tb.append(tr);
-    });
-  });
+  function finales(mats){
+    var regs=mats.filter(function(m){ return cat(m)==='regular'; });
+    $('finales').hidden=!regs.length; var l=clear($('finales-l'));
+    regs.forEach(function(m){ var row=el('div','ev'); var mm=el('div','ev-m'); mm.appendChild(el('div','ev-t',m.materia));
+      var s=[]; if(m.codigo) s.push(m.codigo); if(m.nota!==null&&m.nota!==undefined&&m.nota!=='') s.push('cursada con '+m.nota); if(m.fecha) s.push('regular desde '+corta(m.fecha));
+      mm.appendChild(el('div','ev-d',s.join(' · '))); row.appendChild(mm);
+      var b=el('button','btn','Agendar'); b.onclick=function(){ A('reminder',m.materia); }; row.appendChild(b); l.appendChild(row); });
+  }
 
-  dash.draw('mesas', (ul) => {
-    const m = dash.data('mesas');
-    ul.replaceChildren();
-    if (m.status !== 'ok') { const li = document.createElement('li'); li.textContent = '—'; ul.append(li); return; }
-    m.data.forEach((r, i) => { const li = document.createElement('li'); li.textContent = r.materia; li.dataset.source = 'mesas'; li.dataset.field = 'materia'; li.dataset.row = String(i); ul.append(li); });
-  });
+  function novedades(nov){
+    var l=clear($('nov-l')); var mas=$('nov-mas');
+    if(!nov.length){ l.appendChild(el('div','empty','Sin novedades todavía. Acá queda el historial de todo lo que cambie.')); mas.hidden=true; return; }
+    (st.novAll?nov.slice(0,80):nov.slice(0,5)).forEach(function(n){ var row=el('div','nov'); var t=Date.parse(n.fecha||''); var d=isNaN(t)?null:new Date(t);
+      row.appendChild(el('time',null,d?(('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)):''));
+      var b=el('div'); b.style.minWidth='0'; b.appendChild(el('span','tag '+(n.tipo||'').replace(/\s.*/,''),n.tipo||'Cambio')); b.appendChild(el('p',null,n.detalle||'')); row.appendChild(b); l.appendChild(row); });
+    mas.hidden=nov.length<=5; mas.textContent=st.novAll?'Ver menos':'Ver todas ('+nov.length+')';
+    mas.onclick=function(){ st.novAll=!st.novAll; novedades(nov); };
+  }
+
+  var GRUPOS=[['todas','Todas',null],['aprobadas','Aprobadas',['aprobada','promocionada']],['regular','Regulares',['regular']],
+              ['en_curso','En curso',['en_curso']],['pendiente','Pendientes',['pendiente']],['otras','Desaprobadas',['desaprobada','ausente','libre']]];
+  function materias(mats){
+    var f=clear($('filtros'));
+    GRUPOS.forEach(function(g){ var n=g[2]?mats.filter(function(m){ return g[2].indexOf(cat(m))>=0; }).length:mats.length;
+      if(!n&&g[0]!=='todas') return; var b=el('button','f'+(st.filtro===g[0]?' on':''),g[1]+' '+n);
+      b.onclick=function(){ st.filtro=g[0]; materias(mats); }; f.appendChild(b); });
+    var g=GRUPOS.filter(function(x){ return x[0]===st.filtro; })[0]||GRUPOS[0]; var q=norm(st.q);
+    var orden={regular:0,en_curso:1,aprobada:2,promocionada:2,desaprobada:3,ausente:3,libre:3,pendiente:4};
+    var vis=mats.filter(function(m){ return (!g[2]||g[2].indexOf(cat(m))>=0)&&(!q||norm(m.materia+' '+(m.codigo||'')).indexOf(q)>=0); })
+      .sort(function(a,b){ var d=orden[cat(a)]-orden[cat(b)]; if(d) return d; return (b.fecha||'')<(a.fecha||'')?-1:(b.fecha||'')>(a.fecha||'')?1:0; });
+    var l=clear($('mat-l'));
+    if(!mats.length){ l.appendChild(el('div','empty','Todavía no hay materias. La app las lee de tu plan de estudio y de tu historia académica en la primera revisión.')); return; }
+    if(!vis.length){ l.appendChild(el('div','empty','Ninguna materia coincide con la búsqueda.')); return; }
+    vis.forEach(function(m){ var c=cat(m); var row=el('div','mat'); var a=el('div','mat-m'); a.appendChild(el('div','mat-n',m.materia));
+      var meta=[]; if(m.codigo) meta.push(m.codigo); if(m.tipo) meta.push(m.tipo); if(m.anio) meta.push(/^\d+$/.test(m.anio)&&m.anio.length<3?m.anio+'.º año':m.anio); if(m.periodo) meta.push(m.periodo);
+      if(m.fecha&&c!=='pendiente') meta.push(corta(m.fecha));
+      if(meta.length) a.appendChild(el('div','mat-c',meta.join(' · ')));
+      if(m.detalle) a.appendChild(el('div','mat-d',m.detalle));
+      row.appendChild(a);
+      var s=el('div','mat-s'); var sin=m.nota===null||m.nota===undefined||m.nota===''; s.appendChild(el('div','nota'+(sin?' sin':''),sin?'—':String(m.nota)));
+      s.appendChild(el('span','pill '+c,ETI[c]||m.estado||'')); if(m.provisoria) s.appendChild(el('span','prov','PROVISORIA'));
+      row.appendChild(s); row.onclick=function(){ row.classList.toggle('open'); }; l.appendChild(row); });
+    $('share-btn').onclick=function(){ var gg=st.filtro==='todas'?'':(g[2]?g[2][0]:''); A('share',gg); };
+  }
+
+  function otra(dip){
+    $('otra').hidden=!dip.length; var l=clear($('otra-l'));
+    dip.forEach(function(m){ var c=cat(m); var row=el('div','mat'); var a=el('div','mat-m'); a.appendChild(el('div','mat-n',m.actividad||m.materia||''));
+      if(m.detalle) a.appendChild(el('div','mat-c',m.detalle)); row.appendChild(a);
+      var s=el('div','mat-s'); var sin=m.nota===null||m.nota===undefined||m.nota===''; s.appendChild(el('div','nota'+(sin?' sin':''),sin?'—':String(m.nota)));
+      s.appendChild(el('span','pill '+c,m.estado||ETI[c])); row.appendChild(s); l.appendChild(row); });
+  }
+
+  function documentos(docs){
+    var l=clear($('doc-l')); var mas=$('doc-mas');
+    if(!docs.length){ l.appendChild(el('div','empty','Todavía no se encontraron documentos. Cuando la app lea tu historia académica, tu plan y tus inscripciones, acá aparecen los PDF que Guaraní ofrece. También podés guardar cualquier pantalla de Guaraní como PDF con el botón de descarga de la pestaña Guaraní.')); mas.hidden=true; return; }
+    (st.docAll?docs:docs.slice(0,6)).forEach(function(d){ var b=el('button','doc'); b.appendChild(el('span','pdf','PDF'));
+      var t=el('span'); t.style.minWidth='0'; t.appendChild(el('div','doc-t',d.titulo||'Documento'));
+      t.appendChild(el('div','doc-s',(d.seccion||'Guaraní')+(d.directo?' · descarga directa':' · se abre en Guaraní'))); b.appendChild(t);
+      b.onclick=function(){ A('doc',JSON.stringify(d)); }; l.appendChild(b); });
+    mas.hidden=docs.length<=6; mas.textContent=st.docAll?'Ver menos':'Ver todos ('+docs.length+')';
+    mas.onclick=function(){ st.docAll=!st.docAll; documentos(docs); };
+  }
+
+  function render(force){
+    var accs=[]; var acc={};
+    try{ accs=JSON.parse(A('accounts'))||[]; acc=JSON.parse(A('account'))||{}; }catch(e){}
+    $('bienvenida').hidden=accs.length>0; $('app').hidden=!accs.length;
+    if(!accs.length) return;
+    var r=(data('resumen')[0])||{}; var mats=data('materias'); var cal=data('calendario'); var nov=data('novedades'); var docs=data('documentos'); var dip=data('diplomatura');
+    encabezado(acc,accs,r);            // el encabezado se rehace siempre: muestra «hace X min»
+    var firma=JSON.stringify([acc.id,r,mats,cal,nov.slice(0,90),docs,dip]);
+    if(!force&&firma===st.firma) return;  // nada cambió: no se redibuja (más fluido)
+    st.firma=firma;
+    indicadores(r,mats); fechas(cal); finales(mats); novedades(nov); materias(mats); otra(dip); documentos(docs);
+    $('foot').textContent=(A('status')||'')+' · Guaraní al día no es una app oficial del SIU.';
+  }
+
+  $('q').addEventListener('input',function(){ st.q=this.value; materias(data('materias')); });
+  window.dash={refresh:function(){ render(false); }};
+  window.setAppStatus=function(){ var f=$('foot'); if(f&&!$('app').hidden) f.textContent=(A('status')||'')+' · Guaraní al día no es una app oficial del SIU.'; };
+  render(true);
+  setInterval(function(){ render(false); },60000);
 })();
 </script>
-<script>renderAccount(); setAppStatus();</script>
 </body></html>

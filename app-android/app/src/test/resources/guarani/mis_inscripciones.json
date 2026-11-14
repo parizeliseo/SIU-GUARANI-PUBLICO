@@ -1,0 +1,184 @@
+{
+ "url": "https://guarani.ejemplo.edu.ar/autogestion/mis_inscripciones",
+ "title": "SIU Guaraní - Mis inscripciones",
+ "login": false,
+ "sso": "",
+ "captcha": false,
+ "error": "",
+ "text": "Mis inscripciones\nCursadas - Períodos lectivos vigentes\nInscripciones históricas\nFecha inscripción\tAño\tPeríodo lectivo\tPropuesta\tActividad\tComisión\tSubcomisión\tTurno\tCátedra\tUbicación\tEstado\tComprobantes\n23/08/2026 09:24\t2026\tAnual 2026\tLic. en Sistemas\tFísica I (SI-106)\tA\tNo tiene\tSin definir\tSin definir\tSede Única\tAceptada\tGenerar\nExámenes - Turnos de exámenes vigentes\nInscripciones históricas\nFecha inscripción\tAño\tTurno\tLlamado\tPropuesta\tActividad\tMesa\tUbicación\tLugar\tFecha de examen\tEstado\tComprobantes\n22/08/2026 10:08:42\t2026\tDiciembre 2026\tLlamado 01\tLic. en Sistemas\tÁlgebra y Geometría (SI-103)\tA\tSede Única\tAula 12\t15/12/2027 18:00\tAceptada\tGenerar\n22/08/2026 10:08:38\t2026\tDiciembre 2026\tLlamado 01\tLic. en Sistemas\tÉtica Profesional (SI-204)\tA\tSede Única\t\t27/05/2027\tAceptada\tGenerar\n20/08/2026 09:00:00\t2026\tDiciembre 2026\tLlamado 01\tLic. en Sistemas\tSistemas y Organizaciones (SI-104)\tB\tSede Única\t\t20/12/2027\tBaja\tGenerar",
+ "full": "SIU Guaraní\nPropuesta:\nLicenciatura en Sistemas de Información\nInscripción a Materias\nInscripción a Exámenes\nReportes\nTrámites\nPerfil: Alumno\nCerrar sesión\nMis inscripciones\nCursadas - Períodos lectivos vigentes\nInscripciones históricas\nFecha inscripción\tAño\tPeríodo lectivo\tPropuesta\tActividad\tComisión\tSubcomisión\tTurno\tCátedra\tUbicación\tEstado\tComprobantes\n23/08/2026 09:24\t2026\tAnual 2026\tLic. en Sistemas\tFísica I (SI-106)\tA\tNo tiene\tSin definir\tSin definir\tSede Única\tAceptada\tGenerar\nExámenes - Turnos de exámenes vigentes\nInscripciones históricas\nFecha inscripción\tAño\tTurno\tLlamado\tPropuesta\tActividad\tMesa\tUbicación\tLugar\tFecha de examen\tEstado\tComprobantes\n22/08/2026 10:08:42\t2026\tDiciembre 2026\tLlamado 01\tLic. en Sistemas\tÁlgebra y Geometría (SI-103)\tA\tSede Única\tAula 12\t15/12/2027 18:00\tAceptada\tGenerar\n22/08/2026 10:08:38\t2026\tDiciembre 2026\tLlamado 01\tLic. en Sistemas\tÉtica Profesional (SI-204)\tA\tSede Única\t\t27/05/2027\tAceptada\tGenerar\n20/08/2026 09:00:00\t2026\tDiciembre 2026\tLlamado 01\tLic. en Sistemas\tSistemas y Organizaciones (SI-104)\tB\tSede Única\t\t20/12/2027\tBaja\tGenerar\nInscripción a exámenes\n(SI-204) Ética Profesional - 27/05/2027",
+ "links": [],
+ "menu": [
+  [
+   "Inscripción a Materias",
+   "https://guarani.ejemplo.edu.ar/autogestion/cursada"
+  ],
+  [
+   "Inscripción a Exámenes",
+   "https://guarani.ejemplo.edu.ar/autogestion/examen"
+  ],
+  [
+   "Actuación provisoria",
+   "https://guarani.ejemplo.edu.ar/autogestion/actuacion_provisoria"
+  ],
+  [
+   "Agenda",
+   "https://guarani.ejemplo.edu.ar/autogestion/agenda"
+  ],
+  [
+   "Historia académica",
+   "https://guarani.ejemplo.edu.ar/autogestion/historia_academica"
+  ],
+  [
+   "Inasistencias",
+   "https://guarani.ejemplo.edu.ar/autogestion/inasistencias"
+  ],
+  [
+   "Mis inscripciones",
+   "https://guarani.ejemplo.edu.ar/autogestion/mis_inscripciones"
+  ],
+  [
+   "Plan de estudios",
+   "https://guarani.ejemplo.edu.ar/autogestion/plan_estudio"
+  ],
+  [
+   "Mis datos personales",
+   "https://guarani.ejemplo.edu.ar/autogestion/datos_censales"
+  ],
+  [
+   "Solicitar Constancias y Certificados",
+   "https://guarani.ejemplo.edu.ar/autogestion/certificados"
+  ],
+  [
+   "Cerrar sesión",
+   "https://guarani.ejemplo.edu.ar/autogestion/logout"
+  ]
+ ],
+ "tables": [
+  {
+   "sec": "Cursadas - Períodos lectivos vigentes",
+   "head": [
+    "Fecha inscripción",
+    "Año",
+    "Período lectivo",
+    "Propuesta",
+    "Actividad",
+    "Comisión",
+    "Subcomisión",
+    "Turno",
+    "Cátedra",
+    "Ubicación",
+    "Estado",
+    "Comprobantes"
+   ],
+   "rows": [
+    [
+     "23/08/2026 09:24",
+     "2026",
+     "Anual 2026",
+     "Lic. en Sistemas",
+     "Física I (SI-106)",
+     "A",
+     "No tiene",
+     "Sin definir",
+     "Sin definir",
+     "Sede Única",
+     "Aceptada",
+     "Generar"
+    ]
+   ]
+  },
+  {
+   "sec": "Exámenes - Turnos de exámenes vigentes",
+   "head": [
+    "Fecha inscripción",
+    "Año",
+    "Turno",
+    "Llamado",
+    "Propuesta",
+    "Actividad",
+    "Mesa",
+    "Ubicación",
+    "Lugar",
+    "Fecha de examen",
+    "Estado",
+    "Comprobantes"
+   ],
+   "rows": [
+    [
+     "22/08/2026 10:08:42",
+     "2026",
+     "Diciembre 2026",
+     "Llamado 01",
+     "Lic. en Sistemas",
+     "Álgebra y Geometría (SI-103)",
+     "A",
+     "Sede Única",
+     "Aula 12",
+     "15/12/2027 18:00",
+     "Aceptada",
+     "Generar"
+    ],
+    [
+     "22/08/2026 10:08:38",
+     "2026",
+     "Diciembre 2026",
+     "Llamado 01",
+     "Lic. en Sistemas",
+     "Ética Profesional (SI-204)",
+     "A",
+     "Sede Única",
+     "",
+     "27/05/2027",
+     "Aceptada",
+     "Generar"
+    ],
+    [
+     "20/08/2026 09:00:00",
+     "2026",
+     "Diciembre 2026",
+     "Llamado 01",
+     "Lic. en Sistemas",
+     "Sistemas y Organizaciones (SI-104)",
+     "B",
+     "Sede Única",
+     "",
+     "20/12/2027",
+     "Baja",
+     "Generar"
+    ]
+   ]
+  }
+ ],
+ "propSel": "Licenciatura en Sistemas de Información",
+ "props": [
+  "Licenciatura en Sistemas de Información",
+  "Tecnicatura en Programación"
+ ],
+ "docs": [
+  {
+   "t": "Generar",
+   "h": "",
+   "tipo": "doc",
+   "ctx": "Física I (SI-106)"
+  },
+  {
+   "t": "Generar",
+   "h": "",
+   "tipo": "doc",
+   "ctx": "Álgebra y Geometría (SI-103)"
+  },
+  {
+   "t": "Generar",
+   "h": "",
+   "tipo": "doc",
+   "ctx": "Ética Profesional (SI-204)"
+  },
+  {
+   "t": "Generar",
+   "h": "",
+   "tipo": "doc",
+   "ctx": "Sistemas y Organizaciones (SI-104)"
+  }
+ ]
+}

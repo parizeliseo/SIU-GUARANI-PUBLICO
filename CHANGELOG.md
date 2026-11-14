@@ -5,6 +5,37 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Guaraní al día 1.4 — 13 de noviembre de 2026
+
+Se instala encima de la 1.3.2. La primera revisión después de actualizar vuelve a leer todo y no
+manda avisos, para no dar novedades falsas.
+
+- **Sonido propio para las calificaciones nuevas** (tres notas, distinto del resto) con vibración,
+  en un canal nuevo *Calificaciones nuevas*. Botón en Ajustes para cambiar el tono.
+- **Reportes completos:** la app pide *Historia completa* y expande el plan de estudio, y entiende
+  el formato oficial de SIU Guaraní 3 (plan, historia académica, actuación provisoria, mis
+  inscripciones). El tablero muestra **todas las materias del plan**, incluidas las pendientes, con
+  la historia de cada una (cursada, exámenes, promoción, equivalencia) y la marca *provisoria*.
+- **Avisos de calificación más claros:** «examen aprobado con 8», «cursada aprobada con 7 (queda
+  el final)», «nota provisoria…». Cada nota se avisa una sola vez.
+- **Compartir calificaciones** por WhatsApp, mail, etc.: todas, las de un filtro o la de un aviso.
+- **Exámenes y Google Calendar:** las fechas de *Mis inscripciones* aparecen en *Próximos
+  exámenes*, con aviso de fecha nueva y recordatorios una semana antes, el día anterior y el mismo
+  día. *Agendar* las pasa al calendario del teléfono, sin pedir permisos.
+- **PDF originales:** sección *Documentos oficiales* con los PDF y comprobantes que ofrece
+  Guaraní; se descargan del sitio sin modificar y se pueden abrir o compartir. Botón para guardar
+  cualquier pantalla de Guaraní como PDF.
+- **Carrera e institución siempre a la vista:** la app lee la propuesta elegida y la muestra en el
+  tablero, el menú, la pestaña Guaraní y los avisos. Se puede escribir otro nombre en Ajustes, y
+  avisa si el usuario tiene más de una propuesta.
+- **Actualización automática al abrir la app** si la última lectura tiene más de 10 minutos.
+- **Diseño nuevo del tablero:** encabezado con institución y carrera, indicadores con su origen,
+  buscador y filtros de materias, modo oscuro, y redibujo solo cuando cambian los datos.
+- Seguridad: los datos y contraseñas tampoco viajan al pasar las apps a un teléfono nuevo.
+- 29 pruebas automáticas (antes 7), con páginas de prueba según la documentación del SIU.
+
+---
+
 ## Manual de uso — 12 de noviembre de 2026
 
 - Nuevo **manual de uso completo** en PDF (`publicado/Manual-Guarani-al-dia.pdf`) y para leer en

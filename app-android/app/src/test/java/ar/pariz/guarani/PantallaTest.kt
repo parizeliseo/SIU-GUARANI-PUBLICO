@@ -55,4 +55,65 @@ class PantallaTest {
         user.setText("87654321"); frames(act)
         assertEquals("87654321", user.text.toString())
     }
+
+    private fun conCuenta(): Profile {
+        val c = ApplicationProvider.getApplicationContext<android.content.Context>()
+        val p = Profile("t9", "UTN Sistemas", "Universidad de Ejemplo", "https://guarani.ejemplo.edu.ar/autogestion/", true, "Ingeniería en Sistemas")
+        Profiles.save(c, p, "30123456", "secreta"); Profiles.setActive(c, p.id)
+        return p
+    }
+
+    @Test(timeout = 120_000) fun agendarDesdeLaNotificacion() {
+        conCuenta()
+        val ev = org.json.JSONObject().put("evento", "Examen: Álgebra").put("fecha", "2027-12-15").put("hora", "18:00").put("detalle", "Lugar: Aula 12")
+        val i = android.content.Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+            .putExtra("hacer", "agendar").putExtra("datos", ev.toString())
+        val act = Robolectric.buildActivity(MainActivity::class.java, i).setup().get()
+        val abierto = shadowOf(act).nextStartedActivity
+        assertEquals(android.content.Intent.ACTION_INSERT, abierto.action)
+        assertEquals(android.provider.CalendarContract.Events.CONTENT_URI, abierto.data)
+        assertEquals("Examen: Álgebra", abierto.getStringExtra(android.provider.CalendarContract.Events.TITLE))
+        val esperado = java.time.LocalDateTime.of(2027, 12, 15, 18, 0).atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
+        assertEquals(esperado, abierto.getLongExtra(android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME, 0))
+        assertEquals(esperado + 2 * 3600_000L, abierto.getLongExtra(android.provider.CalendarContract.EXTRA_EVENT_END_TIME, 0))
+        val desc = abierto.getStringExtra(android.provider.CalendarContract.Events.DESCRIPTION)!!
+        assertTrue(desc.contains("Lugar: Aula 12") && desc.contains("Universidad de Ejemplo · Ingeniería en Sistemas"))
+    }
+
+    @Test(timeout = 120_000) fun examenSinHoraEsDeTodoElDia() {
+        val c = ApplicationProvider.getApplicationContext<android.app.Application>()
+        assertTrue(Compartir.agendar(c, "Examen: Ética", "2027-05-27", null, ""))
+        val abierto = shadowOf(c).nextStartedActivity
+        assertTrue(abierto.getBooleanExtra(android.provider.CalendarContract.EXTRA_EVENT_ALL_DAY, false))
+        val ini = java.time.LocalDate.of(2027, 5, 27).atStartOfDay(java.time.ZoneOffset.UTC).toInstant().toEpochMilli()
+        assertEquals(ini, abierto.getLongExtra(android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME, 0))
+    }
+
+    @Test(timeout = 120_000) fun compartirDesdeLaNotificacion() {
+        conCuenta()
+        val i = android.content.Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+            .putExtra("hacer", "compartir").putExtra("datos", "Física I: examen aprobado con 8.")
+        val act = Robolectric.buildActivity(MainActivity::class.java, i).setup().get()
+        val selector = shadowOf(act).nextStartedActivity
+        assertEquals(android.content.Intent.ACTION_CHOOSER, selector.action)
+        @Suppress("DEPRECATION")
+        val envio = selector.getParcelableExtra<android.content.Intent>(android.content.Intent.EXTRA_INTENT)!!
+        assertEquals("text/plain", envio.type)
+        assertEquals("Universidad de Ejemplo · Ingeniería en Sistemas\nFísica I: examen aprobado con 8.", envio.getStringExtra(android.content.Intent.EXTRA_TEXT))
+    }
+
+    @Test(timeout = 120_000) fun carreraEnAjustesYEnLaBarra() {
+        val p = conCuenta()
+        val act = Robolectric.buildActivity(MainActivity::class.java).setup().get()
+        frames(act)
+        act.findViewById<BottomNavigationView>(R.id.nav).selectedItemId = R.id.nav_set; frames(act)
+        assertEquals("Ingeniería en Sistemas", act.findViewById<EditText>(R.id.setCarrera).text.toString())
+        act.findViewById<BottomNavigationView>(R.id.nav).selectedItemId = R.id.nav_web; frames(act)
+        assertEquals("Universidad de Ejemplo · Ingeniería en Sistemas", act.findViewById<android.widget.TextView>(R.id.webSub).text.toString())
+        // Sin carrera escrita a mano, se usa la que la app leyó de Guaraní
+        val c = ApplicationProvider.getApplicationContext<android.content.Context>()
+        Profiles.save(c, p.copy(carrera = ""), null, null)
+        Store.putResumen(c, p.id, Store.resumen(c, p.id).put("propuesta", "Licenciatura leída de Guaraní"))
+        assertEquals("Licenciatura leída de Guaraní", Profiles.carreraDe(c, Profiles.get(c, p.id)!!))
+    }
 }

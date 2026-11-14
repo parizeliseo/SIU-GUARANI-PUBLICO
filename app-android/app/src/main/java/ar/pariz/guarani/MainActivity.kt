@@ -3,7 +3,11 @@ package ar.pariz.guarani
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DownloadManager
+import android.app.NotificationManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
@@ -11,6 +15,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.PowerManager
+import android.print.PrintAttributes
+import android.print.PrintManager
 import android.provider.Settings
 import android.view.View
 import android.webkit.*
@@ -49,6 +55,16 @@ class MainActivity : AppCompatActivity() {
         fileCb = null
     }
     private val notifPerm = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+
+    /** Descargas pedidas desde la pestaña Guaraní: id → nombre de archivo. */
+    private val descargas = HashMap<Long, String>()
+    private val alTerminarDescarga = object : BroadcastReceiver() {
+        override fun onReceive(c: Context, i: Intent) {
+            val id = i.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            val nombre = descargas.remove(id) ?: return
+            descargaLista(id, nombre)
+        }
+    }
 
     private fun cur(): Profile? = Profiles.active(this)
 
@@ -97,8 +113,16 @@ class MainActivity : AppCompatActivity() {
             updateStatus()
         }
 
+        ContextCompat.registerReceiver(this, alTerminarDescarga, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+            ContextCompat.RECEIVER_EXPORTED)
+
         if (!Config.configured(this)) { editingId = null; nav.selectedItemId = R.id.nav_set }
         handleIntent(intent)
+    }
+
+    override fun onDestroy() {
+        runCatching { unregisterReceiver(alTerminarDescarga) }
+        super.onDestroy()
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -110,10 +134,36 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         refreshPages()
         updateStatus()
+        actualizarSiHaceFalta()
     }
+
+    /** Al abrir la app, si la última lectura de Guaraní tiene más de 10 minutos, se actualiza sola. */
+    private fun actualizarSiHaceFalta() {
+        val p = cur() ?: return
+        val ultima = Store.resumen(this, p.id).optLong("ultima_ok_ms", 0L)
+        val intento = Store.resumen(this, p.id).optString("ultima_revision")
+        if (System.currentTimeMillis() - ultima < 10 * 60_000L) return
+        // Si la sesión está vencida y no hay contraseña guardada, insistir no sirve: no se reintenta solo.
+        if (intento.isNotBlank() && Store.resumen(this, p.id).optString("sesion") == "vencida" && Profiles.pass(this, p.id).isEmpty()) return
+        if (System.currentTimeMillis() - ultimoAuto < 5 * 60_000L) return
+        ultimoAuto = System.currentTimeMillis()
+        Scheduler.checkNow(this, p.id)
+    }
+    private var ultimoAuto = 0L
 
     private fun handleIntent(i: Intent?) {
         i?.getStringExtra("pid")?.let { if (Profiles.get(this, it) != null) switchTo(it) }
+        // Botones de las notificaciones: «Compartir» y «Agendar».
+        val hacer = i?.getStringExtra("hacer")
+        if (hacer != null) {
+            val datos = i.getStringExtra("datos").orEmpty()
+            i.removeExtra("hacer")
+            i.getIntExtra("nid", 0).takeIf { it != 0 }?.let { getSystemService(NotificationManager::class.java).cancel(it) }
+            when (hacer) {
+                "compartir" -> Compartir.enviarTexto(this, encabezadoCompartir() + datos, "Compartir calificación")
+                "agendar" -> agendar(datos)
+            }
+        }
         when (i?.getStringExtra("tab")) {
             "web" -> nav.selectedItemId = R.id.nav_web
             "dash" -> nav.selectedItemId = R.id.nav_dash
@@ -180,7 +230,27 @@ class MainActivity : AppCompatActivity() {
         }
         @JavascriptInterface fun status(): String = cur()?.let { Store.status(this@MainActivity, it.id) } ?: ""
         @JavascriptInterface fun base(): String = cur()?.url ?: ""
-        @JavascriptInterface fun account(): String = cur()?.json()?.toString() ?: "{}"
+        @JavascriptInterface fun account(): String {
+            val p = cur() ?: return "{}"
+            val r = Store.resumen(this@MainActivity, p.id)
+            return p.json().put("carrera", Profiles.carreraDe(this@MainActivity, p)).put("carrera_manual", p.carrera.isNotBlank())
+                .put("plan", r.optString("plan")).put("propuestas", r.optJSONArray("propuestas") ?: JSONArray())
+                .put("usuario", Profiles.user(this@MainActivity, p.id)).toString()
+        }
+        /** Compartir calificaciones como texto. cat: "" (todas) o una categoría. */
+        @JavascriptInterface fun share(cat: String) { runOnUiThread { compartirCalificaciones(cat) } }
+        /** Pasar un examen al calendario del teléfono. Recibe el evento como JSON. */
+        @JavascriptInterface fun calendar(json: String) { runOnUiThread { agendar(json) } }
+        /** Recordatorio propio: abre el calendario con el título listo para elegir fecha. */
+        @JavascriptInterface fun reminder(materia: String) {
+            runOnUiThread {
+                val t = if (materia.isBlank()) "Examen" else "Examen: $materia"
+                if (!Compartir.agendar(this@MainActivity, t, Store.today(), null, cuentaComoTexto())) toast("No encontré una app de calendario")
+            }
+        }
+        /** Documento oficial de Guaraní: se descarga del sitio con tu sesión. */
+        @JavascriptInterface fun doc(json: String) { runOnUiThread { abrirDocumento(json) } }
+        @JavascriptInterface fun soundSettings() { runOnUiThread { abrirAjustesDeSonido() } }
         @JavascriptInterface fun accounts(): String =
             JSONArray(Profiles.all(this@MainActivity).map { JSONObject().put("id", it.id).put("nombre", it.nombre) }).toString()
         @JavascriptInterface fun setActive(id: String) { runOnUiThread { switchTo(id) } }
@@ -195,6 +265,85 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // ---------------- Compartir, calendario y documentos ----------------
+    private fun cuentaComoTexto(): String {
+        val p = cur() ?: return ""
+        return listOf(p.institucion, Profiles.carreraDe(this, p)).filter { it.isNotBlank() }.joinToString(" · ")
+    }
+    private fun encabezadoCompartir(): String = cuentaComoTexto().let { if (it.isBlank()) "" else "$it\n" }
+
+    private fun compartirCalificaciones(cat: String) {
+        val p = cur() ?: return
+        val materias = Store.arr(this, p.id, "materias")
+        if (materias.length() == 0) { toast("Todavía no hay calificaciones para compartir"); return }
+        Compartir.enviarTexto(this, Compartir.texto(p.institucion, Profiles.carreraDe(this, p), Store.resumen(this, p.id), materias, cat))
+    }
+
+    private fun agendar(json: String) {
+        val o = runCatching { JSONObject(json) }.getOrNull() ?: return
+        val detalle = listOf(o.optString("detalle"), cuentaComoTexto()).filter { it.isNotBlank() }.joinToString("\n")
+        if (!Compartir.agendar(this, o.optString("evento", "Examen"), o.optString("fecha"), o.optString("hora").ifBlank { null }, detalle))
+            toast("No encontré una app de calendario en el teléfono")
+    }
+
+    /** Abre un documento de Guaraní. Si tiene enlace propio se descarga; si no, se abre la página que lo ofrece. */
+    private fun abrirDocumento(json: String) {
+        val p = cur() ?: return
+        val o = runCatching { JSONObject(json) }.getOrNull() ?: return
+        val url = o.optString("url"); val pagina = o.optString("pagina")
+        when {
+            url.isNotBlank() && sameSite(url, p) -> { openInGuarani(url); toast("Pidiendo el documento a Guaraní…") }
+            pagina.isNotBlank() && sameSite(pagina, p) -> {
+                openInGuarani(pagina)
+                Toast.makeText(this, "Tocá el botón de PDF o «Generar» en esta página de Guaraní", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    /** Terminó una descarga: ofrece abrirla o compartirla. El archivo es el que entregó Guaraní, sin tocar. */
+    private fun descargaLista(id: Long, nombre: String) {
+        val dm = getSystemService(DownloadManager::class.java)
+        val uri = runCatching { dm.getUriForDownloadedFile(id) }.getOrNull()
+        val mime = runCatching { dm.getMimeTypeForDownloadedFile(id) }.getOrNull() ?: "application/pdf"
+        if (uri == null) { toast("No se pudo descargar $nombre"); return }
+        if (mime.startsWith("text/html")) {
+            AlertDialog.Builder(this).setTitle("Guaraní no entregó un archivo")
+                .setMessage("En lugar del documento devolvió una página. Abrí la sección en la pestaña Guaraní y usá el botón de PDF de esa pantalla.")
+                .setPositiveButton("Entendido", null).show()
+            return
+        }
+        if (isFinishing || isDestroyed) return
+        AlertDialog.Builder(this).setTitle("Descarga lista")
+            .setMessage("$nombre\nQuedó guardado en la carpeta Descargas, tal como lo emitió Guaraní.")
+            .setPositiveButton("Abrir") { _, _ ->
+                runCatching {
+                    startActivity(Intent(Intent.ACTION_VIEW).setDataAndType(uri, mime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION))
+                }.onFailure { toast("No hay una app para abrir este archivo") }
+            }
+            .setNeutralButton("Compartir") { _, _ ->
+                val i = Intent(Intent.ACTION_SEND).setType(mime).putExtra(Intent.EXTRA_STREAM, uri)
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                runCatching { startActivity(Intent.createChooser(i, "Compartir $nombre")) }
+            }
+            .setNegativeButton("Cerrar", null).show()
+    }
+
+    /** Guarda en PDF la página de Guaraní que se está viendo, tal como la muestra el sitio. */
+    private fun guardarPaginaComoPdf() {
+        val titulo = (gWeb.title?.ifBlank { null } ?: "Guaraní").replace(Regex("[\\\\/:*?\"<>|]"), " ").take(60)
+        runCatching {
+            (getSystemService(Context.PRINT_SERVICE) as PrintManager)
+                .print(titulo, gWeb.createPrintDocumentAdapter(titulo), PrintAttributes.Builder().build())
+        }.onFailure { toast("Este teléfono no permite guardar la página como PDF") }
+    }
+
+    private fun abrirAjustesDeSonido() {
+        runCatching {
+            startActivity(Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+                .putExtra(Settings.EXTRA_APP_PACKAGE, packageName).putExtra(Settings.EXTRA_CHANNEL_ID, Notifier.CH_NOTAS))
+        }.onFailure { toast("Abrí Configuración → Apps → Guaraní al día → Notificaciones") }
+    }
+
     // ---------------- Guaraní completo ----------------
     private fun ensureGuaraniLoaded() {
         val p = cur() ?: return
@@ -202,6 +351,7 @@ class MainActivity : AppCompatActivity() {
         if (Profiles.useSessionOf(this, p)) gWeb.clearHistory()
         gLoadedFor = p.id
         findViewById<TextView>(R.id.webTitle).text = p.nombre
+        findViewById<TextView>(R.id.webSub).text = cuentaComoTexto()
         gWeb.loadUrl(p.url)
     }
 
@@ -313,6 +463,7 @@ class MainActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 progress.visibility = View.GONE
                 title.text = view?.title?.ifBlank { null } ?: cur()?.nombre ?: "SIU Guaraní"
+                findViewById<TextView>(R.id.webSub).text = cuentaComoTexto()
                 CookieManager.getInstance().flush()
                 val p = cur()
                 if (p != null && url != null && trusted(url, p)) view?.evaluateJavascript(HOOK, null)
@@ -334,6 +485,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         gWeb.setDownloadListener { url, ua, cd, mime, _ ->
+            if (!url.startsWith("http")) {
+                toast("Guaraní arma este archivo en la página: usá «Guardar esta página como PDF»")
+                return@setDownloadListener
+            }
             runCatching {
                 val name = URLUtil.guessFileName(url, cd, mime)
                 val req = DownloadManager.Request(Uri.parse(url))
@@ -343,13 +498,14 @@ class MainActivity : AppCompatActivity() {
                     .setTitle(name)
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                     .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, name)
-                getSystemService(DownloadManager::class.java).enqueue(req)
+                descargas[getSystemService(DownloadManager::class.java).enqueue(req)] = name
                 toast("Descargando $name")
             }.onFailure { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
         }
         findViewById<ImageButton>(R.id.webBack).setOnClickListener { if (gWeb.canGoBack()) gWeb.goBack() }
         findViewById<ImageButton>(R.id.webHome).setOnClickListener { cur()?.let { gWeb.loadUrl(it.url) } }
         findViewById<ImageButton>(R.id.webReload).setOnClickListener { gWeb.reload() }
+        findViewById<ImageButton>(R.id.webPdf).setOnClickListener { guardarPaginaComoPdf() }
     }
 
     // ---------------- Ajustes ----------------
@@ -357,6 +513,7 @@ class MainActivity : AppCompatActivity() {
     private val fInst by lazy { findViewById<AutoCompleteTextView>(R.id.setInst) }
     private val fUrl by lazy { findViewById<EditText>(R.id.setUrl) }
     private val fName by lazy { findViewById<EditText>(R.id.setName) }
+    private val fCarrera by lazy { findViewById<EditText>(R.id.setCarrera) }
     private val fUser by lazy { findViewById<EditText>(R.id.setUser) }
     private val fPass by lazy { findViewById<EditText>(R.id.setPass) }
     private val fSave by lazy { findViewById<CheckBox>(R.id.setSavePass) }
@@ -414,8 +571,10 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.btnCheck).setOnClickListener { Scheduler.checkNow(this); toast("Revisando todas las cuentas…") }
         findViewById<Button>(R.id.btnTest).setOnClickListener {
-            Notifier.notify(this, Notifier.CH_NOTAS, "Prueba: nueva nota en Guaraní", "Así te va a llegar el aviso cuando carguen una nota.")
+            Notifier.notify(this, Notifier.CH_NOTAS, "Prueba: nueva calificación en Guaraní",
+                "Así suena y se ve el aviso cuando cargan una nota.", subtexto = cuentaComoTexto())
         }
+        findViewById<Button>(R.id.btnSound).setOnClickListener { abrirAjustesDeSonido() }
         findViewById<Button>(R.id.btnBattery).setOnClickListener {
             val pm = getSystemService(PowerManager::class.java)
             if (pm.isIgnoringBatteryOptimizations(packageName)) toast("Ya está permitido.")
@@ -450,7 +609,7 @@ class MainActivity : AppCompatActivity() {
         val inst = Instituciones.nameFor(this, url) ?: fInst.text.toString().trim().ifBlank { Uri.parse(url).host!! }
         val nombre = fName.text.toString().trim().ifBlank { inst }
         val old = Profiles.get(this, editingId)
-        val prof = Profile(old?.id ?: Profiles.newId(), nombre, inst, url, fSave.isChecked)
+        val prof = Profile(old?.id ?: Profiles.newId(), nombre, inst, url, fSave.isChecked, fCarrera.text.toString().trim())
         val pass = fPass.text.toString().takeIf { it.isNotEmpty() }
         Profiles.save(this, prof, fUser.text.toString(), if (fSave.isChecked) pass else null)
         if (old != null && old.url != url) { Store.setWatched(this, prof.id, emptyList()); Store.clearSnapshots(this, prof.id) }
@@ -482,6 +641,9 @@ class MainActivity : AppCompatActivity() {
         fInst.setText(p?.institucion ?: "", false)
         fUrl.setText(p?.url ?: ""); fUrl.error = null
         fName.setText(p?.nombre ?: "")
+        fCarrera.setText(p?.carrera ?: "")
+        fCarrera.hint = p?.let { Store.resumen(this, it.id).optString("propuesta") }?.takeIf { it.isNotBlank() }
+            ?.let { "Leída de Guaraní: $it" } ?: "Se completa sola al leer Guaraní"
         fUser.setText(p?.let { Profiles.user(this, it.id) } ?: "")
         fPass.setText(p?.let { Profiles.pass(this, it.id) } ?: "")
         fSave.isChecked = p?.savePass ?: true

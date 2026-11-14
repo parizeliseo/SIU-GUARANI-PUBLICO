@@ -1,0 +1,99 @@
+{
+ "url": "https://guarani.ejemplo.edu.ar/autogestion/actuacion_provisoria",
+ "title": "SIU Guaraní - Actuación Provisoria",
+ "login": false,
+ "sso": "",
+ "captcha": false,
+ "error": "",
+ "text": "Actuación Provisoria\nCursadas\nPropuesta\tActividad\tFecha de regularidad\tNota\tResultado\tNro Acta\tAño Académico\tPeríodo Lectivo\tComisión\nLic. en Sistemas\tBases de Datos\t10/11/2026\t7 (Siete)\tAprobado\t902732\t2026\tAnual 2026\tA\nPromociones\nNo hay información sobre actuaciones provisorias en promociones\nExámenes\nNo hay información sobre actuaciones provisorias en exámenes",
+ "full": "SIU Guaraní\nPropuesta:\nLicenciatura en Sistemas de Información\nInscripción a Materias\nInscripción a Exámenes\nReportes\nTrámites\nPerfil: Alumno\nCerrar sesión\nActuación Provisoria\nCursadas\nPropuesta\tActividad\tFecha de regularidad\tNota\tResultado\tNro Acta\tAño Académico\tPeríodo Lectivo\tComisión\nLic. en Sistemas\tBases de Datos\t10/11/2026\t7 (Siete)\tAprobado\t902732\t2026\tAnual 2026\tA\nPromociones\nNo hay información sobre actuaciones provisorias en promociones\nExámenes\nNo hay información sobre actuaciones provisorias en exámenes\nInscripción a exámenes\n(SI-204) Ética Profesional - 27/05/2027",
+ "links": [],
+ "menu": [
+  [
+   "Inscripción a Materias",
+   "https://guarani.ejemplo.edu.ar/autogestion/cursada"
+  ],
+  [
+   "Inscripción a Exámenes",
+   "https://guarani.ejemplo.edu.ar/autogestion/examen"
+  ],
+  [
+   "Actuación provisoria",
+   "https://guarani.ejemplo.edu.ar/autogestion/actuacion_provisoria"
+  ],
+  [
+   "Agenda",
+   "https://guarani.ejemplo.edu.ar/autogestion/agenda"
+  ],
+  [
+   "Historia académica",
+   "https://guarani.ejemplo.edu.ar/autogestion/historia_academica"
+  ],
+  [
+   "Inasistencias",
+   "https://guarani.ejemplo.edu.ar/autogestion/inasistencias"
+  ],
+  [
+   "Mis inscripciones",
+   "https://guarani.ejemplo.edu.ar/autogestion/mis_inscripciones"
+  ],
+  [
+   "Plan de estudios",
+   "https://guarani.ejemplo.edu.ar/autogestion/plan_estudio"
+  ],
+  [
+   "Mis datos personales",
+   "https://guarani.ejemplo.edu.ar/autogestion/datos_censales"
+  ],
+  [
+   "Solicitar Constancias y Certificados",
+   "https://guarani.ejemplo.edu.ar/autogestion/certificados"
+  ],
+  [
+   "Cerrar sesión",
+   "https://guarani.ejemplo.edu.ar/autogestion/logout"
+  ]
+ ],
+ "tables": [
+  {
+   "sec": "Cursadas",
+   "head": [
+    "Propuesta",
+    "Actividad",
+    "Fecha de regularidad",
+    "Nota",
+    "Resultado",
+    "Nro Acta",
+    "Año Académico",
+    "Período Lectivo",
+    "Comisión"
+   ],
+   "rows": [
+    [
+     "Lic. en Sistemas",
+     "Bases de Datos",
+     "10/11/2026",
+     "7 (Siete)",
+     "Aprobado",
+     "902732",
+     "2026",
+     "Anual 2026",
+     "A"
+    ]
+   ]
+  }
+ ],
+ "propSel": "Licenciatura en Sistemas de Información",
+ "props": [
+  "Licenciatura en Sistemas de Información",
+  "Tecnicatura en Programación"
+ ],
+ "docs": [
+  {
+   "t": "",
+   "h": "https://guarani.ejemplo.edu.ar/autogestion/actuacion_provisoria/pdf_cursadas",
+   "tipo": "pdf",
+   "ctx": ""
+  }
+ ]
+}

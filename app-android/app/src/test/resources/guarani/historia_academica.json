@@ -1,0 +1,71 @@
+{
+ "url": "https://guarani.ejemplo.edu.ar/autogestion/historia_academica",
+ "title": "SIU Guaraní - Historia académica",
+ "login": false,
+ "sso": "",
+ "captcha": false,
+ "error": "",
+ "text": "Historia académica\nFiltre por:\nTodos / Ninguno\nCursadas\nPromocionadaAprobadaDesaprobadaAusente / LibreEn curso\nExámenes\nAprobadoDesaprobado\nVer por AñoActividad/Reconocimiento\nAnálisis Matemático I (SI-101)\nRegularidad - 7 (Siete) Aprobado 20/11/2025 - Ver\nExamen - 2 (Dos) Desaprobado 12/12/2025 - Ver\nExamen - 8 (Ocho) Aprobado 20/02/2026 - Ver\nProgramación I (SI-102)\nPromoción - 8,0 (OCHO) Promocionado 05/07/2026 - Cerrar\nÁlgebra y Geometría (SI-103)\nRegularidad - 6 (Seis) Aprobado 22/11/2025 - Ver\nSistemas y Organizaciones (SI-104)\nRegularidad - Ausente 22/11/2025 - Ver\nInglés Técnico (SI-105)\nEquivalencia - 7,50 (Siete con cincuenta) Aprobado 03/03/2026 - Ver\nFísica I (SI-106)\nEn curso - Primer cuatrimestre 2026 - Ver",
+ "full": "SIU Guaraní\nPropuesta:\nLicenciatura en Sistemas de Información\nInscripción a Materias\nInscripción a Exámenes\nReportes\nTrámites\nPerfil: Alumno\nCerrar sesión\nHistoria académica\nFiltre por:\nTodos / Ninguno\nCursadas\nPromocionadaAprobadaDesaprobadaAusente / LibreEn curso\nExámenes\nAprobadoDesaprobado\nVer por AñoActividad/Reconocimiento\nAnálisis Matemático I (SI-101)\nRegularidad - 7 (Siete) Aprobado 20/11/2025 - Ver\nExamen - 2 (Dos) Desaprobado 12/12/2025 - Ver\nExamen - 8 (Ocho) Aprobado 20/02/2026 - Ver\nProgramación I (SI-102)\nPromoción - 8,0 (OCHO) Promocionado 05/07/2026 - Cerrar\nÁlgebra y Geometría (SI-103)\nRegularidad - 6 (Seis) Aprobado 22/11/2025 - Ver\nSistemas y Organizaciones (SI-104)\nRegularidad - Ausente 22/11/2025 - Ver\nInglés Técnico (SI-105)\nEquivalencia - 7,50 (Siete con cincuenta) Aprobado 03/03/2026 - Ver\nFísica I (SI-106)\nEn curso - Primer cuatrimestre 2026 - Ver\nInscripción a exámenes\n(SI-204) Ética Profesional - 27/05/2027",
+ "links": [],
+ "menu": [
+  [
+   "Inscripción a Materias",
+   "https://guarani.ejemplo.edu.ar/autogestion/cursada"
+  ],
+  [
+   "Inscripción a Exámenes",
+   "https://guarani.ejemplo.edu.ar/autogestion/examen"
+  ],
+  [
+   "Actuación provisoria",
+   "https://guarani.ejemplo.edu.ar/autogestion/actuacion_provisoria"
+  ],
+  [
+   "Agenda",
+   "https://guarani.ejemplo.edu.ar/autogestion/agenda"
+  ],
+  [
+   "Historia académica",
+   "https://guarani.ejemplo.edu.ar/autogestion/historia_academica"
+  ],
+  [
+   "Inasistencias",
+   "https://guarani.ejemplo.edu.ar/autogestion/inasistencias"
+  ],
+  [
+   "Mis inscripciones",
+   "https://guarani.ejemplo.edu.ar/autogestion/mis_inscripciones"
+  ],
+  [
+   "Plan de estudios",
+   "https://guarani.ejemplo.edu.ar/autogestion/plan_estudio"
+  ],
+  [
+   "Mis datos personales",
+   "https://guarani.ejemplo.edu.ar/autogestion/datos_censales"
+  ],
+  [
+   "Solicitar Constancias y Certificados",
+   "https://guarani.ejemplo.edu.ar/autogestion/certificados"
+  ],
+  [
+   "Cerrar sesión",
+   "https://guarani.ejemplo.edu.ar/autogestion/logout"
+  ]
+ ],
+ "tables": [],
+ "propSel": "Licenciatura en Sistemas de Información",
+ "props": [
+  "Licenciatura en Sistemas de Información",
+  "Tecnicatura en Programación"
+ ],
+ "docs": [
+  {
+   "t": "Generar PDF",
+   "h": "https://guarani.ejemplo.edu.ar/autogestion/historia_academica/generar_pdf",
+   "tipo": "pdf",
+   "ctx": ""
+  }
+ ]
+}

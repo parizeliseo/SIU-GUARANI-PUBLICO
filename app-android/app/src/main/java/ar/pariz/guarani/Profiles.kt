@@ -15,14 +15,16 @@ data class Profile(
     val nombre: String,
     val institucion: String,
     val url: String,
-    val savePass: Boolean
+    val savePass: Boolean,
+    /** Carrera escrita a mano en Ajustes. Vacía = se usa la que la app lee de Guaraní. */
+    val carrera: String = ""
 ) {
     val host: String get() = Uri.parse(url).host ?: ""
     fun json(): JSONObject = JSONObject().put("id", id).put("nombre", nombre).put("institucion", institucion)
-        .put("url", url).put("savePass", savePass)
+        .put("url", url).put("savePass", savePass).put("carrera", carrera)
     companion object {
         fun from(o: JSONObject) = Profile(o.getString("id"), o.optString("nombre"), o.optString("institucion"),
-            o.optString("url"), o.optBoolean("savePass", true))
+            o.optString("url"), o.optBoolean("savePass", true), o.optString("carrera"))
     }
 }
 
@@ -56,6 +58,10 @@ object Profiles {
     }
 
     fun get(c: Context, id: String?): Profile? = all(c).firstOrNull { it.id == id }
+
+    /** Carrera de la cuenta: la escrita en Ajustes o, si no, la propuesta que la app leyó de Guaraní. */
+    fun carreraDe(c: Context, p: Profile): String =
+        p.carrera.ifBlank { Store.resumen(c, p.id).optString("propuesta") }
 
     fun active(c: Context): Profile? {
         val l = all(c)

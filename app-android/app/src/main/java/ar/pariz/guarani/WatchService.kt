@@ -64,6 +64,7 @@ class WatchService : Service() {
 /** Al prender el teléfono o actualizar la app, retoma la vigilancia. */
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(c: Context, i: Intent) {
+        if (i.action != Intent.ACTION_BOOT_COMPLETED && i.action != Intent.ACTION_MY_PACKAGE_REPLACED) return
         Scheduler.schedule(c, replace = false)
         Scheduler.keepAlive(c)
         WatchService.sync(c)

@@ -13,6 +13,12 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 - La contraseña se puede **guardar en el teléfono, cifrada**, o no guardarse nunca.
 - Entra tanto con el formulario propio de Guaraní como con el **usuario institucional** (ingreso
   único SAML/CAS, como en UTN-FRBA o UNQ).
+- **Sonido propio** cuando cargan una calificación, con botón para **compartirla**.
+- **Exámenes con recordatorios** (una semana antes, el día anterior y el mismo día) y botón para
+  pasarlos a **Google Calendar**.
+- Los **PDF oficiales** de Guaraní (historia académica, plan, comprobantes), tal como los emite el
+  sitio, listos para abrir o compartir.
+- Institución y **carrera seleccionada** siempre a la vista, en todas las pantallas.
 
 > No es una aplicación oficial del SIU ni de ninguna institución. La hizo un estudiante, y el
 > código está abierto para que cualquiera lo revise.
@@ -21,8 +27,8 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 
 | Archivo | Qué es |
 |---|---|
-| [`publicado/Guarani-al-dia-1.3.2.apk`](publicado/Guarani-al-dia-1.3.2.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
-| [`publicado/Manual-Guarani-al-dia.pdf`](publicado/Manual-Guarani-al-dia.pdf) | **Manual de uso completo** (17 páginas, con capturas): instalación, cuentas, avisos, sesión, ajustes y problemas frecuentes. También se puede [leer en línea](docs/manual/MANUAL.md). |
+| [`publicado/Guarani-al-dia-1.4.apk`](publicado/Guarani-al-dia-1.4.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
+| [`publicado/Manual-Guarani-al-dia.pdf`](publicado/Manual-Guarani-al-dia.pdf) | **Manual de uso completo** (21 páginas, con capturas): instalación, cuentas, avisos, exámenes y calendario, PDF, sesión, ajustes y problemas frecuentes. También se puede [leer en línea](docs/manual/MANUAL.md). |
 
 Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta
 fuente. No está en Google Play. Cada versión se firma con la misma clave, así que se instala encima
@@ -110,17 +116,19 @@ Algunas direcciones que suelen circular **no sirven para esta app**:
 
 **Cuatro pestañas** (todas siguen a la cuenta elegida):
 
-- **Tablero:** promedio, avance de la carrera, materias aprobadas y finales pendientes; novedades,
-  fechas que se vienen, bandeja (mensajes, encuestas, exámenes inscriptos) y el estado de cada
-  materia, que la app lee sola de tu historia académica. Deslizá hacia abajo para revisar en el
-  momento.
+- **Tablero:** arriba, la **institución** y la **carrera** con letras grandes, y si la sesión está
+  abierta. Debajo: avance de la carrera, promedio, aprobadas, finales pendientes y materias en
+  curso; **próximos exámenes** con botón *Agendar*; finales pendientes; novedades; **todas las
+  materias del plan** con estado y nota, buscador y filtros; y los **documentos oficiales** en
+  PDF. Se actualiza sola al abrir la app; deslizá hacia abajo para actualizar en el momento.
 - **Menú:** todas las secciones de tu Guaraní en botones. *Mi cuenta de alumno* sale del menú real
   de tu institución después de entrar (inscripción a materias y exámenes, plan, historia
   académica, datos personales, mensajes…). *Consultas públicas* y *Acceso y ayuda* salen de la
   portada de tu institución (fechas de examen, horarios, validador de certificados, recuperar
   contraseña…).
 - **Guaraní:** el sitio completo dentro de la app, con ingreso automático. Se puede hacer todo lo
-  que hace la web: inscribirse, descargar certificados (van a *Descargas*) y subir archivos.
+  que hace la web: inscribirse, descargar certificados (van a *Descargas* y se pueden abrir o
+  compartir al terminar) y subir archivos. El botón ⤓ guarda la pantalla como PDF.
 - **Ajustes:** cuentas, frecuencia de revisión, avisos y páginas que se vigilan.
 
 **Avisos por tema.** Cada tema tiene su canal, que se puede silenciar aparte desde Android. Con
@@ -128,15 +136,23 @@ varias cuentas, cada aviso empieza con el nombre de la cuenta.
 
 | Canal | Cuándo llega | Ejemplo de título |
 |---|---|---|
-| Notas y actas | Se carga o cambia una calificación, una promoción, una regularidad o un acta. | *«Nueva calificación en Guaraní — Análisis Matemático I: aprobada con 7.»* |
+| Calificaciones nuevas (**con sonido propio**) | Se carga o cambia una calificación, una promoción, una regularidad o un acta, incluidas las provisorias. Botón *Compartir*. | *«Nueva calificación en Guaraní — Física I: examen aprobado con 8.»* |
+| Inscripciones y mesas de examen | Aparece una fecha de examen o evaluación (botón *Agendar*), se abre o cierra una inscripción, o aparece una mesa. | *«Nueva fecha de examen»*, *«Se abrió la inscripción a exámenes»* |
+| Recordatorios de examen | Una semana antes, el día anterior y el mismo día, entre las 8 y las 22. Botón *Agendar*. | *«Mañana: Examen: Algoritmos y Estructuras de Datos»* |
 | Plan de estudios | Cambia algo en el plan de tu propuesta. | *«Cambió tu plan de estudios»* |
-| Inscripciones y mesas de examen | Se abre o cierra la inscripción a exámenes o a materias, o aparece una mesa nueva. | *«Se abrió la inscripción a exámenes»*, *«Novedades en mesas de examen»* |
 | Mensajes y encuestas | Llega un mensaje de la institución o hay una encuesta pendiente. | *«Mensaje nuevo en Guaraní»* |
-| Otros cambios en Guaraní | Cualquier otra cosa que cambie (se puede apagar en Ajustes). | *«Cambió algo en Datos censales»* |
+| Otros cambios en Guaraní | Cualquier otra cosa que cambie (se puede apagar en Ajustes). | *«Cambió algo en Datos personales»* |
 | Estado de la sesión | Guaraní no deja entrar (contraseña cambiada, sesión vencida sin contraseña guardada, captcha). Avisa una sola vez. | *«Guaraní: hay que volver a entrar»* |
 
-Los cinco primeros temas de interés se avisan **siempre**; el interruptor de Ajustes solo apaga
-«Otros cambios».
+Los temas de interés se avisan **siempre**; el interruptor de Ajustes solo apaga «Otros cambios».
+
+**Google Calendar.** *Agendar* abre tu app de calendario (Google Calendar u otra) con el examen
+cargado: título, día, hora, llamado, mesa y lugar. Vos confirmás; la app no pide permiso para leer
+ni escribir tu calendario.
+
+**Compartir.** *Compartir notas* manda un resumen en texto (carrera, promedio y materias por
+estado) por WhatsApp, mail o cualquier app. Para un documento con valor oficial, usá el PDF de la
+historia académica.
 
 ## La sesión, siempre abierta
 
@@ -167,15 +183,24 @@ teléfono apagado o sin red no hay revisión; al volver, la app se pone al día 
   para no mezclar datos.
 - Recorre las páginas del menú del alumno (hasta 30 por cuenta), guarda el texto de cada una y lo
   compara con la revisión anterior, línea por línea. Lo que aparece o desaparece es la novedad.
-- En la historia académica reconoce cada materia por su código (*«Física I (95-1124)»*) y saca
-  **estado y nota**: entiende `8 (Ocho)`, `Nota: 9` o letras como `A`.
+- Lee los reportes **completos**: en la historia académica pide *Historia completa* y en el plan de
+  estudio toca *Expandir* (son los únicos clics que hace, y solo muestran información). Entiende el
+  formato oficial de SIU Guaraní 3: el plan («8,0 (Promocionado) · Promoción»), la historia
+  («Examen - 8 (Ocho) Aprobado 20/02/2026»), la actuación provisoria y *Mis inscripciones* (fechas
+  de examen). Con eso arma la lista de materias, las notas, el promedio, el avance y los exámenes.
+- Cada calificación se avisa **una sola vez** aunque aparezca en varias páginas; la primera lectura
+  no avisa nada (son las notas que ya tenías).
+- Lee la **carrera elegida** del dato *Propuesta* del plan o del selector de Guaraní.
+- Anota los botones de PDF de cada página; al tocarlos, el archivo se pide a Guaraní con tu sesión
+  y se guarda sin modificar.
 - Nada pasa por servidores propios ni de terceros: la app habla solo con el Guaraní de cada cuenta.
 
 **Límites conocidos:** si Guaraní pide captcha al entrar, hay que hacerlo a mano una vez desde la
 pestaña Guaraní. Fechas de Examen y Horarios de Cursadas son buscadores con filtros: se usan desde
 el Menú, pero la app no los revisa sola (tus mesas sí, desde tu cuenta). Si tu carrera y otra
-propuesta se eligen con un selector dentro de Guaraní, se vigila la que esté seleccionada; para la
-otra, sumá su dirección en *Ajustes → Páginas que se vigilan*.
+propuesta se eligen con un selector dentro de Guaraní, se sigue la que esté seleccionada; para
+seguir las dos, creá una cuenta por carrera. Cada institución configura Guaraní a su manera: si en
+la tuya el tablero no muestra algo, los avisos de cambios siguen funcionando.
 
 ## Código
 
@@ -185,15 +210,17 @@ otra, sumá su dirección en *Ajustes → Páginas que se vigilan*.
 | `…/Profiles.kt` | Las cuentas: institución, dirección, usuario y contraseña cifrada; sesiones separadas por cuenta. |
 | `…/Instituciones.kt` + `assets/instituciones.json` | La lista de instituciones. |
 | `…/Scraper.kt` | Navegador invisible: entra (formulario propio o ingreso único), lee los menús y recorre las páginas. |
-| `…/Analyzer.kt` | Compara con la revisión anterior, lee materias y notas, y decide qué avisar. |
+| `…/Lector.kt` | Interpreta los reportes oficiales de Guaraní 3: plan, historia académica, actuación provisoria, inscripciones y carrera. |
+| `…/Analyzer.kt` | Compara con la revisión anterior, arma materias, exámenes y documentos, y decide qué avisar. |
+| `…/Compartir.kt` | Texto para compartir calificaciones y alta de eventos en el calendario del teléfono. |
 | `…/CheckWorker.kt`, `Scheduler.kt` | Revisión periódica de todas las cuentas. |
 | `…/KeepAliveWorker.kt`, `WatchService.kt` | Sesión siempre abierta: toque cada 8 minutos y vigilancia permanente opcional. |
-| `…/Notifier.kt` | Los canales de notificación por tema. |
+| `…/Notifier.kt` | Los canales de notificación por tema, con el sonido de las calificaciones (`res/raw/calificacion.ogg`). |
 | `…/Store.kt`, `Config.kt` | Datos de cada cuenta, fotos de cada página y ajustes generales. |
 | `app-android/app/src/main/assets/dashboard.html`, `menu.html` | El tablero y la pestaña Menú. |
 | `docs/manual/` | El manual: texto (`MANUAL.md`), capturas (`capturas.js`) y generador del PDF (`generar.py`). |
-| `app-android/app/src/test/…/PantallaTest.kt` | Abre la app como recién instalada y comprueba que se pueda escribir en Ajustes. |
-| `app-android/app/src/test/…/AnalyzerTest.kt` | Pruebas del lector de notas y materias, de los avisos por tema y de la detección de sesión vencida. |
+| `app-android/app/src/test/` | 29 pruebas: lectura de cada reporte (`LectorTest`), recorrido completo con avisos, sonido, recordatorios y datos de versiones anteriores (`FlujoTest`), pantallas, calendario y compartir (`PantallaTest`), y avisos por tema (`AnalyzerTest`). |
+| `app-android/app/src/test/guarani/` | Páginas de prueba armadas según la documentación del SIU, y `probar.js`, que les corre el mismo JavaScript que la app usa dentro de Guaraní. |
 
 Paquete `ar.pariz.guarani`, minSdk 26, targetSdk 35, Kotlin 2.0, Android Gradle Plugin 8.7.
 
