@@ -27,7 +27,7 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 
 | Archivo | Qué es |
 |---|---|
-| [`publicado/Guarani-al-dia-1.4.apk`](publicado/Guarani-al-dia-1.4.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
+| [`publicado/Guarani-al-dia-1.4.1.apk`](publicado/Guarani-al-dia-1.4.1.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
 | [`publicado/Manual-Guarani-al-dia.pdf`](publicado/Manual-Guarani-al-dia.pdf) | **Manual de uso completo** (21 páginas, con capturas): instalación, cuentas, avisos, exámenes y calendario, PDF, sesión, ajustes y problemas frecuentes. También se puede [leer en línea](docs/manual/MANUAL.md). |
 
 Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta

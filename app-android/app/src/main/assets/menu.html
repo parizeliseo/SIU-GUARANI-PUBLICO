@@ -3,51 +3,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Menú de Guaraní</title>
 <style>
-:root{--bg:#F7F6F2;--fg:#1E1E1C;--muted:#6B6A64;--panel:#FFFFFF;--line:#E3E1D9;--brand:#1F5C4A;--soft:#E7F0EC}
-@media (prefers-color-scheme: dark){:root{--bg:#1A1A18;--fg:#ECEBE6;--muted:#A3A29B;--panel:#242422;--line:#3A3936;--brand:#6CC2A0;--soft:#233A32}}
-html,body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,"Roboto",sans-serif}
-body{padding:16px 16px 28px}
-h1{font-family:"Noto Serif",Georgia,serif;font-weight:400;font-size:1.8rem;margin:0}
-.quien{display:inline-block;background:var(--soft);color:var(--fg);border-radius:10px;padding:6px 10px;font-size:.84rem;font-weight:600;margin:8px 0 0;line-height:1.3}
+:root{
+  --bg:#F3F2EC; --panel:#FFFFFF; --ink:#1B1B19; --muted:#66655F; --line:#E4E2D9; --soft:#F6F5F0;
+  --brand:#1F5C4A; --brand-d:#143D31; --brand-l:#E3EFE9; --gold:#F2C14E;
+  --r:16px; --sh:0 1px 2px rgba(20,30,25,.06),0 4px 14px rgba(20,30,25,.05);
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#141513; --panel:#1F201D; --ink:#ECEBE6; --muted:#A3A29B; --line:#33342F; --soft:#262723;
+  --brand:#2A7A62; --brand-d:#173F33; --brand-l:#1E3A30; --sh:none;
+}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Roboto","Segoe UI",sans-serif;font-size:15px;line-height:1.45}
+[hidden]{display:none !important}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{padding:0 14px 28px;max-width:720px;margin:0 auto}
+
+.hero{background:linear-gradient(160deg,var(--brand) 0%,var(--brand-d) 100%);color:#fff;padding:16px 16px 18px;border-radius:0 0 22px 22px;margin:0 -14px 14px;box-shadow:var(--sh)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem;opacity:.95;margin-bottom:12px}
+.logo i{width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.16);position:relative;display:inline-block}
+.logo i:after{content:"";position:absolute;right:4px;bottom:4px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.hero h1{font-family:"Noto Serif",Georgia,serif;font-weight:400;font-size:1.6rem;margin:0;line-height:1.2}
+.quien{font-size:.86rem;opacity:.9;margin-top:6px;line-height:1.35}
 .quien:empty{display:none}
-.lede{color:var(--muted);font-size:.9rem;margin:6px 0 18px;line-height:1.45}
-h2{font-size:1rem;margin:22px 0 10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-button.item{font:inherit;text-align:left;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:14px;min-height:74px;display:flex;flex-direction:column;gap:4px}
+.lede{font-size:.8rem;opacity:.78;margin-top:8px;line-height:1.4}
+.search{width:100%;font:inherit;font-size:.92rem;padding:11px 12px;border-radius:12px;border:0;background:rgba(255,255,255,.95);color:#1B1B19;margin-top:12px}
+
+.grupo{background:var(--panel);border-radius:var(--r);padding:6px 6px 6px;margin-bottom:12px;box-shadow:var(--sh)}
+.grupo h2{font-size:.72rem;letter-spacing:1px;text-transform:uppercase;font-weight:700;color:var(--muted);margin:10px 12px 4px}
+button.item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:transparent;border:0;border-radius:12px;padding:10px 10px}
 button.item:active{background:var(--soft)}
-button.item b{font-size:.95rem;font-weight:600}
-button.item span{font-size:.78rem;color:var(--muted);line-height:1.3}
-.empty{background:var(--panel);border:1px dashed var(--line);border-radius:12px;padding:14px;font-size:.88rem;color:var(--muted);line-height:1.45}
-.empty button{margin-top:10px;font:inherit;font-size:.85rem;border-radius:999px;padding:7px 14px;border:0;background:var(--brand);color:#fff}
+button.item + button.item{border-top:1px solid var(--line);border-radius:0}
+.ic{flex:none;width:38px;height:38px;border-radius:11px;background:var(--brand-l);color:var(--brand);display:flex;align-items:center;justify-content:center}
+@media (prefers-color-scheme: dark){ .ic{color:#9FDCC3} }
+.ic svg{width:20px;height:20px;fill:currentColor}
+.tx{flex:1;min-width:0}
+.tx b{display:block;font-size:.95rem;font-weight:600;line-height:1.25}
+.tx span{display:block;font-size:.78rem;color:var(--muted);line-height:1.3;margin-top:1px}
+.chev{flex:none;width:18px;height:18px;fill:var(--muted);opacity:.6}
+.empty{background:var(--panel);border:1px dashed var(--line);border-radius:var(--r);padding:16px;font-size:.88rem;color:var(--muted);line-height:1.45;margin-bottom:12px}
+.empty button{margin-top:10px;font-size:.88rem;font-weight:600;border-radius:12px;padding:10px 16px;border:0;background:var(--brand);color:#fff}
+.nada{color:var(--muted);font-size:.88rem;padding:8px 14px 12px}
+.foot{color:var(--muted);font-size:.74rem;text-align:center;line-height:1.5;margin-top:14px}
 </style></head><body>
-<h1>Todo Guaraní</h1>
-<p class="quien" id="cuenta-nombre"></p>
-<p class="lede">Cada botón abre esa sección de SIU Guaraní dentro de la app, con tu sesión iniciada.</p>
-<div id="sin-cuenta" class="empty" hidden>Primero agregá tu cuenta de Guaraní.<br><button onclick="Android.newAccount()">Agregar cuenta</button></div>
-<div id="todo">
-<h2>Mi cuenta de alumno</h2>
-<div id="alumno" class="grid"></div>
+<div class="wrap">
+  <header class="hero">
+    <div class="logo"><i></i>Guaraní al día</div>
+    <h1>Todo Guaraní</h1>
+    <div class="quien" id="cuenta-nombre"></div>
+    <div class="lede">Cada opción abre esa sección de SIU Guaraní dentro de la app, con tu sesión iniciada.</div>
+    <input class="search" id="q" type="search" placeholder="Buscar una sección (ej.: certificado, mesa)" autocomplete="off">
+  </header>
 
-<h2>Consultas públicas</h2>
-<div id="publico" class="grid"></div>
+  <div id="sin-cuenta" class="empty" hidden>Primero agregá tu cuenta de Guaraní.<br><button onclick="Android.newAccount()">Agregar cuenta</button></div>
 
-<h2>Acceso y ayuda</h2>
-<div id="cuenta" class="grid"></div>
+  <div id="todo">
+    <div id="alumno"></div>
+    <div class="grupo"><h2>Consultas públicas</h2><div id="publico"></div></div>
+    <div class="grupo"><h2>Acceso y ayuda</h2><div id="cuenta"></div></div>
+    <p class="nada" id="sin-resultados" hidden>Ninguna sección coincide con la búsqueda.</p>
+  </div>
+  <p class="foot">Las opciones salen del menú real de tu institución y cambian según lo que ofrezca.</p>
 </div>
 
 <script>
 var BASE='';
 var DESC={
- 'historia':'Notas, actas y promedio','plan':'Materias de tu propuesta','inscripci':'Anotarte o darte de baja',
- 'examen':'Mesas y turnos','cursada':'Comisiones y horarios','mensaje':'Avisos de la institución',
- 'encuesta':'Encuestas pendientes','dato':'Actualizar tus datos','certificad':'Pedir o descargar certificados',
- 'reporte':'Reportes y constancias','calendario':'Fechas del ciclo lectivo','perfil':'Tu perfil'
+ 'inscripcion a examen':'Anotarte a mesas de examen','inscripcion a materia':'Anotarte a cursar o darte de baja',
+ 'historia':'Notas, actas y promedio','plan':'Materias de tu propuesta','provisoria':'Notas de actas sin cerrar',
+ 'mis inscrip':'Tus inscripciones y comprobantes','inscripci':'Anotarte o darte de baja','agenda':'Clases y evaluaciones',
+ 'inasist':'Tus faltas por materia','examen':'Mesas y turnos','cursada':'Comisiones y horarios','mensaje':'Avisos de la institución',
+ 'encuesta':'Encuestas pendientes','dato':'Actualizar tus datos','certificad':'Pedir o descargar certificados','constancia':'Pedir o descargar constancias',
+ 'cronograma':'Fechas de parciales','reporte':'Reportes y constancias','calendario':'Fechas del ciclo lectivo','perfil':'Tu perfil'
 };
-function desc(t){ var n=t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); for(var k in DESC){ if(n.indexOf(k)>=0) return DESC[k]; } return ''; }
+// Íconos (Material Design, licencia Apache 2.0)
+var ICO={
+ insc:'M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z',
+ exam:'M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z',
+ hist:'M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z',
+ plan:'M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z',
+ nota:'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z',
+ doc:'M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z',
+ person:'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z',
+ mail:'M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z',
+ poll:'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z',
+ clock:'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z',
+ check:'M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z',
+ key:'M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z',
+ help:'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z',
+ login:'M11 7 9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z',
+ go:'M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'
+};
+// Cada sección del alumno va a un grupo y lleva un ícono, según su nombre.
+var GRUPOS=[
+ ['Inscripciones', /inscrip|cursada|examen|mesa|comision/],
+ ['Reportes', /historia|plan|provisoria|agenda|inasist|cronograma|reporte|actuaci|calendario|notas/],
+ ['Trámites', /certific|constancia|dato|perfil|tramite|solicit|pago|beca/],
+ ['Comunicación', /mensaje|encuesta|aviso|noticia/]
+];
+function norm(t){ return (t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+function icono(t){ var n=norm(t);
+  if(/historia/.test(n)) return 'hist'; if(/plan/.test(n)) return 'plan'; if(/provisoria|actuaci|nota/.test(n)) return 'nota';
+  if(/mis inscrip/.test(n)) return 'insc'; if(/examen|mesa/.test(n)) return 'exam'; if(/inscrip|cursada|comision/.test(n)) return 'insc';
+  if(/agenda|cronograma|calendario|horario|inasist/.test(n)) return 'clock'; if(/certific|constancia|validador/.test(n)) return 'check';
+  if(/dato|perfil|usuario/.test(n)) return 'person'; if(/mensaje|aviso/.test(n)) return 'mail'; if(/encuesta/.test(n)) return 'poll';
+  if(/contrase|recuper|clave/.test(n)) return 'key'; if(/ayuda|consulta/.test(n)) return 'help'; if(/ingres|acceso|acceder/.test(n)) return 'login';
+  return 'doc'; }
+function desc(t){ var n=norm(t); for(var k in DESC){ if(n.indexOf(k)>=0) return DESC[k]; } return ''; }
 function descPub(u){ for(var i=0;i<PUBLICO.length;i++){ if(u.indexOf(PUBLICO[i][1])>=0) return PUBLICO[i][2]; } for(var j=0;j<CUENTA.length;j++){ if(u.indexOf(CUENTA[j][1])>=0) return CUENTA[j][2]; } return ''; }
-function item(t,u,d){ var b=document.createElement('button'); b.className='item';
-  var x=document.createElement('b'); x.textContent=t; b.append(x);
-  if(d){ var s=document.createElement('span'); s.textContent=d; b.append(s); }
+function svg(k,cls){ return '<svg class="'+(cls||'')+'" viewBox="0 0 24 24" aria-hidden="true"><path d="'+ICO[k]+'"/></svg>'; }
+function item(t,u,d,ik){ var b=document.createElement('button'); b.className='item'; b.setAttribute('data-q',norm(t+' '+(d||'')));
+  var ic=document.createElement('span'); ic.className='ic'; ic.innerHTML=svg(ik||icono(t)); b.appendChild(ic);
+  var tx=document.createElement('span'); tx.className='tx'; var x=document.createElement('b'); x.textContent=t; tx.appendChild(x);
+  if(d){ var s=document.createElement('span'); s.textContent=d; tx.appendChild(s); } b.appendChild(tx);
+  var ch=document.createElement('span'); ch.innerHTML=svg('go','chev'); b.appendChild(ch.firstChild);
   b.onclick=function(){ try{ Android.open(u); }catch(e){ location.href=u; } }; return b; }
 var PUBLICO=[['Fechas de Examen','fecha_examen','Mesas por propuesta, plan y fecha'],
  ['Horarios de Cursadas','horarios_cursadas','Días, turnos y comisiones'],
@@ -59,6 +127,8 @@ var CUENTA=[['Ingresar','acceso','Usuario y contraseña'],
 var SKIP=/(acceso|fecha_examen|horarios_cursadas|validador_certificados|ayuda_menu|alta_usuario|recuperar|logout|salir)/i;
 
 function fromData(name){ var m=[]; try{ m=JSON.parse(Android.get(name)); }catch(e){} return m.filter(function(x){ return x.titulo&&x.url; }); }
+function grupo(titulo){ var g=document.createElement('div'); g.className='grupo'; var h=document.createElement('h2'); h.textContent=titulo; g.appendChild(h); return g; }
+
 function render(){
   try{ BASE=Android.base(); }catch(e){}
   var acc={}; try{ acc=JSON.parse(Android.account()); }catch(e){}
@@ -66,14 +136,20 @@ function render(){
   if(!BASE){ document.getElementById('todo').hidden=true; document.getElementById('sin-cuenta').hidden=false; return; }
   document.getElementById('todo').hidden=false; document.getElementById('sin-cuenta').hidden=true;
   var a=document.getElementById('alumno'); a.replaceChildren();
-  var menu=[]; try{ menu=JSON.parse(Android.get('menu')); }catch(e){}
-  menu=menu.filter(function(m){ return m.titulo && m.url && !SKIP.test(m.url); });
+  var menu=fromData('menu').filter(function(m){ return !SKIP.test(m.url); });
   if(!menu.length){
-    var d=document.createElement('div'); d.className='empty'; d.style.gridColumn='1/-1';
-    d.innerHTML='Inscripción a materias y exámenes, plan de estudios, historia académica, datos personales y alertas aparecen acá apenas la app entra a Guaraní con tu usuario por primera vez.';
+    var d=document.createElement('div'); d.className='empty';
+    d.textContent='Inscripción a materias y exámenes, plan de estudios, historia académica, datos personales y alertas aparecen acá apenas la app entra a Guaraní con tu usuario por primera vez.';
     var b=document.createElement('button'); b.textContent='Ingresar a Guaraní'; b.onclick=function(){ Android.open(BASE+'acceso'); };
-    d.append(document.createElement('br'), b); a.append(d);
-  } else menu.forEach(function(m){ a.append(item(m.titulo, m.url, desc(m.titulo))); });
+    d.appendChild(document.createElement('br')); d.appendChild(b); a.appendChild(d);
+  } else {
+    var cajas={}, orden=GRUPOS.map(function(g){ return g[0]; }).concat(['Otras secciones']);
+    menu.forEach(function(m){ var n=norm(m.titulo+' '+m.url), k='Otras secciones';
+      for(var i=0;i<GRUPOS.length;i++){ if(GRUPOS[i][1].test(n)){ k=GRUPOS[i][0]; break; } }
+      (cajas[k]=cajas[k]||[]).push(m); });
+    orden.forEach(function(k){ if(!cajas[k]) return; var g=grupo(k);
+      cajas[k].forEach(function(m){ g.appendChild(item(m.titulo, m.url, desc(m.titulo))); }); a.appendChild(g); });
+  }
   // Lo público y el acceso se leen de la portada de ESTA institución; si todavía no se leyó, se usan las rutas estándar de SIU Guaraní 3.
   var pub=fromData('menu_publico');
   var p=document.getElementById('publico'); p.replaceChildren();
@@ -82,14 +158,23 @@ function render(){
     pub.forEach(function(m){
       var isAcc=/(acceso|recuperar|alta_usuario|ayuda|usuario)/i.test(m.url) || /(contrase|usuario|ingres|ayuda|aqu)/i.test(m.titulo);
       var t=m.titulo; if(/^aqu[ií]$/i.test(t)) t='Crear usuario';
-      (isAcc?c:p).append(item(t, m.url, desc(t)||descPub(m.url)));
+      (isAcc?c:p).appendChild(item(t, m.url, descPub(m.url)||desc(t)));
     });
   } else {
-    PUBLICO.forEach(function(x){ p.append(item(x[0],BASE+x[1],x[2])); });
-    CUENTA.forEach(function(x){ c.append(item(x[0],BASE+x[1],x[2])); });
+    PUBLICO.forEach(function(x){ p.appendChild(item(x[0],BASE+x[1],x[2])); });
+    CUENTA.forEach(function(x){ c.appendChild(item(x[0],BASE+x[1],x[2])); });
   }
-  if(!p.children.length){ var e=document.createElement('div'); e.className='empty'; e.style.gridColumn='1/-1'; e.textContent='Esta institución no publica consultas sin ingresar.'; p.append(e); }
+  if(!p.children.length){ var e=document.createElement('p'); e.className='nada'; e.textContent='Esta institución no publica consultas sin ingresar.'; p.appendChild(e); }
+  filtrar();
 }
+function filtrar(){
+  var q=norm(document.getElementById('q').value), hay=0;
+  document.querySelectorAll('#todo .grupo').forEach(function(g){ var vis=0;
+    g.querySelectorAll('button.item').forEach(function(b){ var ok=!q||b.getAttribute('data-q').indexOf(q)>=0; b.hidden=!ok; if(ok) vis++; });
+    g.hidden=q&&!vis; hay+=vis; });
+  document.getElementById('sin-resultados').hidden=!q||hay>0;
+}
+document.getElementById('q').addEventListener('input',filtrar);
 window.dash={refresh:render};
 render();
 </script>

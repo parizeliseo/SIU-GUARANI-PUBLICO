@@ -1,113 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:fillViewport="true" android:descendantFocusability="beforeDescendants">
+    android:background="@color/bg" android:fillViewport="true">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:padding="20dp"
-        android:focusableInTouchMode="true">
+        android:orientation="vertical" android:paddingStart="16dp" android:paddingEnd="16dp"
+        android:paddingTop="20dp" android:paddingBottom="28dp"
+        android:focusable="true" android:focusableInTouchMode="true" android:descendantFocusability="beforeDescendants">
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Ajustes" android:textSize="26sp" android:fontFamily="serif" android:textColor="@color/fg"/>
+        <!-- ===== Encabezado ===== -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Ajustes" android:textSize="28sp" android:fontFamily="sans-serif-medium" android:textColor="@color/fg"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" android:layout_marginBottom="18dp"
+            android:text="Tus cuentas de Guaraní, cada cuánto se revisan y cómo te avisa la app."
+            android:textSize="14sp" android:textColor="@color/muted"/>
 
-        <!-- ===== Cuentas ===== -->
-        <TextView style="@style/SetSection" android:text="Mis cuentas de SIU Guaraní"/>
-        <TextView style="@style/SetHelp"
-            android:text="Podés tener varias: una por institución o facultad, o más de un usuario en la misma. La app las revisa a todas."/>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="8dp">
-            <Spinner android:id="@+id/accSpinner" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1"/>
-            <Button android:id="@+id/accNew" style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+ Nueva"/>
-        </LinearLayout>
-        <TextView android:id="@+id/setStatus" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" android:textSize="13sp" android:alpha="0.7" android:textColor="@color/fg"/>
+        <!-- ===== 1. Cuenta ===== -->
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView style="@style/TarjetaTitulo" android:text="Cuenta" android:drawableStart="@drawable/ic_account"/>
+                <TextView style="@style/TarjetaSub"
+                    android:text="Podés tener una por institución o facultad, o más de un usuario en la misma. La app las revisa a todas."/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical">
+                    <Spinner android:id="@+id/accSpinner" android:layout_width="0dp" android:layout_height="52dp" android:layout_weight="1"
+                        android:background="@drawable/campo_lista" android:paddingStart="6dp" android:paddingEnd="40dp"
+                        android:contentDescription="Cuenta elegida"/>
+                    <com.google.android.material.button.MaterialButton android:id="@+id/accNew"
+                        style="@style/Widget.Material3.Button.TonalButton.Icon"
+                        android:layout_width="wrap_content" android:layout_height="52dp" android:layout_marginStart="10dp"
+                        android:text="Nueva" app:icon="@drawable/ic_add" app:cornerRadius="12dp"/>
+                </LinearLayout>
+                <TextView android:id="@+id/setStatus" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:background="@drawable/estado_fondo" android:padding="10dp"
+                    android:drawableStart="@drawable/ic_sync" android:drawablePadding="10dp" app:drawableTint="@color/m_primary"
+                    android:gravity="center_vertical" android:textSize="13sp" android:textColor="@color/fg"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <TextView style="@style/SetLabel" android:text="Institución o facultad"/>
-        <AutoCompleteTextView android:id="@+id/setInst" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:completionThreshold="1" android:inputType="text" android:hint="Escribí para buscar (ej.: UTN, Comahue, IUGNA)"/>
-        <TextView style="@style/SetHelp"
-            android:text="Si la tuya no está en la lista, escribí abajo la dirección de tu Guaraní: la que ves en el navegador cuando entrás a autogestión."/>
+        <!-- ===== 2. Datos de la cuenta ===== -->
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView style="@style/TarjetaTitulo" android:text="Datos de la cuenta" android:drawableStart="@drawable/ic_school"/>
+                <TextView style="@style/TarjetaSub" android:layout_marginBottom="2dp"
+                    android:text="Elegí tu institución y poné el mismo usuario y contraseña con los que entrás a Guaraní."/>
 
-        <TextView style="@style/SetLabel" android:text="Dirección de SIU Guaraní (autogestión)"/>
-        <EditText android:id="@+id/setUrl" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:inputType="textUri" android:hint="https://…/autogestion/"/>
+                <TextView style="@style/Etiqueta" android:layout_marginTop="10dp" android:text="Dónde estudiás"/>
+                <com.google.android.material.textfield.TextInputLayout style="@style/CampoLista"
+                    android:hint="Institución o facultad" app:startIconDrawable="@drawable/ic_school"
+                    app:helperText="Escribí parte del nombre: UTN, UNC, IUGNA…">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView android:id="@+id/setInst"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:inputType="text" android:completionThreshold="1" android:importantForAutofill="no"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout style="@style/Campo"
+                    android:hint="Dirección de SIU Guaraní" app:startIconDrawable="@drawable/ic_link"
+                    app:helperText="Se completa al elegir la institución. Si no está, pegá la de tu Guaraní.">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/setUrl"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:inputType="textUri" android:importantForAutofill="no"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout android:id="@+id/tilCarrera" style="@style/Campo"
+                    android:hint="Carrera o propuesta" app:startIconDrawable="@drawable/ic_book"
+                    app:helperText="Se completa sola al leer Guaraní. Escribila solo si querés otro nombre.">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/setCarrera"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:inputType="textCapSentences" android:importantForAutofill="no"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout style="@style/Campo"
+                    android:hint="Nombre de esta cuenta" app:startIconDrawable="@drawable/ic_label"
+                    app:helperText="Cómo la vas a ver en la app. Ej.: UTN Sistemas, Diplomatura.">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/setName"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:inputType="textCapSentences" android:importantForAutofill="no"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView style="@style/SetLabel" android:text="Nombre de esta cuenta"/>
-        <EditText android:id="@+id/setName" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:inputType="textCapSentences" android:hint="Ej.: UTN Sistemas, Licenciatura, Diplomatura"/>
+                <View style="@style/Separador"/>
+                <TextView style="@style/Etiqueta" android:text="Tu usuario de Guaraní"/>
+                <com.google.android.material.textfield.TextInputLayout style="@style/Campo"
+                    android:hint="Usuario" app:startIconDrawable="@drawable/ic_person"
+                    app:helperText="DNI, legajo o e-mail, según tu institución.">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/setUser"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:inputType="text" android:autofillHints="username"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout style="@style/Campo"
+                    android:hint="Contraseña" app:startIconDrawable="@drawable/ic_lock" app:endIconMode="password_toggle">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/setPass"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:inputType="textPassword" android:autofillHints="password"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.checkbox.MaterialCheckBox android:id="@+id/setSavePass"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"
+                    android:checked="true" android:textSize="15sp" android:textColor="@color/fg"
+                    android:text="Guardar la contraseña en este teléfono"/>
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginStart="48dp" android:textSize="12.5sp" android:textColor="@color/muted"
+                    android:lineSpacingMultiplier="1.12"
+                    android:text="Queda cifrada en el teléfono y solo se envía a tu Guaraní. Así la app vuelve a entrar sola cuando la sesión vence."/>
 
-        <TextView style="@style/SetLabel" android:text="Carrera o propuesta"/>
-        <EditText android:id="@+id/setCarrera" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:inputType="textCapSentences" android:hint="Se completa sola al leer Guaraní"/>
-        <TextView style="@style/SetHelp"
-            android:text="La app la lee de Guaraní y la muestra arriba en todas las pantallas. Escribila acá solo si querés verla con otro nombre."/>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnSave"
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="18dp"
+                    android:text="Guardar cuenta y revisar" android:textSize="15sp" app:icon="@drawable/ic_check" app:cornerRadius="14dp"/>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnDelete"
+                    style="@style/Widget.Material3.Button.TextButton.Icon"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp" android:text="Borrar esta cuenta del teléfono"
+                    android:textColor="@color/danger" app:icon="@drawable/ic_delete" app:iconTint="@color/danger"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <TextView style="@style/SetLabel" android:text="Usuario"/>
-        <EditText android:id="@+id/setUser" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:inputType="text" android:autofillHints="username" android:hint="DNI, legajo o e-mail, según tu institución"/>
+        <!-- ===== 3. Revisiones ===== -->
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView style="@style/TarjetaTitulo" android:text="Revisiones" android:drawableStart="@drawable/ic_schedule"/>
+                <TextView style="@style/TarjetaSub" android:text="Valen para todas las cuentas. Los cambios se guardan solos."/>
 
-        <TextView style="@style/SetLabel" android:text="Contraseña"/>
-        <EditText android:id="@+id/setPass" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:inputType="textPassword" android:autofillHints="password"/>
-        <CheckBox android:id="@+id/setSavePass" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:checked="true" android:textColor="@color/fg"
-            android:text="Guardar la contraseña en este teléfono"/>
-        <TextView style="@style/SetHelp"
-            android:text="Queda cifrada con el Android Keystore y solo se envía a la dirección de Guaraní de esta cuenta. Con la contraseña guardada, la app vuelve a entrar sola cuando la sesión vence. Sin guardarla, usa la sesión que abras en la pestaña Guaraní y te avisa cuando hay que volver a entrar."/>
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="Revisar Guaraní cada" android:textSize="15sp" android:textColor="@color/fg"/>
+                <Spinner android:id="@+id/setInterval" android:layout_width="match_parent" android:layout_height="52dp"
+                    android:layout_marginTop="8dp" android:layout_marginBottom="10dp"
+                    android:background="@drawable/campo_lista" android:paddingStart="6dp" android:paddingEnd="40dp"
+                    android:contentDescription="Frecuencia de revisión"/>
 
-        <Button android:id="@+id/btnSave" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="14dp" android:text="Guardar cuenta y revisar"/>
-        <Button android:id="@+id/btnDelete" style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Borrar esta cuenta del teléfono"/>
+                <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setKeep" style="@style/Interruptor"
+                    android:text="Mantener la sesión abierta" android:checked="true"/>
+                <TextView style="@style/InterruptorAyuda"
+                    android:text="Toca Guaraní cada 8 minutos para que la sesión no venza."/>
+                <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setFixed" style="@style/Interruptor"
+                    android:text="Vigilancia permanente" android:checked="false"/>
+                <TextView style="@style/InterruptorAyuda"
+                    android:text="Si los avisos llegan tarde: deja una notificación fija para que Android no cierre la app. Gasta un poco más de batería."/>
+                <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setWifi" style="@style/Interruptor"
+                    android:text="Revisar solo con Wi-Fi" android:checked="false"/>
+                <TextView style="@style/InterruptorAyuda" android:text="Para no gastar datos móviles."/>
 
-        <!-- ===== Generales ===== -->
-        <TextView style="@style/SetSection" android:text="Revisiones y avisos (todas las cuentas)"/>
-        <TextView style="@style/SetHelp"
-            android:text="Siempre se avisa: calificaciones nuevas, cambios en el plan de estudios, inscripción a exámenes y a materias, mesas de examen, mensajes y encuestas."/>
-        <TextView style="@style/SetLabel" android:text="Revisar Guaraní cada"/>
-        <Spinner android:id="@+id/setInterval" android:layout_width="match_parent" android:layout_height="48dp"/>
-        <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setAll"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp"
-            android:text="Avisarme también de cualquier otro cambio" android:checked="true"/>
-        <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setWifi"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Revisar solo con Wi-Fi" android:checked="false"/>
-        <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setKeep"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Mantener la sesión abierta" android:checked="true"/>
-        <TextView style="@style/SetHelp"
-            android:text="La app toca Guaraní cada 8 minutos para que la sesión no venza. Si igual vence y la contraseña está guardada, vuelve a entrar sola."/>
-        <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setFixed"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Vigilancia permanente (notificación fija)" android:checked="false"/>
-        <TextView style="@style/SetHelp"
-            android:text="Activala si los avisos te llegan tarde o no llegan: deja una notificación fija que impide que Android cierre la app. Gasta un poco más de batería."/>
-        <Button android:id="@+id/btnGeneral" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:text="Guardar"/>
-        <Button android:id="@+id/btnCheck" style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Revisar todas ahora"/>
-        <Button android:id="@+id/btnTest" style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Probar notificación"/>
-        <Button android:id="@+id/btnSound" style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Sonido de las calificaciones"/>
-        <TextView style="@style/SetHelp"
-            android:text="Las calificaciones nuevas suenan con un tono propio. Desde este botón podés cambiarlo o subirle la importancia. Si el teléfono está en silencio o en No molestar, no suena."/>
-        <Button android:id="@+id/btnBattery" style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Permitir que funcione en segundo plano"/>
+                <!-- Se guarda solo al tocar cada opción; el botón queda oculto por compatibilidad -->
+                <Button android:id="@+id/btnGeneral" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:visibility="gone" android:text="Guardar"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- ===== Avanzado ===== -->
-        <TextView style="@style/SetSection" android:text="Avanzado (cuenta elegida)"/>
-        <TextView style="@style/SetLabel" android:text="Páginas de Guaraní que se vigilan (una por línea)"/>
-        <TextView style="@style/SetHelp"
-            android:text="Se completa sola con el menú de Guaraní en la primera revisión. Podés agregar o borrar direcciones."/>
-        <EditText android:id="@+id/setPages" android:importantForAutofill="no" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:inputType="textMultiLine|textUri" android:minLines="4" android:gravity="top" android:textSize="13sp"/>
-        <Button android:id="@+id/btnPages" style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Guardar páginas"/>
-        <Button android:id="@+id/btnReset" style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Volver a tomar la foto inicial (sin avisar)"/>
+        <!-- ===== 4. Avisos ===== -->
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView style="@style/TarjetaTitulo" android:text="Avisos" android:drawableStart="@drawable/ic_bell"/>
+                <TextView style="@style/TarjetaSub"
+                    android:text="Calificaciones, plan de estudios, inscripciones, mesas, mensajes y encuestas se avisan siempre."/>
+                <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/setAll" style="@style/Interruptor"
+                    android:text="Avisar también otros cambios" android:checked="true"/>
+                <TextView style="@style/InterruptorAyuda" android:text="Datos personales, inasistencias y cualquier otra página."/>
 
-        <TextView style="@style/SetHelp" android:layout_marginTop="20dp"
-            android:text="Guaraní al día es una app libre y gratuita, hecha por un alumno. No es una aplicación oficial del SIU ni de ninguna institución. Código y descargas: github.com/parizeliseo/SIU-GUARANI-PUBLICO"/>
+                <View style="@style/Separador" android:layout_marginBottom="2dp"/>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnTest" style="@style/FilaAccion"
+                    android:text="Probar una notificación" app:icon="@drawable/ic_bell"/>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnSound" style="@style/FilaAccion"
+                    android:text="Sonido de las calificaciones" app:icon="@drawable/ic_volume"/>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnBattery" style="@style/FilaAccion"
+                    android:text="Permitir que funcione en segundo plano" app:icon="@drawable/ic_battery"/>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnCheck" style="@style/FilaAccion"
+                    android:text="Revisar todas las cuentas ahora" app:icon="@drawable/ic_sync"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ===== 5. Avanzado ===== -->
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView style="@style/TarjetaTitulo" android:text="Avanzado" android:drawableStart="@drawable/ic_list"/>
+                <TextView style="@style/TarjetaSub"
+                    android:text="Páginas de Guaraní que se revisan en la cuenta elegida. La lista se arma sola con tu menú."/>
+                <com.google.android.material.textfield.TextInputLayout style="@style/Campo" android:layout_marginTop="0dp"
+                    android:hint="Páginas vigiladas (una por línea)" app:startIconDrawable="@drawable/ic_link">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/setPages"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:inputType="textMultiLine|textUri" android:minLines="3" android:maxLines="8" android:gravity="top"
+                        android:textSize="12.5sp" android:importantForAutofill="no"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnPages" style="@style/FilaAccion"
+                    android:layout_marginTop="6dp" android:text="Guardar páginas" app:icon="@drawable/ic_check"/>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnReset" style="@style/FilaAccion"
+                    android:text="Empezar de cero sin avisar" app:icon="@drawable/ic_history"/>
+                <TextView style="@style/InterruptorAyuda" android:layout_marginStart="44dp" android:layout_marginEnd="0dp"
+                    android:text="Vuelve a tomar la foto de Guaraní. Sirve si recibís avisos viejos o repetidos."/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ===== Pie ===== -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" android:gravity="center" android:textSize="12sp" android:textColor="@color/muted"
+            android:lineSpacingMultiplier="1.2"
+            android:text="Guaraní al día · app libre y gratuita, hecha por un estudiante.\nNo es una aplicación oficial del SIU ni de ninguna institución.\ngithub.com/parizeliseo/SIU-GUARANI-PUBLICO"/>
     </LinearLayout>
 </ScrollView>

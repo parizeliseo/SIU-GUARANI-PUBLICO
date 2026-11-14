@@ -521,8 +521,7 @@ class MainActivity : AppCompatActivity() {
     private var spinnerLabels: List<String> = emptyList()
 
     private fun setupSettings() {
-        findViewById<Spinner>(R.id.setInterval).adapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Config.INTERVAL_LABELS)
+        findViewById<Spinner>(R.id.setInterval).adapter = listaSimple(Config.INTERVAL_LABELS)
 
         val insts = Instituciones.all(this)
         fInst.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, insts))
@@ -560,14 +559,14 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton("Cancelar", null).show()
         }
 
-        findViewById<Button>(R.id.btnGeneral).setOnClickListener {
-            Config.saveGeneral(this, Config.INTERVALS[findViewById<Spinner>(R.id.setInterval).selectedItemPosition],
-                findViewById<MaterialSwitch>(R.id.setAll).isChecked, findViewById<MaterialSwitch>(R.id.setWifi).isChecked,
-                findViewById<MaterialSwitch>(R.id.setKeep).isChecked, findViewById<MaterialSwitch>(R.id.setFixed).isChecked)
-            Scheduler.schedule(this, replace = true)
-            Scheduler.keepAlive(this)
-            WatchService.sync(this)
-            toast("Guardado")
+        findViewById<Button>(R.id.btnGeneral).setOnClickListener { guardarGenerales(true) }
+        // Revisiones y avisos se guardan solos al tocar cada opción.
+        listOf(R.id.setAll, R.id.setWifi, R.id.setKeep, R.id.setFixed).forEach { id ->
+            findViewById<MaterialSwitch>(id).setOnCheckedChangeListener { _, _ -> if (!llenandoAjustes) guardarGenerales(false) }
+        }
+        findViewById<Spinner>(R.id.setInterval).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p: AdapterView<*>?, v: View?, pos: Int, id: Long) { if (!llenandoAjustes) guardarGenerales(false) }
+            override fun onNothingSelected(p: AdapterView<*>?) {}
         }
         findViewById<Button>(R.id.btnCheck).setOnClickListener { Scheduler.checkNow(this); toast("Revisando todas las cuentas…") }
         findViewById<Button>(R.id.btnTest).setOnClickListener {
@@ -597,6 +596,28 @@ class MainActivity : AppCompatActivity() {
             toast("Tomando una foto nueva de Guaraní")
         }
         loadSettingsFields()
+    }
+
+    private var llenandoAjustes = false
+    private var ultimoGeneral = ""
+
+    /** Lista desplegable con el texto del mismo tamaño que el resto de la pantalla. */
+    private fun listaSimple(items: List<String>): ArrayAdapter<String> =
+        ArrayAdapter(this, R.layout.lista_item, items).apply { setDropDownViewResource(R.layout.lista_desplegada) }
+
+    private fun guardarGenerales(avisar: Boolean) {
+        val intervalo = Config.INTERVALS[findViewById<Spinner>(R.id.setInterval).selectedItemPosition.coerceAtLeast(0)]
+        val todo = findViewById<MaterialSwitch>(R.id.setAll).isChecked; val wifi = findViewById<MaterialSwitch>(R.id.setWifi).isChecked
+        val keep = findViewById<MaterialSwitch>(R.id.setKeep).isChecked; val fijo = findViewById<MaterialSwitch>(R.id.setFixed).isChecked
+        val firma = "$intervalo|$todo|$wifi|$keep|$fijo"
+        if (firma == ultimoGeneral && !avisar) return
+        val cambioRevision = ultimoGeneral.substringBefore('|') != intervalo.toString() || ultimoGeneral.split('|').getOrNull(2) != wifi.toString()
+        ultimoGeneral = firma
+        Config.saveGeneral(this, intervalo, todo, wifi, keep, fijo)
+        if (cambioRevision || avisar) Scheduler.schedule(this, replace = true)
+        Scheduler.keepAlive(this)
+        WatchService.sync(this)
+        if (avisar) toast("Guardado")
     }
 
     private fun saveAccount() {
@@ -632,7 +653,7 @@ class MainActivity : AppCompatActivity() {
         spinnerIds = all.map { it.id } + listOf(null)
         if (labels != spinnerLabels) {      // la lista solo se rearma si cambió
             spinnerLabels = labels
-            accSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, labels)
+            accSpinner.adapter = listaSimple(labels)
         }
         val sel = spinnerIds.indexOf(editingId).coerceAtLeast(0)
         if (accSpinner.selectedItemPosition != sel) accSpinner.setSelection(sel, false)
@@ -642,20 +663,25 @@ class MainActivity : AppCompatActivity() {
         fUrl.setText(p?.url ?: ""); fUrl.error = null
         fName.setText(p?.nombre ?: "")
         fCarrera.setText(p?.carrera ?: "")
-        fCarrera.hint = p?.let { Store.resumen(this, it.id).optString("propuesta") }?.takeIf { it.isNotBlank() }
-            ?.let { "Leída de Guaraní: $it" } ?: "Se completa sola al leer Guaraní"
+        findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.tilCarrera).helperText =
+            p?.let { Store.resumen(this, it.id).optString("propuesta") }?.takeIf { it.isNotBlank() }
+                ?.let { "Leída de Guaraní: $it. Escribila solo si querés otro nombre." }
+                ?: "Se completa sola al leer Guaraní. Escribila solo si querés otro nombre."
         fUser.setText(p?.let { Profiles.user(this, it.id) } ?: "")
         fPass.setText(p?.let { Profiles.pass(this, it.id) } ?: "")
         fSave.isChecked = p?.savePass ?: true
         findViewById<Button>(R.id.btnDelete).visibility = if (p != null) View.VISIBLE else View.GONE
-        findViewById<Button>(R.id.btnSave).text = if (p == null) "Agregar cuenta y revisar" else "Guardar cuenta y revisar"
+        findViewById<Button>(R.id.btnSave).text = if (p == null) "Agregar cuenta y revisar" else "Guardar cambios y revisar"
         findViewById<EditText>(R.id.setPages).setText(p?.let { Store.watched(this, it.id).joinToString("\n") } ?: "")
 
-        findViewById<Spinner>(R.id.setInterval).setSelection(Config.INTERVALS.indexOf(Config.interval(this)).coerceAtLeast(0))
+        llenandoAjustes = true
+        findViewById<Spinner>(R.id.setInterval).setSelection(Config.INTERVALS.indexOf(Config.interval(this)).coerceAtLeast(0), false)
         findViewById<MaterialSwitch>(R.id.setAll).isChecked = Config.notifyAll(this)
         findViewById<MaterialSwitch>(R.id.setWifi).isChecked = Config.wifiOnly(this)
         findViewById<MaterialSwitch>(R.id.setKeep).isChecked = Config.keepAlive(this)
         findViewById<MaterialSwitch>(R.id.setFixed).isChecked = Config.fixed(this)
+        ultimoGeneral = "${Config.interval(this)}|${Config.notifyAll(this)}|${Config.wifiOnly(this)}|${Config.keepAlive(this)}|${Config.fixed(this)}"
+        accSpinner.post { llenandoAjustes = false }
         updateStatus()
     }
 

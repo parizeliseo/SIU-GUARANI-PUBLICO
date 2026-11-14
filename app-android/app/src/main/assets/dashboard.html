@@ -48,10 +48,26 @@ button{font:inherit;color:inherit;cursor:pointer}
 .acts button.main{background:#fff;color:var(--brand-d)}
 .acts button:active{transform:scale(.98)}
 
+/* ---------- barra de secciones ---------- */
+.jump{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+  margin:0 -14px 12px;padding:8px 14px;background:var(--bg);border-bottom:1px solid transparent;transition:border-color .2s}
+.jump::-webkit-scrollbar{display:none}
+.jump.sombra{border-bottom-color:var(--line);box-shadow:0 2px 6px rgba(0,0,0,.04)}
+.jump button{flex:none;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 12px;
+  font-size:.82rem;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+.jump button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.jump b{font-weight:700;font-size:.72rem;background:var(--soft);color:var(--muted);border-radius:999px;padding:1px 7px}
+.jump button.on b{background:rgba(255,255,255,.22);color:#fff}
+.sec-t{font-size:.7rem;letter-spacing:1px;text-transform:uppercase;font-weight:700;color:var(--muted);margin:4px 2px 8px}
+section{scroll-margin-top:60px}
+
 /* ---------- tarjetas ---------- */
 .card{background:var(--panel);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
 .card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-h2{font-size:1.02rem;margin:0;font-weight:700;letter-spacing:.1px}
+h2{font-size:1.02rem;margin:0;font-weight:700;letter-spacing:.1px;display:flex;align-items:center;gap:10px}
+h2 .ic{flex:none;width:32px;height:32px;border-radius:10px;background:var(--brand-l);color:var(--brand);display:inline-flex;align-items:center;justify-content:center}
+@media (prefers-color-scheme: dark){ h2 .ic{color:#9FDCC3} }
+h2 .ic svg{width:18px;height:18px;fill:currentColor}
 .hint{color:var(--muted);font-size:.82rem;margin:2px 0 10px}
 .link{background:transparent;border:0;color:var(--brand);font-weight:600;font-size:.85rem;padding:4px 0}
 @media (prefers-color-scheme: dark){ .link{color:#7FD3B2} }
@@ -170,38 +186,48 @@ h2{font-size:1.02rem;margin:0;font-weight:700;letter-spacing:.1px}
     Entrá desde la pestaña <b style="display:inline">Guaraní</b> o guardá tu contraseña en <b style="display:inline">Ajustes</b>. Mientras tanto no llegan avisos.
   </div>
 
-  <section class="kpis" id="kpis"></section>
+  <nav class="jump" id="jump" aria-label="Secciones">
+    <button data-to="resumen" class="on">Resumen</button>
+    <button data-to="fechas">Exámenes <b id="j-fechas">0</b></button>
+    <button data-to="materias">Materias <b id="j-materias">0</b></button>
+    <button data-to="novedades">Novedades <b id="j-novedades">0</b></button>
+    <button data-to="docs">Documentos <b id="j-docs">0</b></button>
+  </nav>
+
+  <section id="resumen"><div class="sec-t">Resumen de la carrera</div>
+  <div class="kpis" id="kpis"></div></section>
 
   <section class="card" id="fechas">
-    <div class="card-h"><h2>Próximos exámenes</h2><button class="btn" onclick="Android.reminder('')">+ Recordatorio</button></div>
+    <div class="card-h"><h2><span class="ic" data-ico="cal"></span>Próximos exámenes</h2><button class="btn" onclick="Android.reminder('')">+ Recordatorio</button></div>
     <div id="fechas-l"></div>
   </section>
 
   <section class="card" id="finales" hidden>
-    <div class="card-h"><h2>Finales pendientes</h2></div>
+    <div class="card-h"><h2><span class="ic" data-ico="flag"></span>Finales pendientes</h2></div>
     <p class="hint">Materias regulares que todavía no rendiste. Tocá «Agendar» para ponerte una fecha.</p>
     <div id="finales-l"></div>
   </section>
 
-  <section class="card" id="novedades">
-    <div class="card-h"><h2>Novedades</h2><button class="link" id="nov-mas" hidden></button></div>
-    <div id="nov-l"></div>
-  </section>
 
   <section class="card" id="materias">
-    <div class="card-h"><h2>Materias y calificaciones</h2><button class="btn pri" id="share-btn">Compartir</button></div>
+    <div class="card-h"><h2><span class="ic" data-ico="book"></span>Materias y calificaciones</h2><button class="btn pri" id="share-btn">Compartir</button></div>
     <input class="search" id="q" type="search" placeholder="Buscar materia o código" autocomplete="off">
     <div class="filters" id="filtros"></div>
     <div id="mat-l"></div>
   </section>
 
   <section class="card" id="otra" hidden>
-    <div class="card-h"><h2>Otra propuesta</h2></div>
+    <div class="card-h"><h2><span class="ic" data-ico="school"></span>Otra propuesta</h2></div>
     <div id="otra-l"></div>
   </section>
 
+  <section class="card" id="novedades">
+    <div class="card-h"><h2><span class="ic" data-ico="bell"></span>Novedades</h2><button class="link" id="nov-mas" hidden></button></div>
+    <div id="nov-l"></div>
+  </section>
+
   <section class="card" id="docs">
-    <div class="card-h"><h2>Documentos oficiales</h2><button class="link" id="doc-mas" hidden></button></div>
+    <div class="card-h"><h2><span class="ic" data-ico="pdf"></span>Documentos oficiales</h2><button class="link" id="doc-mas" hidden></button></div>
     <p class="hint">Los emite Guaraní: la app los descarga del sitio con tu sesión, sin modificarlos. Después podés abrirlos o compartirlos.</p>
     <div id="doc-l"></div>
   </section>
@@ -367,9 +393,35 @@ h2{font-size:1.02rem;margin:0;font-weight:700;letter-spacing:.1px}
     var firma=JSON.stringify([acc.id,r,mats,cal,nov.slice(0,90),docs,dip]);
     if(!force&&firma===st.firma) return;  // nada cambió: no se redibuja (más fluido)
     st.firma=firma;
-    indicadores(r,mats); fechas(cal); finales(mats); novedades(nov); materias(mats); otra(dip); documentos(docs);
+    contar(cal,mats,nov,docs); indicadores(r,mats); fechas(cal); finales(mats); novedades(nov); materias(mats); otra(dip); documentos(docs);
     $('foot').textContent=(A('status')||'')+' · Guaraní al día no es una app oficial del SIU.';
   }
+
+  var ICO={
+    cal:'M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z',
+    flag:'M14.4 6 14 4H5v17h2v-7h5.6l.4 2h7V6z',
+    bell:'M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z',
+    book:'M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z',
+    school:'M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z',
+    pdf:'M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'};
+  document.querySelectorAll('[data-ico]').forEach(function(e){ e.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+ICO[e.getAttribute('data-ico')]+'"/></svg>'; });
+
+  // Barra de secciones: salta a cada parte y marca dónde estás.
+  var jump=$('jump');
+  jump.querySelectorAll('button').forEach(function(b){ b.onclick=function(){
+    var t=$(b.getAttribute('data-to')); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); }; });
+  function marcar(){
+    var y=window.scrollY+80, act='resumen';
+    ['resumen','fechas','materias','novedades','docs'].forEach(function(id){ var e=$(id); if(e&&!e.hidden&&e.offsetTop<=y) act=id; });
+    jump.querySelectorAll('button').forEach(function(b){ var on=b.getAttribute('data-to')===act; b.classList.toggle('on',on);
+      if(on&&b.scrollIntoViewIfNeeded) b.scrollIntoViewIfNeeded(false); });
+    jump.classList.toggle('sombra', jump.getBoundingClientRect().top<=0 && window.scrollY>40);
+  }
+  window.addEventListener('scroll',marcar,{passive:true});
+  window.contar=function(cal,mats,nov,docs){
+    var fut=cal.filter(function(e){ var n=dias(e.fecha); return n!==null&&n>=0; }).length;
+    $('j-fechas').textContent=fut; $('j-materias').textContent=mats.length; $('j-novedades').textContent=nov.length; $('j-docs').textContent=docs.length;
+  };
 
   $('q').addEventListener('input',function(){ st.q=this.value; materias(data('materias')); });
   window.dash={refresh:function(){ render(false); }};

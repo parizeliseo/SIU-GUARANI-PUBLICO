@@ -13,8 +13,8 @@ android {
         applicationId = "ar.pariz.guarani"
         minSdk = 26
         targetSdk = 35
-        versionCode = 7
-        versionName = "1.4"
+        versionCode = 8
+        versionName = "1.4.1"
     }
 
     // La clave de firma NO está en el repositorio. Para firmar, poné guarani.keystore y
@@ -42,7 +42,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
-    testOptions { unitTests { isIncludeAndroidResources = true } }
+    testOptions { unitTests {
+        isIncludeAndroidResources = true
+        all { t -> System.getProperty("capturas")?.let { t.systemProperty("capturas", it) } }
+    } }
 }
 
 dependencies {

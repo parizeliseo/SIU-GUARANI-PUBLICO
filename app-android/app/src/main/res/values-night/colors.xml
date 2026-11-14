@@ -1,4 +1,24 @@
 <resources>
-    <color name="bg">#1A1A18</color>
-    <color name="fg">#ECEBE6</color>
+    <color name="bg">#121311</color>
+    <color name="fg">#E7E6E1</color>
+    <color name="muted">#A3A29B</color>
+    <color name="card">#1D1E1B</color>
+    <color name="line">#33342F</color>
+    <color name="danger">#F2B8B5</color>
+    <color name="m_primary">#8FD5B6</color>
+    <color name="m_on_primary">#003827</color>
+    <color name="m_primary_container">#1E4F3F</color>
+    <color name="m_on_primary_container">#B4F0D3</color>
+    <color name="m_secondary">#B4CCC0</color>
+    <color name="m_secondary_container">#2C4A3E</color>
+    <color name="m_on_secondary_container">#D0E9DC</color>
+    <color name="m_tertiary">#E9C46A</color>
+    <color name="m_tertiary_container">#5A4300</color>
+    <color name="m_surface_variant">#3E443F</color>
+    <color name="m_on_surface_variant">#BEC5BE</color>
+    <color name="m_outline">#88908A</color>
+    <color name="m_outline_variant">#3E443F</color>
+    <color name="m_container_low">#191A17</color>
+    <color name="m_container">#1F201D</color>
+    <color name="m_container_high">#292A27</color>
 </resources>

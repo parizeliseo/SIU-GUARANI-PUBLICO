@@ -100,7 +100,7 @@ cuenta de Guaraní.
 ## 4. Agregar tu cuenta
 
 ![Datos de la cuenta](img/02-cuenta.png)
-*Esquema de la pantalla para agregar una cuenta, con datos de ejemplo.*
+*La parte «Cuenta» y «Datos de la cuenta» de Ajustes, con datos de ejemplo.*
 
 La primera vez, la app te recibe con una pantalla de bienvenida. Tocá **Agregar mi cuenta** y
 se abre la pestaña **Ajustes**. Completá los datos en este orden:
@@ -111,7 +111,8 @@ se abre la pestaña **Ajustes**. Completá los datos en este orden:
 2. **Dirección de SIU Guaraní.** Se completa sola cuando elegís la institución. No la toques,
    salvo que la tuya no esté en la lista.
 3. **Nombre de esta cuenta.** Es el nombre con el que la vas a ver en la app. Poné lo que
-   quieras: *UTN Sistemas*, *Licenciatura*, *Diplomatura*.
+   quieras: *UTN Sistemas*, *Licenciatura*, *Diplomatura*. (El campo **Carrera o propuesta**,
+   justo arriba, dejalo vacío: se completa solo.)
 4. **Usuario.** El mismo con el que entrás a Guaraní: DNI, legajo o e-mail, según tu institución.
 5. **Contraseña.** La de Guaraní.
 6. **Guardar la contraseña en este teléfono.** Viene tildado, y conviene dejarlo así: con la
@@ -181,14 +182,24 @@ Es el resumen de tu carrera, de arriba hacia abajo:
 ### Menú
 
 ![Pestaña Menú](img/05-menu.png)
-*Todas las secciones de tu Guaraní, en botones.*
+*Todas las secciones de tu Guaraní, ordenadas por tema.*
 
-Reúne todo lo que tiene tu Guaraní. Cada botón abre esa sección en la pestaña Guaraní, con tu
-sesión ya iniciada.
+Reúne todo lo que tiene tu Guaraní. Cada opción abre esa sección en la pestaña Guaraní, con tu
+sesión ya iniciada. Arriba muestra la institución y la carrera de la cuenta, y tiene un
+**buscador**: escribí, por ejemplo, *certificado* o *mesa* y quedan solo esas opciones.
 
-- **Mi cuenta de alumno:** las secciones de tu menú real (inscripción a materias y a exámenes,
-  plan de estudios, historia académica, mensajes, certificados, datos personales…). Aparecen
-  después de la primera revisión y cambian según lo que ofrezca tu institución.
+Las secciones de tu menú real aparecen después de la primera revisión, cambian según lo que
+ofrezca tu institución y se ordenan en grupos:
+
+- **Inscripciones:** a materias, a exámenes y tus inscripciones.
+- **Reportes:** historia académica, plan de estudios, actuación provisoria, agenda,
+  inasistencias.
+- **Trámites:** certificados, constancias y datos personales.
+- **Comunicación:** mensajes y encuestas.
+- **Otras secciones:** lo que no entre en los grupos anteriores.
+
+Además, siempre están:
+
 - **Consultas públicas:** lo que se puede ver sin ingresar, como fechas de examen, horarios de
   cursadas y el validador de certificados.
 - **Acceso y ayuda:** ingresar, recuperar la contraseña y el formulario de ayuda.
@@ -211,8 +222,8 @@ hacer acá: inscribirte, darte de baja, pedir un certificado, subir un archivo.
 
 ### Ajustes
 
-Tiene tres partes: tus cuentas, las revisiones y avisos, y las opciones avanzadas. Está
-explicada opción por opción en [Ajustes, uno por uno](#16-ajustes-uno-por-uno).
+Está ordenada en tarjetas: **Cuenta**, **Datos de la cuenta**, **Revisiones**, **Avisos** y
+**Avanzado**. Está explicada opción por opción en [Ajustes, uno por uno](#16-ajustes-uno-por-uno).
 
 ## 7. Los avisos
 
@@ -222,8 +233,8 @@ explicada opción por opción en [Ajustes, uno por uno](#16-ajustes-uno-por-uno)
 Cada tema tiene su propio aviso, con un título que dice qué pasó. Para tener en cuenta:
 
 - Los avisos de **notas, plan de estudios, inscripciones, mesas, mensajes y encuestas** llegan
-  **siempre**. Los de «otros cambios» se pueden apagar en Ajustes con *Avisarme también de
-  cualquier otro cambio*.
+  **siempre**. Los de «otros cambios» se pueden apagar en Ajustes con *Avisar también otros
+  cambios*.
 - Al **tocar un aviso** se abre la app en la cuenta que corresponde.
 - Con varias cuentas, el título empieza con el nombre de la cuenta: *«UTN Sistemas · Nueva
   calificación en Guaraní»*.
@@ -264,7 +275,7 @@ silencioso sin tocar los demás. Los canales son: *Calificaciones nuevas*, *Insc
 de examen*, *Recordatorios de examen*, *Plan de estudios*, *Mensajes y encuestas*, *Otros
 cambios en Guaraní*, *Estado de la sesión* y *Vigilancia permanente*.
 
-**Probar que los avisos llegan.** En Ajustes, tocá **Probar notificación**. Si no aparece nada,
+**Probar que los avisos llegan.** En Ajustes, tocá **Probar una notificación**. Si no aparece nada,
 la app no tiene permiso para notificar: activalo en *Configuración del teléfono → Apps → Guaraní
 al día → Notificaciones*.
 
@@ -444,11 +455,11 @@ para esta app, así que la contraseña tampoco viaja a la nube.
 Guaraní, la app te pregunta: **Guardar**, **Ahora no** o **Nunca para esta cuenta**.
 
 **Cambiarla.** Si cambiaste la contraseña en Guaraní, la app no va a poder entrar y te va a
-avisar. Andá a Ajustes, elegí la cuenta, escribí la contraseña nueva y tocá **Guardar cuenta y
+avisar. Andá a Ajustes, elegí la cuenta, escribí la contraseña nueva y tocá **Guardar cambios y
 revisar**.
 
 **Borrarla.** En Ajustes, destildá *Guardar la contraseña en este teléfono* y tocá **Guardar
-cuenta y revisar**. O borrá la cuenta.
+cambios y revisar**. O borrá la cuenta.
 
 **Qué guarda la app en el teléfono.** La dirección de tu Guaraní, tu usuario y tu contraseña
 (cifrados), tus materias y notas, las fechas de examen, y el texto de las páginas que revisó,
@@ -520,25 +531,27 @@ No hace falta poner usuario ni contraseña: solo la dirección.
 ## 16. Ajustes, uno por uno
 
 ![Ajustes generales](img/08-ajustes.png)
-*Esquema de la parte de revisiones, avisos y opciones avanzadas.*
+*Las tarjetas Revisiones, Avisos y Avanzado.*
 
-La pestaña Ajustes tiene tres partes, una debajo de la otra:
+La pestaña Ajustes está ordenada en cinco tarjetas, una debajo de la otra:
 
-- **Mis cuentas de SIU Guaraní:** los datos de cada cuenta. Es lo único que hay que completar
-  para empezar.
-- **Revisiones y avisos:** cada cuánto se revisa y qué se avisa. Vale para todas las cuentas.
+- **Cuenta:** qué cuenta estás viendo, el botón **+ Nueva** y la línea de estado.
+- **Datos de la cuenta:** dónde estudiás y tu usuario de Guaraní. Es lo único que hay que
+  completar para empezar.
+- **Revisiones:** cada cuánto se revisa. Vale para todas las cuentas.
+- **Avisos:** qué se avisa y los botones para probar y configurar las notificaciones.
 - **Avanzado:** qué páginas se vigilan en la cuenta elegida.
 
 Dos cosas para recordar:
 
-- Los datos de una cuenta se guardan con **Guardar cuenta y revisar**.
-- Las opciones de revisiones y avisos se guardan con el botón **Guardar** de esa parte. Si
-  cambiás un interruptor y salís sin tocarlo, el cambio no queda.
+- Los datos de una cuenta se guardan con **Guardar cambios y revisar** (o **Agregar cuenta y
+  revisar** si es nueva).
+- Las opciones de Revisiones y Avisos **se guardan solas** apenas las cambiás.
 
-Arriba, debajo de la lista de cuentas, la línea **Última revisión** dice cuándo se revisó esa
-cuenta y cómo salió. Es lo primero que conviene mirar si algo no anda.
+En la tarjeta Cuenta, la línea de estado dice cuándo se revisó esa cuenta por última vez y
+cómo salió. Es lo primero que conviene mirar si algo no anda.
 
-### Mis cuentas de SIU Guaraní
+### Cuenta y Datos de la cuenta
 
 | Opción | Para qué sirve |
 |---|---|
@@ -547,24 +560,23 @@ cuenta y cómo salió. Es lo primero que conviene mirar si algo no anda.
 | Institución o facultad | Buscar tu institución en la lista. Al elegirla se completa la dirección. |
 | Dirección de SIU Guaraní | La dirección de autogestión. Se puede escribir a mano. |
 | Nombre de esta cuenta | El nombre con el que la ves en la app y en los avisos. |
-| Carrera o propuesta | Se completa sola con la que la app lee de Guaraní (aparece de ejemplo en gris). Escribila solo si querés verla con otro nombre, o para distinguir dos cuentas del mismo usuario. |
+| Carrera o propuesta | Se completa sola con la que la app lee de Guaraní (debajo dice «Leída de Guaraní: …»). Escribila solo si querés verla con otro nombre, o para distinguir dos cuentas del mismo usuario. |
 | Usuario y Contraseña | Los de Guaraní. |
 | Guardar la contraseña en este teléfono | Si está tildado, la app entra sola cuando la sesión vence. |
-| **Guardar cuenta y revisar** | Guarda los cambios y hace una revisión de esa cuenta. |
+| **Guardar cambios y revisar** | Guarda los cambios y hace una revisión de esa cuenta. Si la cuenta es nueva dice **Agregar cuenta y revisar**. |
 | **Borrar esta cuenta del teléfono** | Borra la cuenta y todo lo guardado de ella. Pide confirmación. |
 
-### Revisiones y avisos (todas las cuentas)
+### Revisiones y Avisos (todas las cuentas, se guardan solas)
 
 | Opción | Para qué sirve |
 |---|---|
 | Revisar Guaraní cada | Cada cuánto se hace la revisión completa: 15 minutos, 30 minutos, 1 hora, 2 horas o 6 horas. Más seguido avisa antes y gasta un poco más de batería y de datos. |
-| Avisarme también de cualquier otro cambio | Apagado, solo llegan los avisos de notas, plan, inscripciones, mesas, mensajes y encuestas. |
+| Avisar también otros cambios | Apagado, solo llegan los avisos de notas, plan, inscripciones, mesas, mensajes y encuestas. |
 | Revisar solo con Wi-Fi | Para no gastar datos móviles. Sin Wi-Fi no hay revisión completa. |
 | Mantener la sesión abierta | Toca Guaraní cada 8 minutos para que la sesión no venza. Conviene dejarlo activado. |
-| Vigilancia permanente (notificación fija) | Impide que Android cierre la app. Para teléfonos que frenan las apps en segundo plano. |
-| **Guardar** | Guarda estas opciones. **Los cambios de esta parte no valen hasta tocar Guardar.** |
-| **Revisar todas ahora** | Revisa todas las cuentas en el momento. |
-| **Probar notificación** | Manda un aviso de prueba de calificación, con su sonido. |
+| Vigilancia permanente | Impide que Android cierre la app. Para teléfonos que frenan las apps en segundo plano. |
+| **Revisar todas las cuentas ahora** | Revisa todas las cuentas en el momento. |
+| **Probar una notificación** | Manda un aviso de prueba de calificación, con su sonido. |
 | **Sonido de las calificaciones** | Abre la configuración de Android del canal *Calificaciones nuevas*: tono, vibración e importancia. |
 | **Permitir que funcione en segundo plano** | Le pide a Android que no le aplique ahorro de batería a la app. |
 
@@ -574,7 +586,7 @@ cuenta y cómo salió. Es lo primero que conviene mirar si algo no anda.
 |---|---|
 | Páginas de Guaraní que se vigilan | La lista de páginas que la app revisa en esa cuenta. Se arma sola con tu menú. Podés borrar una línea para dejar de vigilar esa página, o agregar una dirección. |
 | **Guardar páginas** | Guarda la lista. |
-| **Volver a tomar la foto inicial (sin avisar)** | Borra la comparación guardada y empieza de cero, sin mandar avisos. Sirve si la app te avisa cosas viejas o repetidas. |
+| **Empezar de cero sin avisar** | Borra la comparación guardada y empieza de cero, sin mandar avisos. Sirve si la app te avisa cosas viejas o repetidas. |
 
 ## 17. Problemas frecuentes
 
@@ -605,7 +617,7 @@ pestaña Guaraní y tocá el botón de PDF de Guaraní. Como último recurso, el
 guarda la pantalla como PDF.
 
 **No me llegan avisos.**
-Revisá, en este orden: que *Probar notificación* muestre el aviso de prueba; que la línea
+Revisá, en este orden: que *Probar una notificación* muestre el aviso de prueba; que la línea
 *Revisión desde la app* del tablero tenga una fecha reciente; que hayas tocado *Permitir que
 funcione en segundo plano*; y activá *Vigilancia permanente*. Mirá también la tabla de marcas de
 [La sesión, siempre abierta](#12-la-sesión-siempre-abierta).
@@ -646,7 +658,7 @@ Funciona: la app sigue ese camino sola. Cargá el mismo usuario y contraseña qu
 página.
 
 **Me avisa de cambios que no me interesan.**
-Apagá *Avisarme también de cualquier otro cambio*, o borrá esa página de *Páginas que se
+Apagá *Avisar también otros cambios*, o borrá esa página de *Páginas que se
 vigilan*.
 
 **Cambié de teléfono.**

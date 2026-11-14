@@ -1,8 +1,30 @@
 <resources>
     <style name="Theme.Guarani" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/brand</item>
-        <item name="colorSecondary">@color/brand</item>
+        <item name="colorPrimary">@color/m_primary</item>
+        <item name="colorOnPrimary">@color/m_on_primary</item>
+        <item name="colorPrimaryContainer">@color/m_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/m_on_primary_container</item>
+        <item name="colorSecondary">@color/m_secondary</item>
+        <item name="colorSecondaryContainer">@color/m_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/m_on_secondary_container</item>
+        <item name="colorTertiary">@color/m_tertiary</item>
+        <item name="colorTertiaryContainer">@color/m_tertiary_container</item>
+        <item name="colorError">@color/danger</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="colorSurface">@color/bg</item>
+        <item name="colorOnSurface">@color/fg</item>
+        <item name="colorSurfaceVariant">@color/m_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/m_on_surface_variant</item>
+        <item name="colorOutline">@color/m_outline</item>
+        <item name="colorOutlineVariant">@color/m_outline_variant</item>
+        <item name="colorSurfaceContainerLowest">@color/card</item>
+        <item name="colorSurfaceContainerLow">@color/m_container_low</item>
+        <item name="colorSurfaceContainer">@color/m_container</item>
+        <item name="colorSurfaceContainerHigh">@color/m_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/m_surface_variant</item>
         <item name="android:windowBackground">@color/bg</item>
         <item name="android:statusBarColor">@color/brand_dark</item>
+        <item name="materialCardViewStyle">@style/Tarjeta</item>
+        <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>
     </style>
 </resources>

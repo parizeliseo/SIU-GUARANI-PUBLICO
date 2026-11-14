@@ -45,7 +45,10 @@
         <include android:id="@+id/setPane" layout="@layout/settings" android:visibility="gone"/>
     </FrameLayout>
 
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/line"/>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav" android:layout_width="match_parent" android:layout_height="wrap_content"
-        app:menu="@menu/nav"/>
+        app:menu="@menu/nav" app:labelVisibilityMode="labeled"
+        android:background="@color/card" app:itemTextAppearanceActive="@style/NavTexto"
+        app:itemTextAppearanceInactive="@style/NavTexto"/>
 </LinearLayout>

@@ -5,6 +5,24 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Guaraní al día 1.4.1 — 14 de noviembre de 2026
+
+Se instala encima de la 1.4. Es una versión de diseño: todo se ve más ordenado y más claro.
+
+- **Ajustes en tarjetas:** Cuenta, Datos de la cuenta, Revisiones, Avisos y Avanzado. Cada campo
+  tiene ícono y una ayuda corta debajo, y la carrera leída de Guaraní se ve en el campo.
+- **Las opciones de Revisiones y Avisos se guardan solas.** Ya no hay un botón «Guardar» aparte.
+- Botones con nombres más claros: *Guardar cambios y revisar*, *Probar una notificación*,
+  *Revisar todas las cuentas ahora*, *Empezar de cero sin avisar*.
+- **Tablero:** barra fija para saltar a Resumen, Exámenes, Materias, Novedades y Documentos, con
+  la cantidad de cada uno; cada sección con su ícono.
+- **Menú:** mismo encabezado que el tablero, con institución y carrera; buscador; las secciones
+  del alumno agrupadas en Inscripciones, Reportes, Trámites y Comunicación, cada una con ícono.
+- Colores propios de la app en claro y oscuro, y barra inferior con los nombres siempre visibles.
+- Manual actualizado con capturas reales de Ajustes.
+
+---
+
 ## Guaraní al día 1.4 — 13 de noviembre de 2026
 
 Se instala encima de la 1.3.2. La primera revisión después de actualizar vuelve a leer todo y no

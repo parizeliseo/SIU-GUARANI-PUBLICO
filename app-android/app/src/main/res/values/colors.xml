@@ -1,7 +1,31 @@
 <resources>
+    <!-- Marca -->
     <color name="brand">#1F5C4A</color>
     <color name="brand_dark">#143D31</color>
     <color name="ic_bg">#1F5C4A</color>
-    <color name="bg">#F7F6F2</color>
-    <color name="fg">#1E1E1C</color>
+    <color name="gold">#F2C14E</color>
+    <!-- Superficies y texto (los usa también el código) -->
+    <color name="bg">#F3F2EC</color>
+    <color name="fg">#1B1B19</color>
+    <color name="muted">#66655F</color>
+    <color name="card">#FFFFFF</color>
+    <color name="line">#E2E0D7</color>
+    <color name="danger">#B3261E</color>
+    <!-- Paleta Material 3 -->
+    <color name="m_primary">#1F5C4A</color>
+    <color name="m_on_primary">#FFFFFF</color>
+    <color name="m_primary_container">#CDE8DC</color>
+    <color name="m_on_primary_container">#0B2A20</color>
+    <color name="m_secondary">#4D6359</color>
+    <color name="m_secondary_container">#D6E9DF</color>
+    <color name="m_on_secondary_container">#0A1F17</color>
+    <color name="m_tertiary">#7A5B00</color>
+    <color name="m_tertiary_container">#FFE3A3</color>
+    <color name="m_surface_variant">#E4E3DB</color>
+    <color name="m_on_surface_variant">#55574F</color>
+    <color name="m_outline">#7C7F78</color>
+    <color name="m_outline_variant">#C9CAC1</color>
+    <color name="m_container_low">#F8F7F2</color>
+    <color name="m_container">#EEEDE6</color>
+    <color name="m_container_high">#E8E7E0</color>
 </resources>

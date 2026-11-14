@@ -97,13 +97,14 @@ ${toolbar ? `<div style="background:#1F5C4A;color:#fff;padding:8px 14px;font-siz
     console.log('ok', name);
   };
   await shot('01-bienvenida', 0, { file: 'dashboard.html', accs: [], data: {}, height: 640 });
-  await shot('02-cuenta', 3, { html: cuentaHTML, height: 760 });
+  // 02-cuenta y 08-ajustes son capturas nativas (CapturaTest).
+  if (0) await shot('02-cuenta', 3, { html: cuentaHTML, height: 760 });
   await shot('03-tablero', 0, { file: 'dashboard.html', height: 760 });
   await shot('04-materias', 0, { file: 'dashboard.html', height: 640, scrollTo: '#materias' });
   await shot('05-menu', 1, { file: 'menu.html', height: 760 });
   await shot('06-guarani', 2, { url: 'https://siu.iugna.edu.ar/autogestion/', height: 560, toolbar: 'SIU Guaraní - Acceso' });
   await shot('07-avisos', -1, { html: avisosHTML, height: 640 });
-  await shot('08-ajustes', 3, { html: generalHTML, height: 1080 });
+  if (0) await shot('08-ajustes', 3, { html: generalHTML, height: 1080 });
   await shot('09-dos-cuentas', 0, { file: 'dashboard.html', accs: dos, height: 470 });
   await shot('10-examenes', 0, { file: 'dashboard.html', height: 560, scrollTo: '#fechas' });
   await shot('11-documentos', 0, { file: 'dashboard.html', height: 520, scrollTo: '#docs' });
