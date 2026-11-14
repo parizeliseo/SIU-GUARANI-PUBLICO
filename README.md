@@ -50,7 +50,6 @@ comprobar que el archivo no fue modificado:
   herramientas de Android, `apksigner verify --print-certs` muestra la huella del certificado.
 - **En el teléfono:** si ya tenés instalada una versión anterior, Android **solo acepta la
   actualización si la firma coincide**. Un APK alterado no se instala encima.
-- Las sumas de cada versión también están en las [publicaciones (Releases)](https://github.com/parizeliseo/SIU-GUARANI-PUBLICO/releases).
 
 ## Seguridad
 
