@@ -174,6 +174,7 @@ class Scraper(private val ctx: Context) {
     @SuppressLint("SetJavaScriptEnabled")
     private fun build() {
         wv = WebView(ctx.applicationContext)
+        Seguridad.endurecer(wv.settings)
         with(wv.settings) {
             javaScriptEnabled = true
             domStorageEnabled = true
@@ -278,6 +279,8 @@ class Scraper(private val ctx: Context) {
         if (user.isEmpty() || pass.isEmpty()) return State.NEED_LOGIN
         if (d.optBoolean("captcha")) return State.CAPTCHA
         if (!d.optBoolean("login")) return State.LOGIN_FAILED
+        // La contraseña nunca se escribe en una página sin cifrar.
+        if (!Seguridad.esHttps(wv.url)) { lastError = "La página de ingreso no es segura (no usa https)"; return State.LOGIN_FAILED }
         login(user, pass)
         val after = extract()
         lastError = after.optString("error")

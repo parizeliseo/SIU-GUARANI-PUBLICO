@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Solo conexiones cifradas (https) y solo certificados de autoridades del sistema:
+     un certificado instalado a mano en el teléfono no alcanza para espiar el tráfico de la app. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

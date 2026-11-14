@@ -84,8 +84,9 @@ La app no está en Google Play: se descarga desde GitHub.
 3. Android te va a preguntar si permitís instalar apps de esta fuente (el navegador o *Archivos*).
    Tocá **Configuración**, activá **Permitir desde esta fuente** y volvé atrás.
 4. Tocá **Instalar**.
-5. Si aparece un aviso de *Play Protect* diciendo que no reconoce al desarrollador, tocá
-   **Más detalles → Instalar de todas formas**. Es normal en apps que no vienen de la tienda.
+5. Si aparece un aviso de *Play Protect* diciendo que no reconoce la app o al desarrollador, tocá
+   **Más detalles → Instalar de todas formas**. Es normal en apps que no vienen de la tienda: no
+   quiere decir que haya encontrado algo malo.
 6. Abrí la app. Cuando pida permiso para **enviar notificaciones**, tocá **Permitir**: sin ese
    permiso no puede avisarte nada.
 
@@ -465,6 +466,20 @@ cambios y revisar**. O borrá la cuenta.
 (cifrados), tus materias y notas, las fechas de examen, y el texto de las páginas que revisó,
 para poder comparar. Nada de eso se envía a otro lado. Tampoco viaja al pasar los datos a un
 teléfono nuevo: ahí hay que volver a agregar las cuentas. Al desinstalar la app se borra todo.
+
+**Protecciones de la app.**
+
+- Solo usa conexiones cifradas (https). Si escribís una dirección de Guaraní que empieza con
+  `http://`, la app no la acepta.
+- La contraseña se completa solo en páginas https de tu institución o en la página de ingreso único a
+  la que Guaraní te manda en ese momento, nunca en otra página.
+- Otra app del teléfono no puede abrirla para compartir o agendar cosas en tu nombre: los botones de
+  las notificaciones llevan una clave que solo conoce tu instalación.
+- No pide permisos de ubicación, contactos, calendario, cámara, micrófono ni archivos.
+
+**Comprobar que el APK es el original.** En el README del repositorio están la huella del
+certificado de firma y la suma SHA-256 de cada versión. Además, Android solo instala una
+actualización encima de la anterior si la firma coincide.
 
 **Calendario y compartir.** La app no tiene permiso para leer tu calendario ni tus contactos.
 Cuando tocás *Agendar* o *Compartir*, se abre la otra app con los datos cargados y sos vos quien

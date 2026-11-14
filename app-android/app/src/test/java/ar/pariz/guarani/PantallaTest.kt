@@ -68,6 +68,7 @@ class PantallaTest {
         val ev = org.json.JSONObject().put("evento", "Examen: Álgebra").put("fecha", "2027-12-15").put("hora", "18:00").put("detalle", "Lugar: Aula 12")
         val i = android.content.Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
             .putExtra("hacer", "agendar").putExtra("datos", ev.toString())
+            .also { Seguridad.firmar(ApplicationProvider.getApplicationContext(), it) }
         val act = Robolectric.buildActivity(MainActivity::class.java, i).setup().get()
         val abierto = shadowOf(act).nextStartedActivity
         assertEquals(android.content.Intent.ACTION_INSERT, abierto.action)
@@ -93,6 +94,7 @@ class PantallaTest {
         conCuenta()
         val i = android.content.Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
             .putExtra("hacer", "compartir").putExtra("datos", "Física I: examen aprobado con 8.")
+            .also { Seguridad.firmar(ApplicationProvider.getApplicationContext(), it) }
         val act = Robolectric.buildActivity(MainActivity::class.java, i).setup().get()
         val selector = shadowOf(act).nextStartedActivity
         assertEquals(android.content.Intent.ACTION_CHOOSER, selector.action)
@@ -100,6 +102,27 @@ class PantallaTest {
         val envio = selector.getParcelableExtra<android.content.Intent>(android.content.Intent.EXTRA_INTENT)!!
         assertEquals("text/plain", envio.type)
         assertEquals("Universidad de Ejemplo · Ingeniería en Sistemas\nFísica I: examen aprobado con 8.", envio.getStringExtra(android.content.Intent.EXTRA_TEXT))
+    }
+
+    /** Otra app no puede abrir la nuestra con un texto para compartir o un evento para agendar. */
+    @Test(timeout = 120_000) fun ordenesDeOtraAppSeIgnoran() {
+        conCuenta()
+        val i = android.content.Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+            .putExtra("hacer", "compartir").putExtra("datos", "texto ajeno").putExtra(Seguridad.EXTRA_TOKEN, "falso")
+        val act = Robolectric.buildActivity(MainActivity::class.java, i).setup().get()
+        val abiertas = generateSequence { shadowOf(act).nextStartedActivity }.map { it.action }.toList()
+        assertTrue(abiertas.toString(), android.content.Intent.ACTION_CHOOSER !in abiertas && android.content.Intent.ACTION_INSERT !in abiertas)
+    }
+
+    /** Una dirección sin https no se acepta: la app no manda la contraseña sin cifrar. */
+    @Test(timeout = 120_000) fun direccionSinHttpsNoSeGuarda() {
+        val act = Robolectric.buildActivity(MainActivity::class.java).setup().get()
+        act.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.nav).selectedItemId = R.id.nav_set; frames(act)
+        act.findViewById<android.widget.EditText>(R.id.setUrl).setText("http://guarani.ejemplo.edu.ar/autogestion/")
+        act.findViewById<android.widget.EditText>(R.id.setUser).setText("123")
+        act.findViewById<android.view.View>(R.id.btnSave).performClick(); frames(act)
+        assertTrue(Profiles.all(act).isEmpty())
+        assertTrue(act.findViewById<android.widget.EditText>(R.id.setUrl).error.toString().contains("https"))
     }
 
     @Test(timeout = 120_000) fun carreraEnAjustesYEnLaBarra() {

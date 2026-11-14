@@ -152,6 +152,9 @@ class MainActivity : AppCompatActivity() {
     private var ultimoAuto = 0L
 
     private fun handleIntent(i: Intent?) {
+        // Las órdenes con datos (cambiar de cuenta, compartir, agendar, ir a una pestaña) solo valen si las
+        // armó esta app: otra app del teléfono no puede abrirla con textos o acciones propias.
+        if (!Seguridad.esPropio(this, i)) return
         i?.getStringExtra("pid")?.let { if (Profiles.get(this, it) != null) switchTo(it) }
         // Botones de las notificaciones: «Compartir» y «Agendar».
         val hacer = i?.getStringExtra("hacer")
@@ -200,6 +203,7 @@ class MainActivity : AppCompatActivity() {
     // ---------------- Tablero y Menú ----------------
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupDashboard() {
+        Seguridad.endurecer(dashWeb.settings)
         dashWeb.settings.javaScriptEnabled = true
         dashWeb.settings.domStorageEnabled = true
         dashWeb.addJavascriptInterface(Bridge(), "Android")
@@ -214,6 +218,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupMenu() {
+        Seguridad.endurecer(menuWeb.settings)
         menuWeb.settings.javaScriptEnabled = true
         menuWeb.addJavascriptInterface(Bridge(), "Android")
         menuWeb.webViewClient = object : WebViewClient() {
@@ -374,8 +379,35 @@ class MainActivity : AppCompatActivity() {
 
     private val SSO = Regex("auth=(saml|cas|oidc|arai)", RegexOption.IGNORE_CASE)
 
-    /** Página de la cuenta, o la del ingreso único al que nos mandó Guaraní hace instantes. */
-    private fun trusted(url: String, p: Profile) = sameSite(url, p) || System.currentTimeMillis() < ssoUntil
+    /** Servidores de ingreso único a los que Guaraní nos redirigió (no cualquier página que se abra después). */
+    private val ssoHosts = mutableSetOf<String>()
+
+    /**
+     * Al tocar «ingresar con el usuario de la institución», Guaraní lleva a otro servidor (SAML/CAS).
+     * Se confía en ESE servidor —el primero fuera del sitio, o al que se llegue por redirección— y solo
+     * durante 2 minutos; un enlace cualquiera abierto después no recibe la contraseña.
+     */
+    private fun notarIngresoUnico(u: Uri, p: Profile, redireccion: Boolean) {
+        val url = u.toString()
+        if (sameSite(url, p)) {
+            if (SSO.containsMatchIn(url)) { ssoUntil = System.currentTimeMillis() + 120_000; ssoHosts.clear() }
+            return
+        }
+        if (System.currentTimeMillis() >= ssoUntil) return
+        val h = u.host?.lowercase() ?: return
+        if (ssoHosts.isEmpty() || redireccion) ssoHosts += h
+    }
+
+    /**
+     * Página donde se puede escribir la contraseña: tiene que ser https y ser de la institución, o el ingreso
+     * único al que Guaraní redirigió hace instantes.
+     */
+    private fun trusted(url: String, p: Profile): Boolean {
+        if (!Seguridad.esHttps(url)) return false
+        if (sameSite(url, p)) return true
+        val h = Uri.parse(url).host?.lowercase() ?: return false
+        return System.currentTimeMillis() < ssoUntil && h in ssoHosts
+    }
 
     /** Si Guaraní muestra el formulario de ingreso y la contraseña está guardada, entra solo. */
     private fun autoLogin(view: WebView?) {
@@ -440,6 +472,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupGuarani() {
         val progress = findViewById<ProgressBar>(R.id.webProgress)
         val title = findViewById<TextView>(R.id.webTitle)
+        Seguridad.endurecer(gWeb.settings)
         with(gWeb.settings) {
             javaScriptEnabled = true
             domStorageEnabled = true
@@ -458,7 +491,7 @@ class MainActivity : AppCompatActivity() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 progress.visibility = View.VISIBLE
                 val p = cur()
-                if (url != null && p != null && sameSite(url, p) && SSO.containsMatchIn(url)) ssoUntil = System.currentTimeMillis() + 120_000
+                if (url != null && p != null) notarIngresoUnico(Uri.parse(url), p, redireccion = false)
             }
             override fun onPageFinished(view: WebView?, url: String?) {
                 progress.visibility = View.GONE
@@ -471,8 +504,12 @@ class MainActivity : AppCompatActivity() {
             }
             override fun shouldOverrideUrlLoading(view: WebView?, req: WebResourceRequest?): Boolean {
                 val u = req?.url ?: return false
-                if (u.scheme == "http" || u.scheme == "https") return false
-                runCatching { startActivity(Intent(Intent.ACTION_VIEW, u)) }
+                if (u.scheme == "http" || u.scheme == "https") {
+                    val p = cur()
+                    if (req.isForMainFrame && p != null) notarIngresoUnico(u, p, req.isRedirect)
+                    return false
+                }
+                if (Seguridad.externoPermitido(u)) runCatching { startActivity(Intent(Intent.ACTION_VIEW, u)) }
                 return true
             }
         }
@@ -626,6 +663,9 @@ class MainActivity : AppCompatActivity() {
         })
         if (url.isBlank() || Uri.parse(url).host.isNullOrBlank()) {
             fUrl.error = "Elegí tu institución o escribí la dirección de tu Guaraní"; return
+        }
+        if (!Seguridad.esHttps(url)) {
+            fUrl.error = "La dirección tiene que empezar con https://. Sin cifrado la app no envía tu contraseña."; return
         }
         val inst = Instituciones.nameFor(this, url) ?: fInst.text.toString().trim().ifBlank { Uri.parse(url).host!! }
         val nombre = fName.text.toString().trim().ifBlank { inst }

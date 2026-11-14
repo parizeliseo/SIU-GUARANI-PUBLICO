@@ -5,6 +5,25 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Guaraní al día 1.4.2 — 14 de noviembre de 2026
+
+Se instala encima de la 1.4.1. Es una versión de seguridad, para que la app sea de confianza en
+cualquier Android.
+
+- **Solo https en toda la app**, con certificados del sistema. Las direcciones `http://` se rechazan
+  en Ajustes.
+- **La contraseña se completa solo en páginas https** de la institución o en el ingreso único al que
+  Guaraní redirige en ese momento (antes valía cualquier página abierta en los 2 minutos siguientes).
+- **Los botones de las notificaciones van firmados** con una clave aleatoria de la instalación: otra
+  app no puede abrir Guaraní al día para compartir o agendar textos propios.
+- Visores web sin acceso a archivos, con *Navegación segura* y sin contenido mixto; desde Guaraní
+  solo se abren afuera enlaces de correo, teléfono, SMS y mapas.
+- Firma con los esquemas v2 y v3 de Android.
+- README con la huella del certificado y la suma SHA-256 del APK; sección *Seguridad*.
+- 7 pruebas automáticas nuevas de seguridad (37 en total).
+
+---
+
 ## Guaraní al día 1.4.1 — 14 de noviembre de 2026
 
 Se instala encima de la 1.4. Es una versión de diseño: todo se ve más ordenado y más claro.

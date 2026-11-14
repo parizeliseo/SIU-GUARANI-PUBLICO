@@ -27,12 +27,61 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 
 | Archivo | Qué es |
 |---|---|
-| [`publicado/Guarani-al-dia-1.4.1.apk`](publicado/Guarani-al-dia-1.4.1.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
+| [`publicado/Guarani-al-dia-1.4.2.apk`](publicado/Guarani-al-dia-1.4.2.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
 | [`publicado/Manual-Guarani-al-dia.pdf`](publicado/Manual-Guarani-al-dia.pdf) | **Manual de uso completo** (21 páginas, con capturas): instalación, cuentas, avisos, exámenes y calendario, PDF, sesión, ajustes y problemas frecuentes. También se puede [leer en línea](docs/manual/MANUAL.md). |
 
 Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta
 fuente. No está en Google Play. Cada versión se firma con la misma clave, así que se instala encima
 de la anterior y conserva tus cuentas, datos y ajustes.
+
+### Comprobar que el APK es el original
+
+Cada versión se firma con la misma clave, que no está en este repositorio. Antes de instalar podés
+comprobar que el archivo no fue modificado:
+
+| Dato | Valor |
+|---|---|
+| Paquete | `ar.pariz.guarani` |
+| Huella SHA-256 del certificado de firma | `16:1D:A6:D1:3E:D4:D2:22:A5:DB:7E:7E:C8:6C:C1:1B:E3:9B:2E:41:CA:24:14:46:FA:3E:B1:72:D2:C2:54:AD` |
+| SHA-256 de `Guarani-al-dia-1.4.2.apk` | `7e5650b96d27b3ee0d090ca41aa1be44b2d64a41a0a6ed9a4f63a6a2f649a149` |
+
+- **En una computadora:** `sha256sum Guarani-al-dia-1.4.2.apk` (Linux/macOS) o
+  `Get-FileHash Guarani-al-dia-1.4.2.apk` (Windows) tiene que dar el valor de la tabla. Con las
+  herramientas de Android, `apksigner verify --print-certs` muestra la huella del certificado.
+- **En el teléfono:** si ya tenés instalada una versión anterior, Android **solo acepta la
+  actualización si la firma coincide**. Un APK alterado no se instala encima.
+- Las sumas de cada versión también están en las [publicaciones (Releases)](https://github.com/parizeliseo/SIU-GUARANI-PUBLICO/releases).
+
+## Seguridad
+
+Lo que la app hace para cuidar tu cuenta, y que cualquiera puede revisar en el código:
+
+- **Solo conexiones cifradas (https).** El tráfico sin cifrar está bloqueado en toda la app, y solo
+  se aceptan certificados de las autoridades del sistema: un certificado instalado a mano no alcanza
+  para espiar la conexión. Si una dirección de Guaraní no usa https, la app no la acepta.
+- **La contraseña se escribe solo donde corresponde:** en páginas https de tu institución, o en la
+  página de ingreso único a la que Guaraní redirige en ese momento. Nunca en otra página que abras
+  después.
+- **Contraseña cifrada** con el Android Keystore del teléfono. Sin copias de seguridad en la nube.
+- **Otras apps no la pueden manejar.** Los botones de las notificaciones (Compartir, Agendar) llevan
+  una clave aleatoria de tu instalación; si otra app intenta abrirla con datos propios, se ignoran.
+- Los visores internos **no pueden leer archivos del teléfono**, tienen *Navegación segura* de Google
+  activada y no cargan contenido mixto. Desde Guaraní solo se abren afuera enlaces de correo,
+  teléfono, SMS y mapas.
+- **Permisos mínimos:** internet, notificaciones, arrancar al encender el teléfono, trabajar en
+  segundo plano. No pide ubicación, contactos, calendario, cámara, micrófono ni archivos.
+- **Sin publicidad, sin estadísticas, sin servidores propios.** La app habla solo con el Guaraní de
+  cada cuenta.
+- Firma v2 + v3 (esquemas modernos de Android), versión de destino Android 15 (API 35), sin modo de
+  depuración.
+
+**Sobre el aviso de Play Protect.** Como la app no viene de Google Play, Android puede mostrar
+*«App no reconocida»* o *«Desarrollador desconocido»*. No significa que se haya encontrado algo malo:
+es lo que muestra con cualquier app instalada desde fuera de la tienda. Tocá **Más detalles →
+Instalar de todas formas**. Google está implementando la verificación obligatoria de desarrolladores
+para apps de fuera de la tienda (desde septiembre de 2026 en Brasil, Indonesia, Singapur y
+Tailandia; en el resto del mundo, desde 2027). En Argentina todavía no rige; cuando llegue, el
+estado del registro de esta app va a figurar acá.
 
 ## Primeros pasos
 

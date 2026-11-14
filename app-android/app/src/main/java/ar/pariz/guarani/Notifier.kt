@@ -81,6 +81,7 @@ object Notifier {
             val i = Intent(c, MainActivity::class.java).putExtra("tab", tab).putExtra("pid", pid)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             extra(i)
+            Seguridad.firmar(c, i)
             return PendingIntent.getActivity(c, req, i, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         }
         val big = if (lines.isEmpty()) text else lines.take(8).joinToString("\n")
