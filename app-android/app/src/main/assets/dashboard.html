@@ -95,6 +95,10 @@ h2 .ic svg{width:18px;height:18px;fill:currentColor}
 .date b{display:block;font-size:1.3rem}.date span{font-size:.66rem;text-transform:uppercase;font-weight:700;letter-spacing:.6px}
 .ev-m{flex:1;min-width:0}.ev-t{font-weight:600;line-height:1.25}.ev-d{font-size:.8rem;color:var(--muted);margin-top:2px}
 .when{font-size:.72rem;font-weight:700;color:var(--warn)}
+.abiertas{border-left:4px solid var(--gold)}
+.tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;border-radius:6px;padding:2px 6px;margin-bottom:3px}
+.t-ex{background:var(--brand-l);color:var(--brand)}.t-cu{background:rgba(242,193,78,.22);color:#8A6410}
+@media (prefers-color-scheme: dark){ .t-ex{color:#9FDCC3} .t-cu{color:var(--gold)} }
 
 /* ---------- novedades ---------- */
 .nov{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
@@ -196,6 +200,12 @@ h2 .ic svg{width:18px;height:18px;fill:currentColor}
 
   <section id="resumen"><div class="sec-t">Resumen de la carrera</div>
   <div class="kpis" id="kpis"></div></section>
+
+  <section class="card abiertas" id="abiertas" hidden>
+    <div class="card-h"><h2><span class="ic" data-ico="bell"></span>Inscripciones abiertas ahora</h2></div>
+    <p class="hint">Materias con mesa de examen o comisión habilitada en Guaraní. Te avisa cada vez que se abre una.</p>
+    <div id="abiertas-l"></div>
+  </section>
 
   <section class="card" id="fechas">
     <div class="card-h"><h2><span class="ic" data-ico="cal"></span>Próximos exámenes</h2><button class="btn" onclick="Android.reminder('')">+ Recordatorio</button></div>
@@ -319,6 +329,18 @@ h2 .ic svg{width:18px;height:18px;fill:currentColor}
     fut.slice(0,12).forEach(function(e){ l.appendChild(evento(e)); });
   }
 
+  function abiertas(hab){
+    var ab=hab.filter(function(h){ return h.estado==='abierta'; });
+    $('abiertas').hidden=!ab.length; var l=clear($('abiertas-l'));
+    ab.forEach(function(h){ var row=el('div','ev'); var mm=el('div','ev-m');
+      mm.appendChild(el('div','tag '+(h.tipo==='examen'?'t-ex':'t-cu'),h.tipo==='examen'?'Examen':'Cursada'));
+      mm.appendChild(el('div','ev-t',h.materia));
+      var d=(h.detalle||[]).slice(0,2).join(' · '); if(d) mm.appendChild(el('div','ev-d',d));
+      row.appendChild(mm);
+      if(h.url){ var b=el('button','btn pri','Inscribirme'); b.onclick=function(){ A('open',h.url); }; row.appendChild(b); }
+      l.appendChild(row); });
+  }
+
   function finales(mats){
     var regs=mats.filter(function(m){ return cat(m)==='regular'; });
     $('finales').hidden=!regs.length; var l=clear($('finales-l'));
@@ -388,12 +410,12 @@ h2 .ic svg{width:18px;height:18px;fill:currentColor}
     try{ accs=JSON.parse(A('accounts'))||[]; acc=JSON.parse(A('account'))||{}; }catch(e){}
     $('bienvenida').hidden=accs.length>0; $('app').hidden=!accs.length;
     if(!accs.length) return;
-    var r=(data('resumen')[0])||{}; var mats=data('materias'); var cal=data('calendario'); var nov=data('novedades'); var docs=data('documentos'); var dip=data('diplomatura');
+    var r=(data('resumen')[0])||{}; var mats=data('materias'); var cal=data('calendario'); var nov=data('novedades'); var docs=data('documentos'); var dip=data('diplomatura'); var hab=data('habilitaciones');
     encabezado(acc,accs,r);            // el encabezado se rehace siempre: muestra «hace X min»
-    var firma=JSON.stringify([acc.id,r,mats,cal,nov.slice(0,90),docs,dip]);
+    var firma=JSON.stringify([acc.id,r,mats,cal,nov.slice(0,90),docs,dip,hab]);
     if(!force&&firma===st.firma) return;  // nada cambió: no se redibuja (más fluido)
     st.firma=firma;
-    contar(cal,mats,nov,docs); indicadores(r,mats); fechas(cal); finales(mats); novedades(nov); materias(mats); otra(dip); documentos(docs);
+    contar(cal,mats,nov,docs); indicadores(r,mats); abiertas(hab); fechas(cal); finales(mats); novedades(nov); materias(mats); otra(dip); documentos(docs);
     $('foot').textContent=(A('status')||'')+' · Guaraní al día no es una app oficial del SIU.';
   }
 

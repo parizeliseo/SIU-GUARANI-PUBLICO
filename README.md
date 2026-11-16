@@ -27,8 +27,8 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 
 | Archivo | Qué es |
 |---|---|
-| [`publicado/Guarani-al-dia-1.4.2.apk`](publicado/Guarani-al-dia-1.4.2.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
-| [`publicado/Manual-Guarani-al-dia.pdf`](publicado/Manual-Guarani-al-dia.pdf) | **Manual de uso completo** (22 páginas, con capturas): instalación, cuentas, avisos, exámenes y calendario, PDF, sesión, ajustes y problemas frecuentes. También se puede [leer en línea](docs/manual/MANUAL.md). |
+| [`publicado/Guarani-al-dia-1.5.apk`](publicado/Guarani-al-dia-1.5.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
+| [`publicado/Manual-Guarani-al-dia.pdf`](publicado/Manual-Guarani-al-dia.pdf) | **Manual de uso completo** (23 páginas, con capturas): instalación, cuentas, avisos, exámenes y calendario, PDF, sesión, ajustes y problemas frecuentes. También se puede [leer en línea](docs/manual/MANUAL.md). |
 
 Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta
 fuente. No está en Google Play. Cada versión se firma con la misma clave, así que se instala encima
@@ -43,10 +43,10 @@ comprobar que el archivo no fue modificado:
 |---|---|
 | Paquete | `ar.pariz.guarani` |
 | Huella SHA-256 del certificado de firma | `16:1D:A6:D1:3E:D4:D2:22:A5:DB:7E:7E:C8:6C:C1:1B:E3:9B:2E:41:CA:24:14:46:FA:3E:B1:72:D2:C2:54:AD` |
-| SHA-256 de `Guarani-al-dia-1.4.2.apk` | `7e5650b96d27b3ee0d090ca41aa1be44b2d64a41a0a6ed9a4f63a6a2f649a149` |
+| SHA-256 de `Guarani-al-dia-1.5.apk` | `29d4e46ae973e5cc7001d521c014625af5cd42372491238eeef9bb541010d190` |
 
-- **En una computadora:** `sha256sum Guarani-al-dia-1.4.2.apk` (Linux/macOS) o
-  `Get-FileHash Guarani-al-dia-1.4.2.apk` (Windows) tiene que dar el valor de la tabla. Con las
+- **En una computadora:** `sha256sum Guarani-al-dia-1.5.apk` (Linux/macOS) o
+  `Get-FileHash Guarani-al-dia-1.5.apk` (Windows) tiene que dar el valor de la tabla. Con las
   herramientas de Android, `apksigner verify --print-certs` muestra la huella del certificado.
 - **En el teléfono:** si ya tenés instalada una versión anterior, Android **solo acepta la
   actualización si la firma coincide**. Un APK alterado no se instala encima.
@@ -185,7 +185,7 @@ varias cuentas, cada aviso empieza con el nombre de la cuenta.
 | Canal | Cuándo llega | Ejemplo de título |
 |---|---|---|
 | Calificaciones nuevas (**con sonido propio**) | Se carga o cambia una calificación, una promoción, una regularidad o un acta, incluidas las provisorias. Botón *Compartir*. | *«Nueva calificación en Guaraní — Física I: examen aprobado con 8.»* |
-| Inscripciones y mesas de examen | Aparece una fecha de examen o evaluación (botón *Agendar*), se abre o cierra una inscripción, o aparece una mesa. | *«Nueva fecha de examen»*, *«Se abrió la inscripción a exámenes»* |
+| Inscripciones y mesas de examen | Se habilita una mesa o una comisión en **cualquier materia** (la app revisa materia por materia), aparece una fecha de examen (botón *Agendar*), o se abre o cierra una inscripción. | *«Inscripción a examen abierta: Geopolítica»*, *«Nueva fecha de examen»* |
 | Recordatorios de examen | Una semana antes, el día anterior y el mismo día, entre las 8 y las 22. Botón *Agendar*. | *«Mañana: Examen: Algoritmos y Estructuras de Datos»* |
 | Plan de estudios | Cambia algo en el plan de tu propuesta. | *«Cambió tu plan de estudios»* |
 | Mensajes y encuestas | Llega un mensaje de la institución o hay una encuesta pendiente. | *«Mensaje nuevo en Guaraní»* |

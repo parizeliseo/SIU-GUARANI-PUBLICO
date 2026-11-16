@@ -73,12 +73,12 @@ object Notifier {
     private var seq = 0
 
     fun notify(c: Context, channel: String, title: String, text: String, lines: List<String> = emptyList(), tab: String = "dash",
-               pid: String? = null, acciones: List<Accion> = emptyList(), subtexto: String = "") {
+               pid: String? = null, acciones: List<Accion> = emptyList(), subtexto: String = "", url: String? = null) {
         if (Build.VERSION.SDK_INT >= 33 &&
             ContextCompat.checkSelfPermission(c, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return
         val id = ((System.currentTimeMillis() % 100_000_000).toInt() * 10 + (seq++ % 10)) xor (title.hashCode() and 0xFFFF)
         fun abrir(req: Int, extra: (Intent) -> Unit): PendingIntent {
-            val i = Intent(c, MainActivity::class.java).putExtra("tab", tab).putExtra("pid", pid)
+            val i = Intent(c, MainActivity::class.java).putExtra("tab", tab).putExtra("pid", pid).putExtra("url", url)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             extra(i)
             Seguridad.firmar(c, i)

@@ -167,6 +167,12 @@ class MainActivity : AppCompatActivity() {
                 "agendar" -> agendar(datos)
             }
         }
+        // Aviso de inscripción abierta: abre esa página de Guaraní (solo si es de la cuenta y usa https).
+        i?.getStringExtra("url")?.let { u ->
+            i.removeExtra("url")
+            val p = cur()
+            if (p != null && Seguridad.esHttps(u) && sameSite(u, p)) { openInGuarani(u); return }
+        }
         when (i?.getStringExtra("tab")) {
             "web" -> nav.selectedItemId = R.id.nav_web
             "dash" -> nav.selectedItemId = R.id.nav_dash

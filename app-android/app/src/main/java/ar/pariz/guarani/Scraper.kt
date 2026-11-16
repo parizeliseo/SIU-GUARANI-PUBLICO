@@ -36,7 +36,9 @@ class Scraper(private val ctx: Context) {
         val full: String = "",
         /** Propuesta elegida en el selector de Guaraní, y todas las que ofrece. */
         val propSel: String = "", val props: List<String> = emptyList(),
-        val docs: List<Doc> = emptyList()
+        val docs: List<Doc> = emptyList(),
+        /** Detalle de cada actividad de una página de inscripción (materia → líneas del detalle; null si no se pudo leer). */
+        val actividades: List<Pair<String, List<String>?>> = emptyList()
     ) {
         companion object {
             private fun strs(a: JSONArray?): List<String> = if (a == null) emptyList() else (0 until a.length()).map { a.optString(it) }
@@ -169,6 +171,59 @@ class Scraper(private val ctx: Context) {
   }
   return '';
 })(FASE)"""
+
+        /**
+         * En «Inscripción a exámenes» y «Inscripción a materias», Guaraní lista las actividades y muestra
+         * las mesas o comisiones recién al elegir una. Esto lee, sin tocar nada, el detalle de cada actividad
+         * (pide cada página con la sesión, como si se la abriera) y deja el resultado en window.__gad.
+         * Devuelve cuántas actividades va a leer.
+         */
+        const val EXPLORAR = """
+(function(){
+  var main=document.querySelector('#kernel_contenido')||document.querySelector('#contenido')||document.body;
+  function tx(e){ return ((e&&(e.innerText||e.textContent))||'').replace(/\s+/g,' ').trim(); }
+  function nm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim(); }
+  var RE=/\/(elegir_materia|elegir_actividad|seleccionar_materia|seleccionar_actividad|ver_materia|elegir_comision)\//i;
+  var vistos={}, lista=[];
+  main.querySelectorAll('a[href]').forEach(function(a){ var t=tx(a), h=a.href||'';
+    if(t.length<3||!RE.test(h)||h.slice(-1)==='#'||/^javascript:/i.test(h)||vistos[nm(t)]) return;
+    vistos[nm(t)]=1; lista.push([t,h]); });
+  lista=lista.slice(0,60);
+  var nombres={}; lista.forEach(function(x){ nombres[nm(x[0])]=1; });
+  function lineas(root){
+    var c=root.cloneNode(true);
+    c.querySelectorAll('script,style,noscript,select,option,input,button,nav,.navbar,.dropdown-menu').forEach(function(e){ e.remove(); });
+    c.querySelectorAll('br').forEach(function(e){ e.replaceWith('\n'); });
+    c.querySelectorAll('td,th').forEach(function(e){ e.append(' · '); });
+    c.querySelectorAll('p,div,li,tr,h1,h2,h3,h4,h5,h6,legend,table,dt,dd,section,article').forEach(function(e){ e.append('\n'); });
+    var out=[], ya={};
+    (c.textContent||'').split('\n').forEach(function(l){ l=l.replace(/\s+/g,' ').replace(/(\s·\s*)+$/,'').trim();
+      if(l.length>1&&!ya[l]){ ya[l]=1; out.push(l); } });
+    return out; }
+  function detalle(doc, nombre){
+    var m=doc.querySelector('#kernel_contenido')||doc.querySelector('#contenido')||doc.body; if(!m) return null;
+    var n=nm(nombre), hs=m.querySelectorAll('h1,h2,h3,h4,h5,legend,.titulo,strong,b'), cab=null;
+    for(var i=0;i<hs.length&&!cab;i++){ if(nm(hs[i].textContent)===n && !hs[i].closest('a')) cab=hs[i]; }
+    if(cab){ var box=cab.parentElement, k=0;
+      while(box&&box!==m&&k++<4&&(box.textContent||'').replace(/\s+/g,' ').trim().length<(cab.textContent||'').trim().length+15) box=box.parentElement;
+      if(box&&!box.querySelector('a[href*="elegir_"]')) return lineas(box); }
+    return lineas(m).filter(function(l){ return !nombres[nm(l)]; }); }
+  window.__gad={listo:false, items:[]};
+  (async function(){
+    for(var i=0;i<lista.length;i++){
+      try{
+        var r=await fetch(lista[i][1],{credentials:'include'});
+        var d=new DOMParser().parseFromString(await r.text(),'text/html');
+        var pw=d.querySelector('input[type=password]');
+        window.__gad.items.push({t:lista[i][0], l:pw?null:(detalle(d,lista[i][0])||[]).slice(0,40)});
+      }catch(e){ window.__gad.items.push({t:lista[i][0], l:null}); }
+      await new Promise(function(ok){ setTimeout(ok,250); });
+    }
+    window.__gad.listo=true;
+  })();
+  return String(lista.length);
+})()"""
+        const val EXPLORADO = """JSON.stringify(window.__gad||null)"""
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -239,6 +294,20 @@ class Scraper(private val ctx: Context) {
         if (eval(ACTIONS.replace("FASE", "1")).isEmpty()) return
         waitStable()
         if (eval(ACTIONS.replace("FASE", "2")).isNotEmpty()) waitStable()
+    }
+
+    /** Lee el detalle de cada actividad de la página de inscripción abierta (hasta 2 minutos). */
+    private suspend fun explorar(): List<Pair<String, List<String>?>> {
+        val n = eval(EXPLORAR).toIntOrNull() ?: 0
+        if (n == 0) return emptyList()
+        val start = SystemClock.elapsedRealtime()
+        var o: JSONObject? = null
+        while (SystemClock.elapsedRealtime() - start < 120_000) {
+            delay(1000)
+            o = runCatching { JSONObject(eval(EXPLORADO)) }.getOrNull() ?: continue
+            if (o.optBoolean("listo")) break
+        }
+        return Habilitaciones.leer(o?.optJSONArray("items"))
     }
 
     private suspend fun login(user: String, pass: String): Boolean {
@@ -338,7 +407,9 @@ class Scraper(private val ctx: Context) {
                 if (sameDoc(finalUrl, homeUrl) && u !in watched) continue
                 if (pages.any { sameDoc(it.url, finalUrl) }) continue
                 if (e.optString("text").isBlank()) continue
-                pages.add(Page.fromJson(e, finalUrl))
+                var page = Page.fromJson(e, finalUrl)
+                if (Habilitaciones.tipoDePagina(finalUrl, page.title) != null) page = page.copy(actividades = runCatching { explorar() }.getOrDefault(emptyList()))
+                pages.add(page)
                 good.add(finalUrl)
             }
             return Result(State.OK, pages, good, menu = menuOf(home), menuPublico = publico)

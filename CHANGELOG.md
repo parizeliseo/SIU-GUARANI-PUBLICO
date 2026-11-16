@@ -5,6 +5,22 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Guaraní al día 1.5 — 15 de noviembre de 2026
+
+Se instala encima de la 1.4.2.
+
+- **Aviso cuando se habilita una inscripción en cualquier materia.** En *Inscripción a exámenes* e
+  *Inscripción a materias*, la app ahora entra a leer cada materia (como hace la UNDEF, que lista
+  todas y dice «No hay mesas habilitadas para esta actividad») y avisa apenas una tiene mesa o
+  comisión: *«Inscripción a examen abierta: Geopolítica»*, con el llamado y la fecha. También avisa
+  si aparece otra mesa en una materia que ya tenía. Al tocar el aviso se abre esa inscripción.
+- La app solo lee: nunca inscribe ni da de baja. Si una lectura falla, conserva el estado anterior
+  y no da avisos falsos.
+- **Tablero:** recuadro *Inscripciones abiertas ahora* con el botón *Inscribirme*.
+- 6 pruebas nuevas (43 en total), con páginas de ejemplo armadas como la inscripción a exámenes real.
+
+---
+
 ## Guaraní al día 1.4.2 — 14 de noviembre de 2026
 
 Se instala encima de la 1.4.1. Es una versión de seguridad, para que la app sea de confianza en

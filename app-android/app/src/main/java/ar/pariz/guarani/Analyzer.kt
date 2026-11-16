@@ -248,6 +248,9 @@ class Analyzer(private val c: Context, private val prof: Profile) {
         val nuevosEventos = guardarEventos(Lector.eventos(r.pages),
             r.pages.any { kindOf(it.url, it.title) in setOf("inscripciones", "examen") })
 
+        // 3b) Inscripciones habilitadas, materia por materia.
+        val habilitadas = habilitaciones(r.pages)
+
         // 4) Carrera, documentos oficiales y resumen.
         Lector.carrera(r.pages)?.let { ca ->
             if (ca.nombre.isNotBlank()) res.put("propuesta", ca.nombre)
@@ -272,6 +275,12 @@ class Analyzer(private val c: Context, private val prof: Profile) {
             notify(Notifier.CH_INSC, if (e.tipo == "examen") "Nueva fecha de examen" else "Nueva evaluación", "${e.materia} — $cuando",
                 listOfNotNull("${e.materia} — $cuando", e.detalle.ifBlank { null }),
                 acciones = listOf(Notifier.Accion("Agendar", "agendar", eventoJson(e).toString())))
+        }
+        for ((avisos, url) in habilitadas) {
+            val (t, txt, ls) = Habilitaciones.mensaje(avisos)
+            avisos.forEach { Store.addNovedad(c, pid, "Inscripciones", (if (it.tipo == "examen") "Inscripción a examen abierta: " else "Inscripción a materia abierta: ") +
+                it.materia + (it.detalle.firstOrNull()?.let { d -> " — $d" } ?: "")) }
+            notify(Notifier.CH_INSC, t, txt, ls, tab = "web", url = url)
         }
         val notifyAll = Config.notifyAll(c)
         val materiasConFecha = nuevosEventos.map { norm(it.materia) }
@@ -472,10 +481,28 @@ class Analyzer(private val c: Context, private val prof: Profile) {
         l.forEach { (t, u) -> put(JSONObject().put("titulo", t).put("url", u)) }
     }
 
+    /**
+     * Lee el detalle de cada materia en las páginas de inscripción y guarda el estado. Devuelve los avisos
+     * agrupados por página (para abrir esa página al tocar la notificación).
+     */
+    private fun habilitaciones(pages: List<Scraper.Page>): List<Pair<List<Habilitaciones.Aviso>, String>> {
+        var estado = Store.arr(c, pid, "habilitaciones")
+        val out = mutableListOf<Pair<List<Habilitaciones.Aviso>, String>>()
+        for (p in pages) {
+            if (p.actividades.isEmpty()) continue
+            val tipo = Habilitaciones.tipoDePagina(p.url, p.title) ?: continue
+            val (avisos, nuevo) = Habilitaciones.comparar(estado, p.actividades.map { Habilitaciones.estado(tipo, it.first, it.second) }, p.url)
+            estado = nuevo
+            if (avisos.isNotEmpty()) out += avisos to p.url
+        }
+        Store.put(c, pid, "habilitaciones", estado)
+        return out
+    }
+
     private fun notify(ch: String, title: String, text: String, lines: List<String> = emptyList(), tab: String = "dash",
-                       acciones: List<Notifier.Accion> = emptyList()) {
+                       acciones: List<Notifier.Accion> = emptyList(), url: String? = null) {
         val t = if (Profiles.all(c).size > 1) "${prof.nombre} · $title" else title
-        Notifier.notify(c, ch, t, text, lines, tab, pid, acciones, Profiles.carreraDe(c, prof))
+        Notifier.notify(c, ch, t, text, lines, tab, pid, acciones, Profiles.carreraDe(c, prof), url)
     }
 
     // ------------------------------------------------------------------ respaldo (otros formatos)

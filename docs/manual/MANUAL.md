@@ -162,6 +162,9 @@ Es el resumen de tu carrera, de arriba hacia abajo:
   promedio, aprobadas, finales pendientes y materias en curso. Debajo de cada número dice de
   dónde sale: por ejemplo, si el promedio lo informa Guaraní o lo calcula la app con tus notas
   aprobadas.
+- **Inscripciones abiertas ahora** (solo cuando hay alguna): las materias con mesa de examen o
+  comisión habilitada, con el llamado y la fecha, y el botón **Inscribirme**, que abre la
+  inscripción en Guaraní.
 - **Próximos exámenes:** las mesas a las que estás inscripto y las evaluaciones con fecha, con
   cuántos días faltan y el botón **Agendar**. Ver [Exámenes, recordatorios y Google
   Calendar](#9-exámenes-recordatorios-y-google-calendar).
@@ -251,6 +254,9 @@ Estos son todos los avisos:
 | Apareció una fecha de examen o de evaluación | **Nueva fecha de examen** / **Nueva evaluación** | Inscripciones y mesas de examen | Agendar |
 | Falta una semana, un día o es hoy | **En una semana / Mañana / Hoy: Examen: …** | Recordatorios de examen | Agendar |
 | Cambió algo en tu plan de estudios | **Cambió tu plan de estudios** | Plan de estudios | — |
+| Se habilitó una mesa de examen en una materia | **Inscripción a examen abierta: Geopolítica**, con el llamado y la fecha | Inscripciones y mesas de examen | Al tocarlo abre la inscripción en Guaraní |
+| Apareció otra mesa en una materia que ya tenía | **Nueva mesa de examen: …** | Inscripciones y mesas de examen | Abre la inscripción |
+| Se habilitó una comisión para cursar una materia | **Inscripción a materia abierta: …** | Inscripciones y mesas de examen | Abre la inscripción |
 | Se abrió o se cerró la inscripción a exámenes | **Se abrió la inscripción a exámenes** / **Cerró la inscripción a exámenes** | Inscripciones y mesas de examen | — |
 | Apareció una mesa de examen nueva | **Novedades en mesas de examen** | Inscripciones y mesas de examen | — |
 | Se abrió o se cerró la inscripción a materias | **Se abrió la inscripción a materias** / **Cerró la inscripción a materias** | Inscripciones y mesas de examen | — |
@@ -263,6 +269,14 @@ Cómo se escribe cada calificación: *«cursada aprobada con 7 (queda el final)�
 regularidad, *«examen aprobado con 8»*, *«promocionada con 9»*, *«aprobada por equivalencia»*,
 *«ausente en el examen»*. Si la nota todavía es provisoria (el acta no está cerrada), el aviso
 lo dice: *«nota provisoria, examen aprobado con 9»*.
+
+**Inscripciones habilitadas, materia por materia.** En muchas instituciones, *Inscripción a
+exámenes* e *Inscripción a materias* muestran todas tus materias, y las mesas o comisiones
+aparecen recién al elegir una (si no hay, Guaraní dice *«No hay mesas habilitadas para esta
+actividad»*). En cada revisión la app entra a leer cada materia, **sin tocar nada**, y te avisa
+apenas una pasa a tener mesa o comisión habilitada. Al tocar el aviso se abre esa inscripción en
+la pestaña Guaraní para que te anotes. La app **nunca te inscribe sola**. Si al instalarla ya hay
+una inscripción abierta, también te avisa, una sola vez.
 
 **El sonido de las calificaciones.** Las calificaciones nuevas suenan con un tono propio, de tres
 notas, distinto del resto de los avisos, y vibran. Para cambiar el tono o subirle la importancia,
@@ -686,7 +700,9 @@ los datos se copian de un teléfono a otro.
 - **Captcha.** Si tu Guaraní lo pide, hay que entrar a mano esa vez.
 - **Fechas de Examen y Horarios de Cursadas** son buscadores con filtros: se usan desde el Menú,
   pero la app no los revisa sola. Tus mesas sí las detecta, desde la inscripción a exámenes de tu
-  cuenta.
+  cuenta, materia por materia (hasta 60 materias por página).
+- **Revisar materia por materia lleva tiempo:** con muchas materias, cada revisión puede tardar
+  un minuto más. Si una lectura falla, la app conserva lo que sabía y no avisa nada falso.
 - **Dos propuestas en el mismo usuario.** Si tu carrera y otra propuesta se eligen con un
   selector dentro de Guaraní, la app sigue la que esté seleccionada (y el tablero te lo avisa).
 - **El promedio** es el que informa Guaraní cuando lo muestra; si no, la app lo calcula con tus
