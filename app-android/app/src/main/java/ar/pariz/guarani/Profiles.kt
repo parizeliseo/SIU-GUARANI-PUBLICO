@@ -3,8 +3,6 @@ package ar.pariz.guarani
 import android.content.Context
 import android.net.Uri
 import android.webkit.CookieManager
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.UUID
@@ -31,13 +29,7 @@ data class Profile(
 object Profiles {
     private fun p(c: Context) = c.getSharedPreferences("profiles", Context.MODE_PRIVATE)
 
-    /** Usuario y contraseña van cifrados con una clave del Android Keystore, nunca en texto plano. */
-    private fun secure(c: Context) = runCatching {
-        val key = MasterKey.Builder(c).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
-        EncryptedSharedPreferences.create(c, "cred", key,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
-    }.getOrNull()
+    // Usuario y contraseña van cifrados con una clave del Android Keystore, nunca en texto plano (ver Boveda).
 
     fun normalizeUrl(url: String): String {
         var u = url.trim()
@@ -76,10 +68,8 @@ object Profiles {
         val i = l.indexOfFirst { it.id == prof.id }
         if (i >= 0) l[i] = prof else l.add(prof)
         p(c).edit().putString("list", JSONArray(l.map { it.json() }).toString()).apply()
-        val s = secure(c)?.edit() ?: return
-        if (user != null) s.putString("u_${prof.id}", user.trim())
-        if (!prof.savePass) s.remove("p_${prof.id}") else if (pass != null) s.putString("p_${prof.id}", pass)
-        s.apply()
+        if (user != null) Boveda.put(c, "u_${prof.id}", user.trim())
+        if (!prof.savePass) Boveda.remove(c, "p_${prof.id}") else if (pass != null) Boveda.put(c, "p_${prof.id}", pass)
         Store.ensureSeed(c, prof.id)
     }
 
@@ -87,15 +77,15 @@ object Profiles {
     fun delete(c: Context, id: String) {
         val l = all(c).filter { it.id != id }
         p(c).edit().putString("list", JSONArray(l.map { it.json() }).toString()).apply()
-        secure(c)?.edit()?.remove("u_$id")?.remove("p_$id")?.apply()
+        Boveda.remove(c, "u_$id", "p_$id")
         Store.deleteAll(c, id)
         if (p(c).getString("active", null) == id) l.firstOrNull()?.let { setActive(c, it.id) }
     }
 
-    fun user(c: Context, id: String): String = secure(c)?.getString("u_$id", "") ?: ""
+    fun user(c: Context, id: String): String = Boveda.get(c, "u_$id")
     fun pass(c: Context, id: String): String {
         val prof = get(c, id) ?: return ""
-        return if (prof.savePass) secure(c)?.getString("p_$id", "") ?: "" else ""
+        return if (prof.savePass) Boveda.get(c, "p_$id") else ""
     }
     fun savePassword(c: Context, id: String, user: String, pass: String) {
         val prof = get(c, id) ?: return
@@ -140,15 +130,14 @@ object Profiles {
         migrated = true
         if (p(c).contains("list")) return
         val url = Config.legacyUrl(c) ?: run { p(c).edit().putString("list", "[]").apply(); return }
-        val s = secure(c)
-        val u = s?.getString("u", "") ?: ""
-        val pw = s?.getString("p", "") ?: ""
+        val u = Boveda.get(c, "u")
+        val pw = Boveda.get(c, "p")
         val id = "c1"
         val host = Uri.parse(url).host ?: url
         val inst = Instituciones.nameFor(c, url) ?: host
         val prof = Profile(id, inst, inst, normalizeUrl(url), true)
         p(c).edit().putString("list", JSONArray().put(prof.json()).toString()).putString("active", id).apply()
-        s?.edit()?.putString("u_$id", u)?.putString("p_$id", pw)?.remove("u")?.remove("p")?.apply()
+        Boveda.put(c, "u_$id", u); Boveda.put(c, "p_$id", pw); Boveda.remove(c, "u", "p")
         Store.migrateLegacy(c, id)
         Store.ensureSeed(c, id)
         Config.clearLegacy(c)

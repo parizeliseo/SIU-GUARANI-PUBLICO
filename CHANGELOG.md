@@ -5,6 +5,45 @@ se instala encima de la anterior y conserva cuentas, datos y ajustes.
 
 ---
 
+## Guaraní al día 1.6 — 18 de noviembre de 2026
+
+Se instala encima de la 1.5 y conserva cuentas, contraseñas y datos. Revisión completa: más rápida,
+con más capacidad y al día con Android 16.
+
+**Más rápida**
+- Cada página se lee apenas termina de cargar y queda quieta, en vez de esperar 2,2 segundos fijos.
+  La app sabe cuándo terminó porque cuenta las consultas, scripts y estilos que todavía se están
+  descargando (Guaraní 3 dibuja el formulario en etapas después de cargar).
+- Las materias de *Inscripción a exámenes / a materias* se leen de a cuatro a la vez: 40 materias
+  pasan de unos 22 segundos a unos 4.
+- El visor oculto ya no descarga fuentes, audio, video ni estadísticas de terceros.
+- Una lectura menos por página cuando no hay nada que desplegar.
+- La clave de cifrado de la contraseña se prepara una sola vez (antes, en cada lectura).
+
+**Más capacidad**
+- Hasta 40 páginas por cuenta (antes 30) y 150 materias por página de inscripción (antes 60).
+- Historial de novedades de hasta 600 entradas (antes 300).
+- Los datos de cada cuenta van en archivos propios con escritura atómica y copia en memoria, en vez
+  de un único archivo de preferencias que se reescribía entero en cada cambio.
+- Con muchas cuentas, se reparte el tiempo: primero la que hace más tiempo que no se revisa, y
+  ninguna se empieza si no alcanza el tiempo que Android da a un trabajo en segundo plano.
+
+**Al día**
+- Destino Android 16 (API 36), el que pide Google Play desde agosto de 2026; compila con Android 17.
+- Android Gradle Plugin 9.5, Gradle 9.9, AndroidX Core 1.19, Material 1.14, WorkManager 2.12,
+  corrutinas 1.11, Robolectric 4.18.
+- La contraseña se cifra con AES-256-GCM directo sobre el Android Keystore. Reemplaza a
+  *EncryptedSharedPreferences*, que Google declaró obsoleto; lo guardado se pasa solo al formato nuevo.
+
+**Más instituciones y mejor diagnóstico**
+- Se agregó **UNDEF — Facultad de la Defensa Nacional (FADENA)**. Las 28 instituciones de la lista se
+  probaron contra los sitios reales.
+- Si Guaraní está fuera del horario de atención (como la UNRN de noche), la app lo dice así y no lo
+  toma como un cambio.
+- 8 pruebas nuevas (51 en total); la compilación automática ahora también corre el análisis de código.
+
+---
+
 ## Guaraní al día 1.5 — 15 de noviembre de 2026
 
 Se instala encima de la 1.4.2.

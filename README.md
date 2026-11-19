@@ -27,7 +27,7 @@ y te avisa al celular cuando se carga una nota, se abre una inscripción o cambi
 
 | Archivo | Qué es |
 |---|---|
-| [`publicado/Guarani-al-dia-1.5.apk`](publicado/Guarani-al-dia-1.5.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
+| [`publicado/Guarani-al-dia-1.6.apk`](publicado/Guarani-al-dia-1.6.apk) | La aplicación, lista para instalar (Android 8.0 o más nuevo). |
 | [`publicado/Manual-Guarani-al-dia.pdf`](publicado/Manual-Guarani-al-dia.pdf) | **Manual de uso completo** (23 páginas, con capturas): instalación, cuentas, avisos, exámenes y calendario, PDF, sesión, ajustes y problemas frecuentes. También se puede [leer en línea](docs/manual/MANUAL.md). |
 
 Descargá el `.apk` en el celular, abrilo desde *Archivos* y permití la instalación desde esta
@@ -43,10 +43,10 @@ comprobar que el archivo no fue modificado:
 |---|---|
 | Paquete | `ar.pariz.guarani` |
 | Huella SHA-256 del certificado de firma | `16:1D:A6:D1:3E:D4:D2:22:A5:DB:7E:7E:C8:6C:C1:1B:E3:9B:2E:41:CA:24:14:46:FA:3E:B1:72:D2:C2:54:AD` |
-| SHA-256 de `Guarani-al-dia-1.5.apk` | `29d4e46ae973e5cc7001d521c014625af5cd42372491238eeef9bb541010d190` |
+| SHA-256 de `Guarani-al-dia-1.6.apk` | `3e7b621e7a01a437c4a6d22203cb043aa8558fa090a1552300e191240755b8b6` |
 
-- **En una computadora:** `sha256sum Guarani-al-dia-1.5.apk` (Linux/macOS) o
-  `Get-FileHash Guarani-al-dia-1.5.apk` (Windows) tiene que dar el valor de la tabla. Con las
+- **En una computadora:** `sha256sum Guarani-al-dia-1.6.apk` (Linux/macOS) o
+  `Get-FileHash Guarani-al-dia-1.6.apk` (Windows) tiene que dar el valor de la tabla. Con las
   herramientas de Android, `apksigner verify --print-certs` muestra la huella del certificado.
 - **En el teléfono:** si ya tenés instalada una versión anterior, Android **solo acepta la
   actualización si la firma coincide**. Un APK alterado no se instala encima.
@@ -61,7 +61,7 @@ Lo que la app hace para cuidar tu cuenta, y que cualquiera puede revisar en el c
 - **La contraseña se escribe solo donde corresponde:** en páginas https de tu institución, o en la
   página de ingreso único a la que Guaraní redirige en ese momento. Nunca en otra página que abras
   después.
-- **Contraseña cifrada** con el Android Keystore del teléfono. Sin copias de seguridad en la nube.
+- **Contraseña cifrada** con AES-256-GCM y una clave del Android Keystore del teléfono, que no se puede sacar del aparato. Sin copias de seguridad en la nube.
 - **Otras apps no la pueden manejar.** Los botones de las notificaciones (Compartir, Agendar) llevan
   una clave aleatoria de tu instalación; si otra app intenta abrirla con datos propios, se ignoran.
 - Los visores internos **no pueden leer archivos del teléfono**, tienen *Navegación segura* de Google
@@ -71,7 +71,7 @@ Lo que la app hace para cuidar tu cuenta, y que cualquiera puede revisar en el c
   segundo plano. No pide ubicación, contactos, calendario, cámara, micrófono ni archivos.
 - **Sin publicidad, sin estadísticas, sin servidores propios.** La app habla solo con el Guaraní de
   cada cuenta.
-- Firma v2 + v3 (esquemas modernos de Android), versión de destino Android 15 (API 35), sin modo de
+- Firma v2 + v3 (esquemas modernos de Android), versión de destino Android 16 (API 36), sin modo de
   depuración.
 
 **Sobre el aviso de Play Protect.** Como la app no viene de Google Play, Android puede mostrar
@@ -137,6 +137,7 @@ responden como SIU Guaraní autogestión para alumnos.
 | UNRaf — Universidad Nacional de Rafaela | `https://guarani.unraf.edu.ar/autogestion/` |
 | UNDEF — Instituto Universitario Aeronáutico (IUA) | `https://autogestion.iua.edu.ar/` |
 | UNDEF — Facultad de Ingeniería del Ejército (FIE) | `https://www.fie.undef.edu.ar/siu/3w/` |
+| UNDEF — Facultad de la Defensa Nacional (FADENA) | `https://autogestion.fadena.undef.edu.ar/3w/` |
 | IUSE — Instituto Universitario de Seguridad | `https://autogestion.iuse.edu.ar/` |
 | UBA — Ciclo Básico Común (CBC) | `https://guarani.uba.ar/cbc/` |
 | UBA — Facultad de Agronomía | `https://guarani.agro.uba.ar/agro/` |
@@ -267,19 +268,19 @@ la tuya el tablero no muestra algo, los avisos de cambios siguen funcionando.
 | `…/Store.kt`, `Config.kt` | Datos de cada cuenta, fotos de cada página y ajustes generales. |
 | `app-android/app/src/main/assets/dashboard.html`, `menu.html` | El tablero y la pestaña Menú. |
 | `docs/manual/` | El manual: texto (`MANUAL.md`), capturas (`capturas.js`) y generador del PDF (`generar.py`). |
-| `app-android/app/src/test/` | 29 pruebas: lectura de cada reporte (`LectorTest`), recorrido completo con avisos, sonido, recordatorios y datos de versiones anteriores (`FlujoTest`), pantallas, calendario y compartir (`PantallaTest`), y avisos por tema (`AnalyzerTest`). |
+| `app-android/app/src/test/` | 51 pruebas: lectura de cada reporte (`LectorTest`), recorrido completo con avisos, sonido, recordatorios y datos de versiones anteriores (`FlujoTest`), pantallas, calendario y compartir (`PantallaTest`), avisos por tema (`AnalyzerTest`), inscripciones por materia (`HabilitacionesTest`), seguridad (`SeguridadTest`), cifrado de la contraseña (`BovedaTest`), almacenamiento (`StoreTest`) y reglas de lectura (`ReglasTest`). |
 | `app-android/app/src/test/guarani/` | Páginas de prueba armadas según la documentación del SIU, y `probar.js`, que les corre el mismo JavaScript que la app usa dentro de Guaraní. |
 
-Paquete `ar.pariz.guarani`, minSdk 26, targetSdk 35, Kotlin 2.0, Android Gradle Plugin 8.7.
+Paquete `ar.pariz.guarani`, minSdk 26, targetSdk 36 (Android 16), compileSdk 37, Android Gradle Plugin 9.5 con Kotlin incorporado, Gradle 9.9.
 
 ### Compilar
 
 ```bash
 cd app-android
-./gradlew testReleaseUnitTest assembleRelease
+./gradlew testDebugUnitTest lintRelease assembleRelease
 ```
 
-Necesita JDK 17 o más nuevo y el SDK de Android (API 35). Sin clave queda un APK sin firmar. Para
+Necesita JDK 17 o más nuevo y el SDK de Android (API 37; las herramientas que falten se bajan solas). Sin clave queda un APK sin firmar. Para
 firmarlo, poné `guarani.keystore` y un `keystore.properties` en `app-android/app/`:
 
 ```properties

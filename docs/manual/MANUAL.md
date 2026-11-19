@@ -540,6 +540,7 @@ No hace falta poner usuario ni contraseña: solo la dirección.
 | UNC — Universidad Nacional de Córdoba | `https://autogestion.guarani.unc.edu.ar/` |
 | UNCA — Universidad Nacional de Catamarca | `https://guarani.unca.edu.ar/autogestion/` |
 | UNDEF — Facultad de Ingeniería del Ejército (FIE) | `https://www.fie.undef.edu.ar/siu/3w/` |
+| UNDEF — Facultad de la Defensa Nacional (FADENA) | `https://autogestion.fadena.undef.edu.ar/3w/` |
 | UNDEF — Instituto Universitario Aeronáutico (IUA) | `https://autogestion.iua.edu.ar/` |
 | UNIPE — Universidad Pedagógica Nacional | `https://guarani.unipe.edu.ar/autogestion/` |
 | UNJu — Universidad Nacional de Jujuy | `https://alumnos.unju.edu.ar/unju/` |
@@ -700,9 +701,9 @@ los datos se copian de un teléfono a otro.
 - **Captcha.** Si tu Guaraní lo pide, hay que entrar a mano esa vez.
 - **Fechas de Examen y Horarios de Cursadas** son buscadores con filtros: se usan desde el Menú,
   pero la app no los revisa sola. Tus mesas sí las detecta, desde la inscripción a exámenes de tu
-  cuenta, materia por materia (hasta 60 materias por página).
-- **Revisar materia por materia lleva tiempo:** con muchas materias, cada revisión puede tardar
-  un minuto más. Si una lectura falla, la app conserva lo que sabía y no avisa nada falso.
+  cuenta, materia por materia (hasta 150 materias por página, de a cuatro a la vez).
+- **Revisar materia por materia lleva unos segundos más:** con 40 materias, alrededor de 4
+  segundos. Si una lectura falla, la app conserva lo que sabía y no avisa nada falso.
 - **Dos propuestas en el mismo usuario.** Si tu carrera y otra propuesta se eligen con un
   selector dentro de Guaraní, la app sigue la que esté seleccionada (y el tablero te lo avisa).
 - **El promedio** es el que informa Guaraní cuando lo muestra; si no, la app lo calcula con tus

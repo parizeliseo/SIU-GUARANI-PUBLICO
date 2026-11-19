@@ -9,6 +9,7 @@ import android.webkit.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.json.JSONArray
+import java.io.ByteArrayInputStream
 import org.json.JSONObject
 import kotlin.coroutines.resume
 
@@ -78,7 +79,31 @@ class Scraper(private val ctx: Context) {
             "inscripcion_cursada", "inscripcion_examen", "agenda", "cronograma_evaluaciones", "inasistencias",
             "mensajes", "encuestas", "certificados", "datos_censales"
         )
-        const val MAX_PAGES = 30
+        const val MAX_PAGES = 40
+
+        /**
+         * Estado de la página: "listo|cosas pendientes|largo del texto". Pendientes = consultas XHR/fetch en curso más
+         * scripts y estilos que todavía se descargan (Guaraní 3 dibuja el formulario en etapas después de cargar).
+         */
+        const val QUIETA = """(function(){
+  if(!window.__gadRed){ window.__gadRed={n:0};
+    var S=XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.send=function(){ var r=window.__gadRed, fin=false; r.n++;
+      function f(){ if(!fin){ fin=true; r.n--; } } this.addEventListener('loadend',f);
+      try{ return S.apply(this,arguments); }catch(e){ f(); throw e; } };
+    if(window.fetch){ var F=window.fetch; window.fetch=function(){ var r=window.__gadRed; r.n++;
+      return F.apply(this,arguments).finally(function(){ r.n--; }); }; } }
+  // Scripts y estilos agregados que todavía se están bajando (no figuran aún entre los recursos cargados).
+  var hechos={}; (performance.getEntriesByType?performance.getEntriesByType('resource'):[]).forEach(function(e){ hechos[e.name]=1; });
+  var bajando=0; document.querySelectorAll('script[src],link[rel=stylesheet][href]').forEach(function(e){
+    var u=e.src||e.href; if(/^https?:/.test(u)&&!hechos[u]) bajando++; });
+  return document.readyState+'|'+(Math.max(0,window.__gadRed.n)+bajando)+'|'+(document.body?document.body.innerText.length:0);
+})()"""
+
+        internal val FUERA_DE_HORARIO = Regex("(disponibilidad horaria|fuera de (este|ese|el) (rango )?horario|disponible para su uso .{0,60}horario|sistema (se encuentra )?(fuera de servicio|en mantenimiento)|no estara habilitado)")
+        private val NO_HACE_FALTA = Regex("\\.(woff2?|ttf|otf|eot|mp4|webm|mp3|ogg|wav|m4a)$")
+        private val RASTREO = listOf("google-analytics.com", "googletagmanager.com", "doubleclick.net", "hotjar.com",
+            "facebook.net", "clarity.ms", "stats.g.doubleclick.net")
 
         /**
          * Lee la pantalla actual: texto, tablas visibles, menú, propuesta elegida y documentos.
@@ -188,7 +213,7 @@ class Scraper(private val ctx: Context) {
   main.querySelectorAll('a[href]').forEach(function(a){ var t=tx(a), h=a.href||'';
     if(t.length<3||!RE.test(h)||h.slice(-1)==='#'||/^javascript:/i.test(h)||vistos[nm(t)]) return;
     vistos[nm(t)]=1; lista.push([t,h]); });
-  lista=lista.slice(0,60);
+  lista=lista.slice(0,150);
   var nombres={}; lista.forEach(function(x){ nombres[nm(x[0])]=1; });
   function lineas(root){
     var c=root.cloneNode(true);
@@ -209,18 +234,21 @@ class Scraper(private val ctx: Context) {
       if(box&&!box.querySelector('a[href*="elegir_"]')) return lineas(box); }
     return lineas(m).filter(function(l){ return !nombres[nm(l)]; }); }
   window.__gad={listo:false, items:[]};
-  (async function(){
-    for(var i=0;i<lista.length;i++){
+  // Cuatro lecturas a la vez (rápido y sin cargar de más al servidor); el resultado sale en el orden de la lista.
+  var res=new Array(lista.length), sig=0;
+  async function obrero(){
+    while(sig<lista.length){ var i=sig++;
       try{
         var r=await fetch(lista[i][1],{credentials:'include'});
         var d=new DOMParser().parseFromString(await r.text(),'text/html');
         var pw=d.querySelector('input[type=password]');
-        window.__gad.items.push({t:lista[i][0], l:pw?null:(detalle(d,lista[i][0])||[]).slice(0,40)});
-      }catch(e){ window.__gad.items.push({t:lista[i][0], l:null}); }
-      await new Promise(function(ok){ setTimeout(ok,250); });
+        res[i]={t:lista[i][0], l:pw?null:(detalle(d,lista[i][0])||[]).slice(0,40)};
+      }catch(e){ res[i]={t:lista[i][0], l:null}; }
+      window.__gad.items=res.filter(function(x){ return x; });
+      await new Promise(function(ok){ setTimeout(ok,60); });
     }
-    window.__gad.listo=true;
-  })();
+  }
+  Promise.all([obrero(),obrero(),obrero(),obrero()]).then(function(){ window.__gad.items=res; window.__gad.listo=true; });
   return String(lista.length);
 })()"""
         const val EXPLORADO = """JSON.stringify(window.__gad||null)"""
@@ -245,32 +273,46 @@ class Scraper(private val ctx: Context) {
             override fun onReceivedError(view: WebView?, req: WebResourceRequest?, err: WebResourceError?) {
                 if (req?.isForMainFrame == true) mainError = err?.description?.toString() ?: "error"
             }
+            override fun shouldInterceptRequest(view: WebView?, req: WebResourceRequest?): WebResourceResponse? {
+                val u = req?.url ?: return null
+                if (req.isForMainFrame || !innecesario(u)) return null
+                return WebResourceResponse("text/plain", "utf-8", 204, "No Content", emptyMap(), ByteArrayInputStream(ByteArray(0)))
+            }
         }
     }
 
+    /**
+     * Espera a que la página termine de cargar y quede quieta: sin navegación en curso, sin consultas
+     * de red pendientes (XHR/fetch) y con el texto sin cambiar en dos lecturas seguidas.
+     * Antes se esperaban 2,2 s fijos por página; ahora se lee apenas está lista.
+     */
     private suspend fun waitIdle(expectNavigation: Boolean) {
         val start = SystemClock.elapsedRealtime()
         if (expectNavigation) { loading = true }
-        lastEvent = SystemClock.elapsedRealtime()
-        while (true) {
-            delay(400)
-            val now = SystemClock.elapsedRealtime()
-            val idle = now - lastEvent
-            if (!loading && idle > 2200 && wv.progress >= 100) break
-            if (now - start > 45_000) break
+        lastEvent = start
+        while (SystemClock.elapsedRealtime() - start < 45_000) {
+            delay(150)
+            if (!loading && wv.progress >= 100) break
         }
+        waitStable(maxOf(4_000L, 45_000L - (SystemClock.elapsedRealtime() - start)), minQuietas = 2)
     }
 
-    /** Espera a que la pantalla deje de cambiar (después de un clic que trae datos sin recargar). */
-    private suspend fun waitStable(maxMs: Long = 20_000) {
+    /** Espera a que la pantalla deje de cambiar (también después de un clic que trae datos sin recargar). */
+    private suspend fun waitStable(maxMs: Long = 20_000, minQuietas: Int = 3) {
         val start = SystemClock.elapsedRealtime()
-        delay(700)
-        var last = -1; var same = 0
+        delay(250)
+        var last = ""; var same = 0
+        var lastTexto = ""; var textoIgual = 0
         while (SystemClock.elapsedRealtime() - start < maxMs) {
-            val len = eval("''+(document.body?document.body.innerText.length:0)").toIntOrNull() ?: -1
-            if (!loading && len == last && len > 0) { if (++same >= 3) return } else same = 0
-            last = len
-            delay(500)
+            val s = if (loading) "" else eval(QUIETA)
+            // "listo|pendientes|largo del texto": con algo pendiente no se da por terminada...
+            val quieta = s.isNotEmpty() && s.startsWith("complete|0|") && !s.endsWith("|0")
+            if (quieta && s == last) { if (++same >= minQuietas) return } else same = 0
+            // ...salvo que el texto no cambie en 3 segundos (un recurso trabado no frena la lectura).
+            val texto = s.substringAfterLast('|')
+            if (s.startsWith("complete|") && texto != "0" && texto == lastTexto) { if (++textoIgual >= 10) return } else textoIgual = 0
+            last = s; lastTexto = texto
+            delay(300)
         }
     }
 
@@ -287,23 +329,31 @@ class Scraper(private val ctx: Context) {
         }
     }
 
-    private suspend fun extract(): JSONObject = runCatching { JSONObject(eval(EXTRACT)) }.getOrDefault(JSONObject())
-
-    /** Pide a la página que muestre todo lo que tiene (historia completa, plan expandido). */
-    private suspend fun reveal() {
-        if (eval(ACTIONS.replace("FASE", "1")).isEmpty()) return
-        waitStable()
-        if (eval(ACTIONS.replace("FASE", "2")).isNotEmpty()) waitStable()
+    /** Bloquea lo que no hace falta para leer Guaraní: fuentes, audio/video y estadísticas de terceros. */
+    private fun innecesario(u: Uri): Boolean {
+        val path = (u.path ?: "").lowercase()
+        val host = (u.host ?: "").lowercase()
+        return NO_HACE_FALTA.containsMatchIn(path) || RASTREO.any { host == it || host.endsWith(".$it") }
     }
 
-    /** Lee el detalle de cada actividad de la página de inscripción abierta (hasta 2 minutos). */
+    private suspend fun extract(): JSONObject = runCatching { JSONObject(eval(EXTRACT)) }.getOrDefault(JSONObject())
+
+    /** Pide a la página que muestre todo lo que tiene (historia completa, plan expandido). Devuelve si tocó algo. */
+    private suspend fun reveal(): Boolean {
+        if (eval(ACTIONS.replace("FASE", "1")).isEmpty()) return false
+        waitStable()
+        if (eval(ACTIONS.replace("FASE", "2")).isNotEmpty()) waitStable()
+        return true
+    }
+
+    /** Lee el detalle de cada actividad de la página de inscripción abierta (hasta 3 minutos). */
     private suspend fun explorar(): List<Pair<String, List<String>?>> {
         val n = eval(EXPLORAR).toIntOrNull() ?: 0
         if (n == 0) return emptyList()
         val start = SystemClock.elapsedRealtime()
         var o: JSONObject? = null
-        while (SystemClock.elapsedRealtime() - start < 120_000) {
-            delay(1000)
+        while (SystemClock.elapsedRealtime() - start < 180_000) {
+            delay(400)
             o = runCatching { JSONObject(eval(EXPLORADO)) }.getOrNull() ?: continue
             if (o.optBoolean("listo")) break
         }
@@ -364,6 +414,9 @@ class Scraper(private val ctx: Context) {
             load(baseIn)
             if (mainError != null) return Result(State.OFFLINE, emptyList(), emptyList(), mainError ?: "")
             var home = extract()
+            // Algunas instituciones apagan Guaraní de noche y muestran un cartel en lugar del sistema.
+            if (!needsLogin(home) && FUERA_DE_HORARIO.containsMatchIn(Lector.norm(home.optString("text").take(1500))))
+                return Result(State.OFFLINE, emptyList(), emptyList(), "Guaraní está fuera del horario de atención de la institución")
             // Si Guaraní redirige a otra dirección (otro servidor o carpeta), se toma esa como base.
             val eff = clean(home.optString("url", baseIn))
             // (Si nos mandó a la página de ingreso de otro servidor, la base sigue siendo la de la cuenta.)
@@ -400,8 +453,9 @@ class Scraper(private val ctx: Context) {
                     if (signIn(d, user, pass) != null) return Result(State.NEED_LOGIN, pages, good)
                     load(u)
                 }
-                runCatching { reveal() }
-                val e = extract()
+                // Si no hubo nada que desplegar, lo leído recién ya es la página final (una lectura menos).
+                val tocó = runCatching { reveal() }.getOrDefault(false)
+                val e = if (tocó || needsLogin(d)) extract() else d
                 val finalUrl = clean(e.optString("url", u))
                 // Si una ruta de respaldo redirige a la portada, no existe en este Guaraní.
                 if (sameDoc(finalUrl, homeUrl) && u !in watched) continue

@@ -2,19 +2,18 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
     namespace = "ar.pariz.guarani"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "ar.pariz.guarani"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 10
-        versionName = "1.5"
+        targetSdk = 36
+        versionCode = 11
+        versionName = "1.6"
     }
 
     // La clave de firma NO está en el repositorio. Para firmar, poné guarani.keystore y
@@ -43,7 +42,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions { jvmTarget = "17" }
     testOptions { unitTests {
         isIncludeAndroidResources = true
         all { t -> System.getProperty("capturas")?.let { t.systemProperty("capturas", it) } }
@@ -51,16 +49,16 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("androidx.work:work-runtime-ktx:2.9.1")
-    implementation("androidx.security:security-crypto:1.1.0-alpha06")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation("androidx.core:core-ktx:1.19.1")
+    implementation("androidx.appcompat:appcompat:1.8.0")
+    implementation("com.google.android.material:material:1.14.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0")
+    implementation("androidx.work:work-runtime-ktx:2.12.0")
+    implementation("androidx.security:security-crypto:1.1.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.robolectric:robolectric:4.14.1")
-    testImplementation("androidx.test:core:1.6.1")
-    testImplementation("androidx.work:work-testing:2.9.1")
-    testImplementation("org.json:json:20240303")
+    testImplementation("org.robolectric:robolectric:4.18.1")
+    testImplementation("androidx.test:core:1.7.0")
+    testImplementation("androidx.work:work-testing:2.12.0")
+    testImplementation("org.json:json:20260814")
 }

@@ -185,7 +185,8 @@ class Analyzer(private val c: Context, private val prof: Profile) {
         if (r.menuPublico.isNotEmpty()) Store.put(c, pid, "menu_publico", menuJson(r.menuPublico))
         if (r.state != Scraper.State.OK) {
             val msg = when (r.state) {
-                Scraper.State.OFFLINE -> "Sin conexión con Guaraní (${r.message}). Se reintenta en la próxima revisión."
+                Scraper.State.OFFLINE -> if (r.message.startsWith("Guaraní está fuera")) "${r.message}. Se reintenta en la próxima revisión."
+                    else "Sin conexión con Guaraní (${r.message}). Se reintenta en la próxima revisión."
                 Scraper.State.NEED_LOGIN -> "La sesión de Guaraní venció y la contraseña no está guardada: entrá desde la pestaña Guaraní."
                 Scraper.State.LOGIN_FAILED -> "Guaraní rechazó el usuario o la clave. ${r.message}".trim()
                 Scraper.State.CAPTCHA -> "Guaraní pide un captcha: entrá una vez desde la pestaña Guaraní."

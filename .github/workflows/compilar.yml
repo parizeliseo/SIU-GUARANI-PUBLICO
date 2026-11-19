@@ -1,4 +1,4 @@
-# Comprueba que la app Guaraní al día compile y que pasen las pruebas del lector de notas.
+# Comprueba que la app Guaraní al día compile, que pasen todas las pruebas y el análisis de código (lint).
 # No publica nada ni firma con la clave real: solo avisa si un cambio rompió algo.
 name: Guaraní al día (Android)
 
@@ -25,12 +25,12 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
 
       - name: Pruebas y compilación
         run: |
           chmod +x gradlew
-          ./gradlew --no-daemon testReleaseUnitTest assembleRelease
+          ./gradlew --no-daemon testDebugUnitTest lintRelease assembleRelease
 
       - name: Guardar el APK (sin firmar)
         uses: actions/upload-artifact@v7
